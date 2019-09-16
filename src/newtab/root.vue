@@ -1,7 +1,7 @@
 <template>
-    <div id="fuc">
-       <h3>hello vueadfasfa !</h3>
-    </div>
+  <section id="newtab-page">
+
+  </section>
 </template>
 <script>
 export default {
@@ -9,11 +9,9 @@ export default {
 }
 </script>
 <style scoped>
-#fuc {
-    width: 420px;
-    height: 2000px;
-    text-align: center;
-    color: #333;
-    background: #f54;
+::-webkit-scrollbar { 
+  display: none; 
+}
+#newtab-page {
 }
 </style>
