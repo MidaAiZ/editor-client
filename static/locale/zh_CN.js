@@ -1,11 +1,11 @@
-export const zh_CN = {
-    searchTab: {
-        webPage: '网页',
-        img: '图片',
-        news: '新闻',
-        video: '视频',
-        map: '地图'
-    },
+ const zh_CN = {
+    searchTab: [
+        '网页',
+        '图片',
+        '新闻',
+        '视频',
+        '地图'
+    ],
     searchType: {},
     searchPlaceholder: '输入并搜索...',
     appName: {
@@ -45,3 +45,4 @@ export const zh_CN = {
         others: '其他'
     }
 }
+export default zh_CN

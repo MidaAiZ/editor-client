@@ -1,6 +1,6 @@
 <template>
     <div>
-         <el-button>ed</el-button>
+         <!--<el-button>ed</el-button>-->
     </div>
 </template>
 <script>
