@@ -1,10 +1,12 @@
 <template>
-    <div>fff</div>
+
 </template>
 <script>
 
 export default {
-    name: 'systemBar',
+    data(){
+        
+    }
 }
 </script>
 <style scoped>
