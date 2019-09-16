@@ -3,25 +3,27 @@
         <el-button class="open-system-bar-btn" @click="drawer = true" icon="el-icon-menu" size="medium" circle>
         </el-button>
         <el-drawer
-            #title="barTab"
             :visible.sync="drawer"
             :direction="direction"
             :show-close="false"
             size="40%"
         >
-            <barTab></barTab>
+            <barTab slot="title"></barTab>
+            <barSearch></barSearch>
         </el-drawer>
     </div>
 </template>
 <script>
 import barTab from '../component/BarTab.vue'
+import barSearch from '../component/BarSearch.vue'
 
 export default {
     name: 'systemBar',
     components: {
         barTab,
+        barSearch,
     },
-     data() {
+    data() {
       return {
         drawer: false,
         direction: 'rtl',

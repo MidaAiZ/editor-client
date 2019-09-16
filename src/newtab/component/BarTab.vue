@@ -14,6 +14,7 @@ import zh_CN from '../../../static/locale/zh_CN.js'
 
 export default {
     name: 'barTab',
+    props: ['nameId'],
     data() {
         return {
             logreg: zh_CN.logreg,
@@ -40,5 +41,6 @@ export default {
         font-size: 20px;
         line-height: 40px;
         float: right;
+        cursor: pointer;
     }
 </style>
