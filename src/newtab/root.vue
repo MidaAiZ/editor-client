@@ -16,19 +16,19 @@
   </v-app>
 </template>
 <script>
-import background from '../section/Background'
-import systemBar from '../section/SystemBar'
-import suggestions from '../section/Suggestions'
-import customSearch from '../section/CustomSearch'
+import background from './section/Background.vue'
+import systemBar from './section/SystemBar.vue'
+import suggestions from './section/Suggestions.vue'
+import customSearch from './section/CustomSearch.vue'
 
 export default {
     name: 'root',
     components: {
-    systemBar,
-    background,
-    suggestions,
-    customSearch,
-  }
+        systemBar,
+        background,
+        suggestions,
+        customSearch,
+    }
 }
 </script>
 <style scoped>
