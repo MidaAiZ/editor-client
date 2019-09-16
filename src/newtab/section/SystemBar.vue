@@ -3,19 +3,24 @@
         <el-button class="open-system-bar-btn" @click="drawer = true" icon="el-icon-menu" size="medium" circle>
         </el-button>
         <el-drawer
-            title="我是标题"
+            #title="barTab"
             :visible.sync="drawer"
             :direction="direction"
             :show-close="false"
         >
+            <barTab></barTab>
             <span>我来啦!</span>
         </el-drawer>
     </div>
 </template>
 <script>
+import barTab from '../component/BarTab.vue'
 
 export default {
     name: 'systemBar',
+    components: {
+        barTab,
+    },
      data() {
       return {
         drawer: false,

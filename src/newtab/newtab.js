@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import root from './root.vue'
-import 'element-ui/lib/theme-chalk/index.css';
+import './theme.scss';
 import Element from 'element-ui';
 Vue.use(Element);
 
