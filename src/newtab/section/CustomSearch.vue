@@ -4,7 +4,7 @@
             <span v-for="(item,index) in tabList" class="search-tab">{{item}}</span>
         </div>
         <div id="search-input-container">
-            <span>
+            <span class="input-icon-container">
                 <img src="https://picsum.photos/50/50" class="input-icon"/>
             </span>
             <input :placeholder="searchPlaceholder" class="search-input"/>
@@ -41,19 +41,27 @@ export default {
         border-bottom: 2px solid transparent
     }
     .search-tab:hover{
-
+        color: #999999;
+    }
+    #search-input-container{
+        display: flex;
+        align-items: center;
     }
     .search-input{
         border-radius:35px;
         height: 35px;
         outline-style:none;
         border:1px solid #ccc;
-        padding: 7px 20px;
-        width:400px;
+        padding: 7px 20px 7px 50px;
+        width:450px;
         font-size: 18px;
+        background: transparent;
     }
     .input-icon{
         height: 36px;
         width:36px;
+    }
+    .input-icon-container{
+        margin-right: -50px;
     }
 </style>
