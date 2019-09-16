@@ -7,9 +7,9 @@
             :visible.sync="drawer"
             :direction="direction"
             :show-close="false"
+            size="40%"
         >
             <barTab></barTab>
-            <span>我来啦!</span>
         </el-drawer>
     </div>
 </template>

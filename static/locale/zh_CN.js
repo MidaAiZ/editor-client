@@ -43,6 +43,7 @@
         finance: '金融',
         reading: '阅读',
         others: '其他'
-    }
+    },
+    logreg: '登录/注册'
 }
 export default zh_CN
