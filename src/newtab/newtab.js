@@ -2,6 +2,9 @@ import Vue from 'vue'
 import root from './root.vue'
 import './theme.scss';
 import Element from 'element-ui';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
 Vue.use(Element);
 
 new Vue({
