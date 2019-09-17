@@ -11,7 +11,7 @@
 </template>
 <script>
 import zh_CN from '../../../static/locale/zh_CN.js'
-console.log(zh_CN.appTypeList)
+
 export default {
     name: 'webList',
     data() {
