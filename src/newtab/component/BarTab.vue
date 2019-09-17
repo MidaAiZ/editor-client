@@ -26,10 +26,12 @@ export default {
     .sys-bar-title {
         width: 100%;
         height: 40px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
     .logo {
         width: 150px;
-        text-align: center;
+        text-align: left;
         font-size: 20px;
         font-weight: 400;
         line-height: 40px;
@@ -37,7 +39,7 @@ export default {
     }
     .logreg {
         width: 150px;
-        text-align: center;
+        text-align: right;
         font-size: 20px;
         line-height: 40px;
         float: right;

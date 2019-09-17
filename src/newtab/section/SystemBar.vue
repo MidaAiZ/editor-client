@@ -6,22 +6,25 @@
             :visible.sync="drawer"
             :direction="direction"
             :show-close="false"
-            size="40%"
+            size="500px"
         >
             <barTab slot="title"></barTab>
             <barSearch></barSearch>
+            <webList class="web-list"></webList>
         </el-drawer>
     </div>
 </template>
 <script>
 import barTab from '../component/BarTab.vue'
 import barSearch from '../component/BarSearch.vue'
+import webList from '../component/WebList.vue'
 
 export default {
     name: 'systemBar',
     components: {
         barTab,
         barSearch,
+        webList,
     },
     data() {
       return {
@@ -52,5 +55,9 @@ export default {
         background-color: #555;
         opacity: 0.5;
         color: #fff;
+    }
+    .web-list {
+        height: auto;
+        overflow: auto;
     }
 </style>
