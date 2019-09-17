@@ -3,10 +3,13 @@
         <div class="logo">
             LOGO&NAME
         </div>
-        <div class="logreg">
+        <div class="logreg"  @click="logregModalVisible = true">
             <i class="el-icon-user-solid"></i>
             {{logreg}}
         </div>
+        <el-dialog :title="logreg" :visible.sync="logregModalVisible" :modal="false">
+            
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -18,6 +21,7 @@ export default {
     data() {
         return {
             logreg: zh_CN.logreg,
+            logregModalVisible: false,
         }
     }
 }
