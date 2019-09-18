@@ -8,16 +8,20 @@
             {{logreg}}
         </div>
         <el-dialog :title="logreg" :visible.sync="logregModalVisible" :modal="false">
-            
+            <logregModal></logregModal>
         </el-dialog>
     </div>
 </template>
 <script>
 import zh_CN from '../../../static/locale/zh_CN.js'
+import logregModal from './Logreg.vue'
 
 export default {
     name: 'barTab',
     props: ['nameId'],
+    components: {
+        logregModal,
+    },
     data() {
         return {
             logreg: zh_CN.logreg,
