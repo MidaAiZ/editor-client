@@ -1,8 +1,7 @@
 <template>
     <div class="logreg-wrap">
-        <el-input class="logreg-input" placeholder=""></el-input>
-        <el-input class="logreg-input" placeholder=""></el-input>
-        <el-button></el-button>
+        <input class="logreg-input" placeholder="" />
+        <input class="logreg-input" placeholder="" />
     </div>
 </template>
 <script>
@@ -16,7 +15,12 @@ export default {
         width: 100%;
     }
     .logreg-input {
+        width: 100%;
+        height: 40px;
+        border-radius: 4px;
+        margin-bottom: 15px;
         border: 0;
         background-color: #efefef;
+        outline: 0;
     }
 </style>
