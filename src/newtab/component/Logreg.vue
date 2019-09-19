@@ -7,7 +7,7 @@
                 {{forgetPsw}}
             </div>
             <div class="log-or-reg">
-                <el-button class="login-btn" @click="login" type="primary">{{loginBtn}}</el-button>
+                <el-button class="login-btn" :loading="loginLoading" @click="login" type="primary">{{loginBtn}}</el-button>
                 <div class="new-user-btn" @click="filter = 'register'">
                     {{newUser}}
                 </div>
@@ -47,7 +47,7 @@ export default {
         }
     },
     computed: {
-    ...mapState('user', ['loginEmail', 'loginPassword']),
+    ...mapState('user', ['loginEmail', 'loginPassword', 'loginLoading']),
   },
   methods: {
     inputLogin (value, type) {
@@ -58,9 +58,11 @@ export default {
     },
     login() {
         console.log(this.loginEmail, this.loginPassword)
+        this.setLoginLoading(true)
     },
     ...mapMutations('user', [
       'setLogInfo',
+      'setLoginLoading',
     ]),
   }
 }
