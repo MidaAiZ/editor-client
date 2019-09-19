@@ -1,13 +1,13 @@
 <template>
     <div>
         <div v-if="filter === 'login'" class="logreg-wrap">
-            <input class="logreg-input" :placeholder="userAccountPlaceholder" />
-            <input class="logreg-input" :placeholder="pswPlaceholder" />
+            <input class="logreg-input" :placeholder="userAccountPlaceholder" :value="loginEmail" @input="inputLogin($event.target.value, 'loginEmail')" />
+            <input class="logreg-input" :placeholder="pswPlaceholder" type="password" :value="loginPassword" @input="inputLogin($event.target.value, 'loginPassword')" />
             <div class="forget-psw-wrap">
                 {{forgetPsw}}
             </div>
             <div class="log-or-reg">
-                <el-button class="login-btn" type="primary">{{loginBtn}}</el-button>
+                <el-button class="login-btn" @click="login" type="primary">{{loginBtn}}</el-button>
                 <div class="new-user-btn" @click="filter = 'register'">
                     {{newUser}}
                 </div>
@@ -29,6 +29,7 @@
     </div>
 </template>
 <script>
+import { mapGetters, mapState, mapMutations } from 'vuex'
 import zh_CN from '../../../static/locale/zh_CN.js'
 
 export default {
@@ -44,7 +45,24 @@ export default {
             backToLog: zh_CN.backToLog,
             filter: "login",
         }
-    }
+    },
+    computed: {
+    ...mapState('user', ['loginEmail', 'loginPassword']),
+  },
+  methods: {
+    inputLogin (value, type) {
+        this.setLogInfo({
+            type,
+            value,
+        })
+    },
+    login() {
+        console.log(this.loginEmail, this.loginPassword)
+    },
+    ...mapMutations('user', [
+      'setLogInfo',
+    ]),
+  }
 }
 </script>
 <style scoped>

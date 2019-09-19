@@ -4,8 +4,8 @@
 const state = {
   hasLogin: false,
   userName: '',
-  email: '',
-  password: '',
+  loginEmail: '',
+  loginPassword: '',
 }
 
 // getters
@@ -20,7 +20,9 @@ const actions = {
 
 // mutations
 const mutations = {
-  
+    setLogInfo (state, payload) {
+        state[payload.type] = payload.value
+      }
 }
 
 export default {
