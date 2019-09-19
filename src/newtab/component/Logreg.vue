@@ -1,14 +1,29 @@
 <template>
-    <div class="logreg-wrap">
-        <input class="logreg-input" :placeholder="userAccountPlaceholder" />
-        <input class="logreg-input" :placeholder="pswPlaceholder" />
-        <div class="forget-psw-wrap">
-            {{forgetPsw}}
+    <div>
+        <div v-if="filter === 'login'" class="logreg-wrap">
+            <input class="logreg-input" :placeholder="userAccountPlaceholder" />
+            <input class="logreg-input" :placeholder="pswPlaceholder" />
+            <div class="forget-psw-wrap">
+                {{forgetPsw}}
+            </div>
+            <div class="log-or-reg">
+                <el-button class="login-btn" type="primary">{{loginBtn}}</el-button>
+                <div class="new-user-btn" @click="filter = 'register'">
+                    {{newUser}}
+                </div>
+            </div>
         </div>
-        <div class="log-or-reg">
-            <el-button class="login-btn" type="primary">{{loginBtn}}</el-button>
-            <div class="new-user-btn">
-                {{newUser}}
+        <div v-if="filter === 'register'" class="logreg-wrap">
+            <input class="logreg-input" :placeholder="userAccountPlaceholder" />
+            <input class="logreg-input" :placeholder="pswPlaceholder" />
+            <div class="forget-psw-wrap">
+                {{forgetPsw}}
+            </div>
+            <div class="log-or-reg">
+                <el-button class="login-btn" type="primary">{{regBtn}}</el-button>
+                <div class="new-user-btn" @click="filter = 'login'">
+                    {{backToLog}}
+                </div>
             </div>
         </div>
     </div>
@@ -23,8 +38,11 @@ export default {
             userAccountPlaceholder: zh_CN.userAccountPlaceholder,
             pswPlaceholder: zh_CN.pswPlaceholder,
             loginBtn: zh_CN.login,
+            regBtn: zh_CN.register,
             forgetPsw: zh_CN.forgetPsw,
-            newUser: zh_CN.newUser
+            newUser: zh_CN.newUser,
+            backToLog: zh_CN.backToLog,
+            filter: "login",
         }
     }
 }
@@ -72,5 +90,6 @@ export default {
         line-height: 40px;
         font-weight: lighter;
         margin-top: 20px;
+        cursor: pointer;
     }
 </style>

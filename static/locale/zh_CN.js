@@ -51,5 +51,6 @@
     userAccountPlaceholder: '邮箱',
     pswPlaceholder: '密码',
     forgetPsw: '忘记密码',
+    backToLog: '返回登录',
 }
 export default zh_CN
