@@ -3,9 +3,15 @@
         <div class="logo">
             LOGO&NAME
         </div>
-        <div class="logreg"  @click="logregModalVisible = true">
-            <i class="el-icon-user-solid"></i>
-            {{hasLogin ? userName : logreg}}
+        <div class="logreg">
+            <div v-if="hasLogin == false" @click="logregModalVisible = true">
+                <i class="el-icon-user-solid"></i>
+                {{logreg}}
+            </div>
+            <div v-else>
+                {{userName}}
+                <i class="el-icon-s-tools"></i>
+            </div>
         </div>
         <el-dialog :visible.sync="logregModalVisible" :modal="false" width="400px">
             <logregModal></logregModal>
@@ -30,7 +36,7 @@ export default {
         }
     },
     computed: {
-    ...mapState(['hasLogin', 'userName']),
+    ...mapState('user', ['hasLogin', 'userName']),
   },
 }
 </script>
@@ -50,7 +56,7 @@ export default {
         float: left;
     }
     .logreg {
-        width: 150px;
+        width: 200px;
         text-align: right;
         font-size: 20px;
         line-height: 40px;
