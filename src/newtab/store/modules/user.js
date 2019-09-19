@@ -2,6 +2,7 @@
 // initial state
 // shape: [{ id, quantity }]
 const state = {
+  hasLogin: false,
   userName: '',
   email: '',
   password: '',

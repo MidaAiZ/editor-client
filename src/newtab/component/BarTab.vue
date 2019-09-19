@@ -5,7 +5,7 @@
         </div>
         <div class="logreg"  @click="logregModalVisible = true">
             <i class="el-icon-user-solid"></i>
-            {{logreg}}
+            {{hasLogin ? userName : logreg}}
         </div>
         <el-dialog :visible.sync="logregModalVisible" :modal="false" width="400px">
             <logregModal></logregModal>
@@ -13,6 +13,7 @@
     </div>
 </template>
 <script>
+import { mapGetters, mapState } from 'vuex'
 import zh_CN from '../../../static/locale/zh_CN.js'
 import logregModal from './Logreg.vue'
 
@@ -27,7 +28,10 @@ export default {
             logreg: zh_CN.logreg,
             logregModalVisible: false,
         }
-    }
+    },
+    computed: {
+    ...mapState(['hasLogin', 'userName']),
+  },
 }
 </script>
 <style scoped>
