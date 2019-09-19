@@ -7,7 +7,7 @@
             <i class="el-icon-user-solid"></i>
             {{logreg}}
         </div>
-        <el-dialog :title="logreg" :visible.sync="logregModalVisible" :modal="false">
+        <el-dialog :visible.sync="logregModalVisible" :modal="false" width="400px">
             <logregModal></logregModal>
         </el-dialog>
     </div>

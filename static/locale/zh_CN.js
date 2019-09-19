@@ -44,6 +44,12 @@
         reading: '阅读',
         others: '其他'
     },
-    logreg: '登录/注册'
+    logreg: '登录/注册',
+    login: '登录',
+    newUser: '注册新用户',
+    register: '注册',
+    userAccountPlaceholder: '邮箱',
+    pswPlaceholder: '密码',
+    forgetPsw: '忘记密码',
 }
 export default zh_CN
