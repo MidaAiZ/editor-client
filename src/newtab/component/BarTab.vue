@@ -8,10 +8,16 @@
                 <i class="el-icon-user-solid"></i>
                 {{logreg}}
             </div>
-            <div v-else>
+            <div @click="settingDrawer = true" v-else>
                 {{userName}}
                 <i class="el-icon-s-tools"></i>
             </div>
+            <el-drawer
+                title="设置"
+                :append-to-body="true"
+                :visible.sync="settingDrawer">
+                <p>_(:зゝ∠)_</p>
+            </el-drawer>
         </div>
         <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" :modal="false" width="400px">
             <logregModal></logregModal>
@@ -32,6 +38,7 @@ export default {
     data() {
         return {
             logreg: zh_CN.logreg,
+            settingDrawer: false,
         }
     },
     computed: {
