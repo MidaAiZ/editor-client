@@ -27,8 +27,12 @@ export default {
         /*border-radius: 20px;*/
         /*height: 40px;*/
     /*}*/
+    #custom-search{
+        display: inline-block;
+    }
     #search-tab-container{
-        padding-left: 50px;
+        padding-left: 35px;
+        margin-bottom: 15px;
     }
     .search-tab{
         font-size: 16px;
@@ -53,7 +57,7 @@ export default {
         outline-style:none;
         border:1px solid #ccc;
         padding: 7px 20px 7px 50px;
-        width:450px;
+        width:600px;
         font-size: 18px;
         background: transparent;
     }

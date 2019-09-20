@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <v-content>
+    <div>
       <background />
       <systemBar />
       <section>
         <v-layout>
-          <v-flex>
+          <div id="main">
             <customSearch />
             <suggestions />
-          </v-flex>
+          </div>
         </v-layout>
       </section>
-    </v-content>
+    </div>
       
   </v-app>
 </template>
@@ -32,7 +32,13 @@ export default {
 }
 </script>
 <style scoped>
-::-webkit-scrollbar { 
-  display: none; 
-}
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  #main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+  }
 </style>
