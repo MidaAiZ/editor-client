@@ -1,6 +1,6 @@
 <template>
-    <el-dialog :visible="settingVis" title="设置" @close="closeSetting(false)">
-       <h3>hello vueFCK !</h3>
+    <el-dialog :visible="settingVis" title="设置" top="5vh" @close="closeSetting(false)">
+        
     </el-dialog>
 </template>
 <script>

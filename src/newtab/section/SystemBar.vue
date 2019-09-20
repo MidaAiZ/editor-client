@@ -10,6 +10,12 @@
         >
             <barTab slot="title"></barTab>
             <barSearch></barSearch>
+            <div v-if="hasLogin === false" style="margin-top: 10px;">
+                <el-alert
+                    title="登录账户体验专业版，书签、设置云存储不丢失"
+                    type="warning">
+                </el-alert>
+            </div>
             <webList class="web-list"></webList>
         </el-drawer>
     </div>
@@ -18,6 +24,7 @@
 import barTab from '../component/BarTab.vue'
 import barSearch from '../component/BarSearch.vue'
 import webList from '../component/WebList.vue'
+import { mapState } from 'vuex'
 
 export default {
     name: 'systemBar',
@@ -31,6 +38,9 @@ export default {
         drawer: false,
         direction: 'rtl',
       };
+    },
+    computed: {
+        ...mapState('user', ['hasLogin']),
     },
     methods: {
       handleClose(done) {
