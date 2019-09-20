@@ -4,9 +4,14 @@ import './theme.scss';
 import Element from 'element-ui';
 import Vuex from 'vuex';
 import store from './store'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+import Draggable from 'vuedraggable'
 
 Vue.use(Vuex);
 Vue.use(Element);
+Vue.use(VueAwesomeSwiper);
+Vue.use(Draggable);
 
 new Vue({
     el: '#newtab',

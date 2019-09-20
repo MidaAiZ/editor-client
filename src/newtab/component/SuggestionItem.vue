@@ -1,6 +1,6 @@
 <template>
-    <div class="suggestion-item">
-        <div>
+    <div class="suggestion-item" :style="width">
+        <div class="item-img-container">
             <img src="https://picsum.photos/150/150"
                  class="item-img"/>
         </div>
@@ -11,13 +11,20 @@
 
     export default {
         name: 'suggestions',
+        props: ['itemNumber'],
+        computed:{
+            width:function () {
+                return{
+                    'width': 100/this.itemNumber+'%'
+                }
+            }
+        }
     }
 </script>
 <style scoped>
     .suggestion-item{
         display: inline-block;
-        margin-bottom: 25px;
-        padding: 0 50px 30px 50px;
+        margin-bottom: 20px;
     }
     .item-img{
         width:90px;
@@ -29,5 +36,11 @@
         font-size:15px;
         padding-top: 20px;
         width: 100%;
+    }
+    .item-img-container{
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 </style>
