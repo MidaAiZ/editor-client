@@ -12,14 +12,6 @@
                 {{userName}}
                 <i class="el-icon-s-tools"></i>
             </div>
-            <el-drawer
-                title="设置"
-                :append-to-body="true"
-                v-on:close="toggleSettingDrawer(false)"
-                :visible="settingVis">
-                <p>_(:зゝ∠)_</p>
-                <settingDrawerFilter></settingDrawerFilter>
-            </el-drawer>
         </div>
         <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" :modal="false" width="400px">
             <logregModal></logregModal>
@@ -30,7 +22,6 @@
 import { mapGetters, mapState, mapMutations } from 'vuex'
 import zh_CN from '../../../static/locale/zh_CN.js'
 import logregModal from './Logreg.vue'
-import settingDrawerFilter from './SettingDrawerFilter.vue'
 
 export default {
     name: 'barTab',
@@ -41,7 +32,6 @@ export default {
     data() {
         return {
             logreg: zh_CN.logreg,
-            settingDrawer: false,
         }
     },
     computed: {
@@ -53,7 +43,7 @@ export default {
           this.setLogRegModalVis(vis)
       },
       toggleSettingDrawer(vis) {
-          console.log(this.settingVis)
+          this.SET_SETTINGVIS(vis)
       },
       ...mapMutations('user', [
       'setLogRegModalVis',
@@ -75,7 +65,6 @@ export default {
         width: 150px;
         text-align: left;
         font-size: 20px;
-        font-weight: 400;
         line-height: 40px;
         float: left;
     }
@@ -86,5 +75,8 @@ export default {
         line-height: 40px;
         float: right;
         cursor: pointer;
+    }
+    .setting-title {
+        font-size: 20px;
     }
 </style>
