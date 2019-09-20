@@ -17,16 +17,18 @@ const getters = {
 // actions
 const actions = {
   login ({ commit }) {
-    setTimeout(() => {
+    setTimeout(() => { // 模拟登录过程
         commit('setLoginLoading', false)
-      }, 3000)
+        commit('setLogRegModalVis', false)
+        commit('loginSuccess', true)
+        commit('setUserName', 'SeanFu')
+      }, 2000)
   }
 }
 
 // mutations
 const mutations = {
     setLogRegModalVis (state, vis) {
-        console.log('modal visible: ',vis);
         state.logregModalVis = vis
     },
     setLoginInfo (state, payload) { // 填写登录信息
@@ -34,6 +36,12 @@ const mutations = {
     },
     setLoginLoading (state, loading) { // 登录时等候的加载图标显示
         state.loginLoading = loading
+    },
+    loginSuccess (state, success) {
+        state.hasLogin = success
+    },
+    setUserName (state, name) {
+        state.userName = name
     }
 }
 
