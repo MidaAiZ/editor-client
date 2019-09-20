@@ -16,7 +16,11 @@ const getters = {
 
 // actions
 const actions = {
-  
+  login ({ commit }) {
+    setTimeout(() => {
+        commit('setLoginLoading', false)
+      }, 3000)
+  }
 }
 
 // mutations

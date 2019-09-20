@@ -7,7 +7,7 @@
                 {{forgetPsw}}
             </div>
             <div class="log-or-reg">
-                <el-button class="login-btn" :loading="loginLoading" @click="login" type="primary">{{loginBtn}}</el-button>
+                <el-button class="login-btn" :loading="loginLoading" @click="handleLogin" type="primary">{{loginBtn}}</el-button>
                 <div class="new-user-btn" @click="filter = 'register'">
                     {{newUser}}
                 </div>
@@ -29,7 +29,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import zh_CN from '../../../static/locale/zh_CN.js'
 
 export default {
@@ -56,13 +56,16 @@ export default {
             value,
         })
     },
-    login() {
-        console.log(this.loginEmail, this.loginPassword)
+    handleLogin() {
         this.setLoginLoading(true)
+        this.login()
     },
     ...mapMutations('user', [
       'setLoginInfo',
       'setLoginLoading',
+    ]),
+    ...mapActions('user', [
+      'login',
     ]),
   }
 }
