@@ -1,7 +1,7 @@
-
+import { SET_SETTINGVIS } from './mutations-type.js'
 // initial state
 const state = {
-
+    settingVis: false,
   }
   
   // getters
@@ -16,7 +16,9 @@ const state = {
   
   // mutations
   const mutations = {
-      
+      [SET_SETTINGVIS] (state, vis) {
+          state.settingVis = vis
+      }
   }
   
   export default {

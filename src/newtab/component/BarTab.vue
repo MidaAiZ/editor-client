@@ -8,15 +8,17 @@
                 <i class="el-icon-user-solid"></i>
                 {{logreg}}
             </div>
-            <div @click="settingDrawer = true" v-else>
+            <div @click.stop.prevent="toggleSettingDrawer(true)" v-else>
                 {{userName}}
                 <i class="el-icon-s-tools"></i>
             </div>
             <el-drawer
                 title="设置"
                 :append-to-body="true"
-                :visible.sync="settingDrawer">
+                v-on:close="toggleSettingDrawer(false)"
+                :visible="settingVis">
                 <p>_(:зゝ∠)_</p>
+                <settingDrawerFilter></settingDrawerFilter>
             </el-drawer>
         </div>
         <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" :modal="false" width="400px">
@@ -28,6 +30,7 @@
 import { mapGetters, mapState, mapMutations } from 'vuex'
 import zh_CN from '../../../static/locale/zh_CN.js'
 import logregModal from './Logreg.vue'
+import settingDrawerFilter from './SettingDrawerFilter.vue'
 
 export default {
     name: 'barTab',
@@ -43,13 +46,20 @@ export default {
     },
     computed: {
     ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
+    ...mapState('settings', ['settingVis']),
   },
   methods: {
       setModalVis(vis) {
           this.setLogRegModalVis(vis)
       },
+      toggleSettingDrawer(vis) {
+          console.log(this.settingVis)
+      },
       ...mapMutations('user', [
       'setLogRegModalVis',
+    ]),
+    ...mapMutations('settings', [
+      'SET_SETTINGVIS',
     ]),
   },
 }
