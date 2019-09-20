@@ -4,7 +4,7 @@
             LOGO&NAME
         </div>
         <div class="logreg">
-            <div v-if="hasLogin == false" @click="logregModalVisible = true">
+            <div v-if="hasLogin == false" @click.stop.prevent="setModalVis(true)">
                 <i class="el-icon-user-solid"></i>
                 {{logreg}}
             </div>
@@ -13,13 +13,13 @@
                 <i class="el-icon-s-tools"></i>
             </div>
         </div>
-        <el-dialog :visible.sync="logregModalVisible" :modal="false" width="400px">
+        <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" :modal="false" width="400px">
             <logregModal></logregModal>
         </el-dialog>
     </div>
 </template>
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapMutations } from 'vuex'
 import zh_CN from '../../../static/locale/zh_CN.js'
 import logregModal from './Logreg.vue'
 
@@ -32,11 +32,18 @@ export default {
     data() {
         return {
             logreg: zh_CN.logreg,
-            logregModalVisible: false,
         }
     },
     computed: {
-    ...mapState('user', ['hasLogin', 'userName']),
+    ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
+  },
+  methods: {
+      setModalVis(vis) {
+          this.setLogRegModalVis(vis)
+      },
+      ...mapMutations('user', [
+      'setLogRegModalVis',
+    ]),
   },
 }
 </script>

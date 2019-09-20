@@ -1,6 +1,7 @@
 
 // initial state
 const state = {
+  logregModalVis: false,
   hasLogin: false,
   userName: '',
   loginEmail: '',
@@ -20,9 +21,13 @@ const actions = {
 
 // mutations
 const mutations = {
-    setLogInfo (state, payload) { // 填写登录信息
+    setLogRegModalVis (state, vis) {
+        console.log('modal visible: ',vis);
+        state.logregModalVis = vis
+    },
+    setLoginInfo (state, payload) { // 填写登录信息
         state[payload.type] = payload.value
-      },
+    },
     setLoginLoading (state, loading) { // 登录时等候的加载图标显示
         state.loginLoading = loading
     }

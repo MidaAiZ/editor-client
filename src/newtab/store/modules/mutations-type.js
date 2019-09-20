@@ -1,1 +1,1 @@
-export const LOGIN = 'LOGIN' // 登录mutation
+export const setLogRegModalVis = 'setLogRegModalVis' // 登录mutation

@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     inputLogin (value, type) {
-        this.setLogInfo({
+        this.setLoginInfo({
             type,
             value,
         })
@@ -61,7 +61,7 @@ export default {
         this.setLoginLoading(true)
     },
     ...mapMutations('user', [
-      'setLogInfo',
+      'setLoginInfo',
       'setLoginLoading',
     ]),
   }
