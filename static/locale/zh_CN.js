@@ -68,5 +68,11 @@
     },
     bgMaskOpacity: '壁纸蒙版透明度',
     bgBlur: '壁纸模糊度',
+    targetOpenType: '目标打开方式',
+    targetOpenTypeTip: '打开方式仅作用在本插件',
+    newSiteNewTab: '在新标签页中打开网站',
+    searchResultNewTab: '在新标签页中打开搜索结果',
+    openMarkNewTab: '在新标签页中打开书签',
+    historyNewTab: '在新标签页中打开历史记录',
 }
 export default zh_CN

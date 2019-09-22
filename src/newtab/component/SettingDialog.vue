@@ -48,6 +48,50 @@
                     <el-slider v-model="bgBlurValue" @input="changeBlur($event)" :format-tooltip="formatTooltip"></el-slider>
                 </div>
             </div>
+            <div class="setting-modal setting-modal-not-first">
+                <p class="setting-type-name">
+                    {{ targetOpenType }}
+                </p>
+                <p class="setting-tip">
+                    {{ targetOpenTypeTip }}
+                </p>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ newSiteNewTab }}</span>
+                    <el-switch
+                        @change="toggleNewType($event, 'newSiteNewTabValue')"
+                        class="setting-switch"
+                        v-model="newSiteNewTabValue"
+                    >
+                    </el-switch>
+                </div>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ searchResultNewTab }}</span>
+                    <el-switch
+                        @change="toggleNewType($event, 'searchResultNewTabValue')"
+                        class="setting-switch"
+                        v-model="searchResultNewTabValue"
+                    >
+                    </el-switch>
+                </div>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ openMarkNewTab }}</span>
+                    <el-switch
+                        @change="toggleNewType($event, 'openMarkNewTabValue')"
+                        class="setting-switch"
+                        v-model="openMarkNewTabValue"
+                    >
+                    </el-switch>
+                </div>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ historyNewTab }}</span>
+                    <el-switch
+                        @change="toggleNewType($event, 'historyNewTabValue')"
+                        class="setting-switch"
+                        v-model="historyNewTabValue"
+                    >
+                    </el-switch>
+                </div>
+            </div>
         </div>
     </el-drawer>
 </template>
@@ -68,7 +112,13 @@ export default {
             UnsplashDesc: zh_CN.UnsplashBg.desc,
             randomDesc: zh_CN.randomBg.desc,
             bgMaskOpacity: zh_CN.bgMaskOpacity,
-            bgBlur: zh_CN.bgBlur
+            bgBlur: zh_CN.bgBlur,
+            targetOpenType: zh_CN.targetOpenType,
+            targetOpenTypeTip: zh_CN.targetOpenTypeTip,
+            newSiteNewTab: zh_CN.newSiteNewTab,
+            searchResultNewTab: zh_CN.searchResultNewTab,
+            openMarkNewTab: zh_CN.openMarkNewTab,
+            historyNewTab: zh_CN.historyNewTab,
         }
     },
     computed: {
@@ -76,7 +126,11 @@ export default {
             'settingVis',
             'bgSrc',
             'maskOpacityValue',
-            'bgBlurValue'
+            'bgBlurValue',
+            'newSiteNewTabValue',
+            'searchResultNewTabValue',
+            'openMarkNewTabValue',
+            'historyNewTabValue'
         ])
     },
     methods: {
@@ -95,11 +149,18 @@ export default {
         changeBlur(blur) {
             this.SET_BGBLUR(blur)
         },
+        toggleNewType(value, type) {
+            this.SET_NEWTYPE({
+                type,
+                value,
+            })
+        },
         ...mapMutations('settings', [
             'SET_SETTINGVIS',
             'SET_BGSRC',
             'SET_BGMASKOPACITY',
-            'SET_BGBLUR'
+            'SET_BGBLUR',
+            'SET_NEWTYPE',
         ]),
     }
 }
@@ -165,5 +226,23 @@ export default {
     }
     .bg-mask-setting-item-name {
         margin-bottom: -3px;
+    }
+    .setting-tip {
+        font-size: 14px;
+        font-weight: lighter;
+        color: #666;
+        margin-top: -5px;
+    }
+    .setting-open-item {
+        margin-top: 5px;
+        height: 30px;
+        line-height: 30px;
+    }
+    .setting-switch {
+        float: right
+    }
+    .setting-open-title {
+        font-size: 15px;
+        color: #888;
     }
 </style>

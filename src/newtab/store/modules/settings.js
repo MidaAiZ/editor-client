@@ -1,10 +1,14 @@
-import { SET_SETTINGVIS, SET_BGSRC, SET_BGBLUR, SET_BGMASKOPACITY } from './mutations-type.js'
+import { SET_SETTINGVIS, SET_BGSRC, SET_BGBLUR, SET_BGMASKOPACITY, SET_NEWTYPE } from './mutations-type.js'
 // initial state
 const state = {
     settingVis: false,
     bgSrc: 'Bing',
     maskOpacityValue: 30,
-    bgBlurValue: 20
+    bgBlurValue: 20,
+    newSiteNewTabValue: false,
+    searchResultNewTabValue: false,
+    openMarkNewTabValue: false,
+    historyNewTabValue: false,
   }
   
   // getters
@@ -30,6 +34,9 @@ const state = {
       },
       [SET_BGBLUR] (state, blur) {
           state.bgBlurValue = blur
+      },
+      [SET_NEWTYPE] (state, payload) {
+          state[payload.type] = payload.value
       }
   }
   
