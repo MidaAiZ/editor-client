@@ -66,5 +66,7 @@
         title: 'Unsplash壁纸库',
         desc: '使用来自Unsplash的优质无版权照片作为壁纸'
     },
+    bgMaskOpacity: '壁纸蒙版透明度',
+    bgBlur: '壁纸模糊度',
 }
 export default zh_CN

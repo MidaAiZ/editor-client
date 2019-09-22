@@ -5,7 +5,7 @@
             <i class="el-icon-close close-setting" @click="closeSetting(false)"></i>
         </div>
         <div class="setting-wrap">
-            <div class="background-setting">
+            <div class="setting-modal background-setting">
                 <p class="setting-type-name">
                     {{backgroundImgSetting}}
                 </p>
@@ -34,6 +34,20 @@
                     </el-radio>
                 </div>
             </div>
+            <div class="setting-modal setting-modal-not-first">
+                <div class="bg-mask-setting-item">
+                    <p class="setting-type-name bg-mask-setting-item-name">
+                        {{ bgMaskOpacity }}
+                    </p>
+                    <el-slider :format-tooltip="formatTooltip" v-model="maskOpacityValue" @input="changeOpacity($event)"></el-slider>
+                </div>
+                <div class="bg-mask-setting-item-last">
+                    <p class="setting-type-name bg-mask-setting-item-name">
+                        {{ bgBlur }}
+                    </p>
+                    <el-slider v-model="bgBlurValue" @input="changeBlur($event)" :format-tooltip="formatTooltip"></el-slider>
+                </div>
+            </div>
         </div>
     </el-drawer>
 </template>
@@ -52,13 +66,17 @@ export default {
             randomBg: zh_CN.randomBg.title,
             BingDesc: zh_CN.BingBg.desc,
             UnsplashDesc: zh_CN.UnsplashBg.desc,
-            randomDesc: zh_CN.randomBg.desc
+            randomDesc: zh_CN.randomBg.desc,
+            bgMaskOpacity: zh_CN.bgMaskOpacity,
+            bgBlur: zh_CN.bgBlur
         }
     },
     computed: {
         ...mapState('settings', [
             'settingVis',
-            'bgSrc'
+            'bgSrc',
+            'maskOpacityValue',
+            'bgBlurValue'
         ])
     },
     methods: {
@@ -68,9 +86,20 @@ export default {
         changeBgSrc(src) {
             this.SET_BGSRC(src)
         },
+        formatTooltip(val) {
+            return val + '%';
+        },
+        changeOpacity(value) {
+            this.SET_BGMASKOPACITY(value)
+        },
+        changeBlur(blur) {
+            this.SET_BGBLUR(blur)
+        },
         ...mapMutations('settings', [
             'SET_SETTINGVIS',
-            'SET_BGSRC'
+            'SET_BGSRC',
+            'SET_BGMASKOPACITY',
+            'SET_BGBLUR'
         ]),
     }
 }
@@ -108,14 +137,17 @@ export default {
         font-size: 16px;
         color: #666;
     }
-    .background-setting {
-        background-color: #fbfbfb;
+    .setting-modal {
+        background-color: #f9f9f9;
         padding: 18px;
+    }
+    .setting-modal-not-first {
+        margin-top: 20px;
     }
     .setting-bg-item {
         width: 100%;
         margin-top: 10px;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
     }
     .setting-bg-item-last {
         width: 100%;
@@ -130,5 +162,8 @@ export default {
         text-indent: 23px;
         font-weight: lighter;
         color: #666;
+    }
+    .bg-mask-setting-item-name {
+        margin-bottom: -3px;
     }
 </style>

@@ -1,9 +1,16 @@
 <template>
     <div id="background">
         <img :src="imgUrl"/>
+        <div>
+            {{ bgSrc }}
+        </div>
+        <div>
+            {{ maskOpacityValue }}
+        </div>
     </div>
 </template>
 <script>
+import { mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
     name: 'background',
@@ -11,6 +18,13 @@ export default {
         return{
             imgUrl: ''
         }
+    },
+    computed: {
+        ...mapState('settings', [
+            'bgSrc',
+            'maskOpacityValue',
+            'bgBlurValue',
+        ])
     }
 }
 </script>
