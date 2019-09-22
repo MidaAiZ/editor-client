@@ -1,7 +1,8 @@
-import { SET_SETTINGVIS } from './mutations-type.js'
+import { SET_SETTINGVIS, SET_BGSRC } from './mutations-type.js'
 // initial state
 const state = {
     settingVis: false,
+    bgSrc: 'Bing',
   }
   
   // getters
@@ -18,6 +19,9 @@ const state = {
   const mutations = {
       [SET_SETTINGVIS] (state, vis) {
           state.settingVis = vis
+      },
+      [SET_BGSRC] (state, src) {
+          state.bgSrc = src
       }
   }
   

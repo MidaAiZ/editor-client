@@ -13,7 +13,7 @@
                 <i class="el-icon-s-tools"></i>
             </div>
         </div>
-        <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" :modal="false" width="400px">
+        <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" append-to-body width="400px">
             <logregModal></logregModal>
         </el-dialog>
     </div>

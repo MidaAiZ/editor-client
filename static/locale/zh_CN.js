@@ -52,5 +52,19 @@
     pswPlaceholder: '密码',
     forgetPsw: '忘记密码',
     backToLog: '返回登录',
+    settingName: '设置',
+    backgroundImgSetting: '壁纸库',
+    randomBg: {
+        title: '随机壁纸库',
+        desc: '使用一张随机选取的壁纸'
+    },
+    BingBg: {
+        title: 'Bing壁纸库',
+        desc: '使用Bing的每日壁纸库'
+    },
+    UnsplashBg: {
+        title: 'Unsplash壁纸库',
+        desc: '使用来自Unsplash的优质无版权照片作为壁纸'
+    },
 }
 export default zh_CN

@@ -7,6 +7,7 @@
             :direction="direction"
             :show-close="false"
             size="500px"
+            :modal="false"
         >
             <barTab slot="title"></barTab>
             <barSearch></barSearch>
