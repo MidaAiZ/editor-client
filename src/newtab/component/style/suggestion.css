@@ -1,0 +1,26 @@
+.item-img{
+    width:90px;
+    height: 90px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.item-img-del{
+    width:90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #c8ebfb;
+    box-shadow: #ccc 0 0 2px;
+}
+.displayNone{
+    display: none;
+}
+.ghost .item-img{
+    display:none
+    /*background: rgb(129, 168, 187);*/
+}
+.ghost .item-img-del{
+    display: inline-block;
+}
+.ghost .item-name{
+    opacity: 0;
+}
