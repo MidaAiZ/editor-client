@@ -6,6 +6,9 @@ import {
     SET_NEWTYPE, 
     SET_HOMEBTN,
     SET_LAYOUT,
+    HIDE_ALLICONS,
+    SET_ICONRADIUS,
+    SET_ICONSIZE,
 } from './mutations-type.js'
 // initial state
 const state = {
@@ -26,6 +29,9 @@ const state = {
         row: 2,
         col: 5,
     },
+    hideAllIcons: false,
+    iconRadiusValue: 50,
+    iconSizeValue: 55,
   }
   
   // getters
@@ -60,7 +66,16 @@ const state = {
       },
       [SET_LAYOUT] (state, payload) {
           state.iconLayout = payload
-      }
+      },
+      [HIDE_ALLICONS] (state, value) {
+          state.hideAllIcons = value
+      },
+      [SET_ICONRADIUS] (state, value) {
+          state.iconRadiusValue = value
+      },
+      [SET_ICONSIZE] (state, value) {
+        state.iconSizeValue = value
+    },
   }
   
   export default {

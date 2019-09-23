@@ -12,3 +12,6 @@ export const SET_BGBLUR = 'SET_BGBLUR' // 调节壁纸模糊度
 export const SET_NEWTYPE = 'SET_NEWTYPE' // 调节打开各类型内容的方式
 export const SET_HOMEBTN = 'SET_HOMEBTN' // 调节主页各按钮是否显示
 export const SET_LAYOUT = 'SET_LAYOUT' // 调节主页各图标布局
+export const HIDE_ALLICONS = 'HIDE_ALLICONS' // 隐藏所有图标
+export const SET_ICONRADIUS = 'SET_ICONRADIUS' // 调节图标圆角弧度
+export const SET_ICONSIZE = 'SET_ICONSIZE' // 调节图标大小

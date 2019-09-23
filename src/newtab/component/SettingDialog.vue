@@ -212,7 +212,32 @@
                     </div>
                 </div>
             </div>
-
+            <div class="setting-modal setting-modal-not-first">
+                <p class="setting-type-name">
+                    {{ icon }}
+                </p>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ hideIcon }}</span>
+                    <el-switch
+                        @change="toggleIconSetting($event, 'hideAllIcons')"
+                        class="setting-switch"
+                        v-model="hideAllIcons"
+                    >
+                    </el-switch>
+                </div>
+                <div class="bg-mask-setting-item">
+                    <p class="setting-type-name bg-mask-setting-item-name">
+                        {{ iconRadius }}
+                    </p>
+                    <el-slider :format-tooltip="formatTooltip" max="50" v-model="iconRadiusValue" @input="setIconRadius($event)"></el-slider>
+                </div>
+                <div class="bg-mask-setting-item">
+                    <p class="setting-type-name bg-mask-setting-item-name">
+                        {{ iconSize }}
+                    </p>
+                    <el-slider :format-tooltip="formatTooltip" v-model="iconSizeValue" @input="setIconSize($event)"></el-slider>
+                </div>
+            </div>
         </div>
     </el-drawer>
 </template>
@@ -245,7 +270,11 @@ export default {
             showOftenUsedWeb: zh_CN.showOftenUsedWeb,
             showEmail: zh_CN.showEmail,
             showBookMark: zh_CN.showBookMark,
-            layout: zh_CN.layout
+            layout: zh_CN.layout,
+            icon: zh_CN.icon,
+            hideIcon: zh_CN.hideIcon,
+            iconRadius: zh_CN.iconRadius,
+            iconSize: zh_CN.iconSize
         }
     },
     computed: {
@@ -262,7 +291,10 @@ export default {
             'showOftenUsedBar',
             'showEmailBtn',
             'showBookMarkBar',
-            'iconLayout'
+            'iconLayout',
+            'hideAllIcons',
+            'iconRadiusValue',
+            'iconSizeValue',
         ])
     },
     methods: {
@@ -300,6 +332,15 @@ export default {
                 col,
             })
         },
+        toggleIconSetting(value) {
+            this.HIDE_ALLICONS(value)
+        },
+        setIconRadius(value) {
+            this.SET_ICONRADIUS(value)
+        },
+        setIconSize(value) {
+            this.SET_ICONSIZE(value)
+        },
         ...mapMutations('settings', [
             'SET_SETTINGVIS',
             'SET_BGSRC',
@@ -307,7 +348,10 @@ export default {
             'SET_BGBLUR',
             'SET_NEWTYPE',
             'SET_HOMEBTN',
-            'SET_LAYOUT'
+            'SET_LAYOUT',
+            'HIDE_ALLICONS',
+            'SET_ICONRADIUS',
+            'SET_ICONSIZE',
         ]),
     }
 }

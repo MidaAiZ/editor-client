@@ -80,5 +80,9 @@
     showEmail: '在底部显示邮箱入口',
     showBookMark: '在顶部显示书签',
     layout: '图标布局',
+    icon: '图标',
+    hideIcon: '隐藏所有网页图标',
+    iconRadius: '图标圆角',
+    iconSize: '图标大小',
 }
 export default zh_CN
