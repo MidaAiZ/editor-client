@@ -1,4 +1,12 @@
-import { SET_SETTINGVIS, SET_BGSRC, SET_BGBLUR, SET_BGMASKOPACITY, SET_NEWTYPE } from './mutations-type.js'
+import {
+    SET_SETTINGVIS,
+    SET_BGSRC, 
+    SET_BGBLUR, 
+    SET_BGMASKOPACITY, 
+    SET_NEWTYPE, 
+    SET_HOMEBTN,
+    SET_LAYOUT,
+} from './mutations-type.js'
 // initial state
 const state = {
     settingVis: false,
@@ -9,6 +17,15 @@ const state = {
     searchResultNewTabValue: false,
     openMarkNewTabValue: false,
     historyNewTabValue: false,
+    randomBgBtn: false,
+    showOftenUsedBar: false,
+    showEmailBtn: false,
+    showBookMarkBar: false,
+    iconLayout: {
+        name: '2x5',
+        row: 2,
+        col: 5,
+    },
   }
   
   // getters
@@ -37,6 +54,12 @@ const state = {
       },
       [SET_NEWTYPE] (state, payload) {
           state[payload.type] = payload.value
+      },
+      [SET_HOMEBTN] (state, payload) {
+        state[payload.type] = payload.value
+      },
+      [SET_LAYOUT] (state, payload) {
+          state.iconLayout = payload
       }
   }
   

@@ -74,5 +74,11 @@
     searchResultNewTab: '在新标签页中打开搜索结果',
     openMarkNewTab: '在新标签页中打开书签',
     historyNewTab: '在新标签页中打开历史记录',
+    view: '视图',
+    showRandomBg: '显示随机壁纸按钮',
+    showOftenUsedWeb: '在顶部显示常用网站',
+    showEmail: '在底部显示邮箱入口',
+    showBookMark: '在顶部显示书签',
+    layout: '图标布局',
 }
 export default zh_CN

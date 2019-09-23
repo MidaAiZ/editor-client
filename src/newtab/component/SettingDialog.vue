@@ -92,6 +92,127 @@
                     </el-switch>
                 </div>
             </div>
+            <div class="setting-modal setting-modal-not-first">
+                <p class="setting-type-name">
+                    {{ view }}
+                </p>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ showRandomBg }}</span>
+                    <el-switch
+                        @change="toggleHomeBtnSetting($event, 'randomBgBtn')"
+                        class="setting-switch"
+                        v-model="randomBgBtn"
+                    >
+                    </el-switch>
+                </div>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ showOftenUsedWeb }}</span>
+                    <el-switch
+                        @change="toggleHomeBtnSetting($event, 'showOftenUsedBar')"
+                        class="setting-switch"
+                        v-model="showOftenUsedBar"
+                    >
+                    </el-switch>
+                </div>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ showEmail }}</span>
+                    <el-switch
+                        @change="toggleHomeBtnSetting($event, 'showEmailBtn')"
+                        class="setting-switch"
+                        v-model="showEmailBtn"
+                    >
+                    </el-switch>
+                </div>
+                <div class="setting-open-item">
+                    <span class="setting-open-title">{{ showBookMark }}</span>
+                    <el-switch
+                        @change="toggleHomeBtnSetting($event, 'showBookMarkBar')"
+                        class="setting-switch"
+                        v-model="showBookMarkBar"
+                    >
+                    </el-switch>
+                </div>
+            </div>
+            <div class="setting-modal setting-modal-not-first">
+                <p class="setting-type-name">
+                    {{ layout }}
+                </p>
+                <div class="setting-layout-wrap">
+                    <div class="setting-layout layout-2-4">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 8" @click="setLayout('2x4', 2, 4)" class="layout-block" :style="{width: '28px', height: '35px', backgroundColor: (iconLayout.name=='2x4' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">2 x 4</p>
+                    </div>
+                    <div class="setting-layout layout-2-5">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 10" @click="setLayout('2x5', 2, 5)" class="layout-block" :style="{width: '22px', height: '35px', backgroundColor: (iconLayout.name=='2x5' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">2 x 5</p>
+                    </div>
+                    <div class="setting-layout layout-2-6">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 12" @click="setLayout('2x6', 2, 6)" class="layout-block" :style="{width: '18px', height: '35px', backgroundColor: (iconLayout.name=='2x6' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">2 x 6</p>
+                    </div>
+                    <div class="setting-layout layout-2-7">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 14" @click="setLayout('2x7', 2, 7)" class="layout-block" :style="{width: '15px', height: '35px', backgroundColor: (iconLayout.name=='2x7' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">2 x 7</p>
+                    </div>
+                    <div class="setting-layout layout-3-3">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 9" @click="setLayout('3x3', 3, 3)" class="layout-block" :style="{width: '38px', height: '23px', backgroundColor: (iconLayout.name=='3x3' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">3 x 3</p>
+                    </div>
+                    <div class="setting-layout layout-3-4">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 12" @click="setLayout('3x4', 3, 4)" class="layout-block" :style="{width: '28px', height: '23px', backgroundColor: (iconLayout.name=='3x4' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">3 x 4</p>
+                    </div>
+                    <div class="setting-layout layout-3-5">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 15" @click="setLayout('3x5', 3, 5)" class="layout-block" :style="{width: '22px', height: '23px', backgroundColor: (iconLayout.name=='3x5' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">3 x 5</p>
+                    </div>
+                    <div class="setting-layout layout-3-6">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 18" @click="setLayout('3x6', 3, 6)" class="layout-block" :style="{width: '18px', height: '23px', backgroundColor: (iconLayout.name=='3x6' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">3 x 6</p>
+                    </div>
+                    <div class="setting-layout layout-3-7">
+                        <div class="setting-layout-item">
+                            <div v-for="i in 21" @click="setLayout('3x7', 3, 7)" class="layout-block" :style="{width: '15px', height: '23px', backgroundColor: (iconLayout.name=='3x7' ? '#ffc81f' : '#ccc')}">
+
+                            </div>
+                        </div>
+                        <p class="layout-title">3 x 7</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </el-drawer>
 </template>
@@ -119,6 +240,12 @@ export default {
             searchResultNewTab: zh_CN.searchResultNewTab,
             openMarkNewTab: zh_CN.openMarkNewTab,
             historyNewTab: zh_CN.historyNewTab,
+            view: zh_CN.view,
+            showRandomBg: zh_CN.showRandomBg,
+            showOftenUsedWeb: zh_CN.showOftenUsedWeb,
+            showEmail: zh_CN.showEmail,
+            showBookMark: zh_CN.showBookMark,
+            layout: zh_CN.layout
         }
     },
     computed: {
@@ -130,7 +257,12 @@ export default {
             'newSiteNewTabValue',
             'searchResultNewTabValue',
             'openMarkNewTabValue',
-            'historyNewTabValue'
+            'historyNewTabValue',
+            'randomBgBtn',
+            'showOftenUsedBar',
+            'showEmailBtn',
+            'showBookMarkBar',
+            'iconLayout'
         ])
     },
     methods: {
@@ -155,12 +287,27 @@ export default {
                 value,
             })
         },
+        toggleHomeBtnSetting(value, type) {
+            this.SET_HOMEBTN({
+                type,
+                value,
+            })
+        },
+        setLayout(name, row, col) {
+            this.SET_LAYOUT({
+                name,
+                row,
+                col,
+            })
+        },
         ...mapMutations('settings', [
             'SET_SETTINGVIS',
             'SET_BGSRC',
             'SET_BGMASKOPACITY',
             'SET_BGBLUR',
             'SET_NEWTYPE',
+            'SET_HOMEBTN',
+            'SET_LAYOUT'
         ]),
     }
 }
@@ -201,6 +348,7 @@ export default {
     .setting-modal {
         background-color: #f9f9f9;
         padding: 18px;
+        padding-top: 10px;
     }
     .setting-modal-not-first {
         margin-top: 20px;
@@ -244,5 +392,46 @@ export default {
     .setting-open-title {
         font-size: 15px;
         color: #888;
+    }
+    .setting-layout-wrap {
+        width: 100%;
+        height: 340px;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: space-around;
+    }
+    .setting-layout {
+        width: 30%;
+        height: 100px;
+        padding: 5px;
+        cursor: pointer;
+    }
+    
+    .setting-layout-item {
+        width: 100%;
+        height: 70px;
+        background-color: #f9f9f9;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: center;
+    }
+    .layout-title {
+        height: 20px;
+        line-height: 10px;
+        text-align: center;
+        color: #999;
+    }
+    .layout-block {
+        background-color: #ccc;
+        margin: 1px;
+        border-radius: 4px;
     }
 </style>
