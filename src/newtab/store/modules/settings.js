@@ -16,6 +16,7 @@ import {
     SET_SEARCHBAROPACITY,
     SET_FONTSIZE,
     SET_FONTCOLOR,
+    RESET_ALL,
 } from './mutations-type.js'
 // initial state
 const state = {
@@ -47,6 +48,36 @@ const state = {
     fontSizeValue: 15,
     fontColorValue: '#fff',
   }
+
+//   const defaultSetting = {
+//     settingVis: false,
+//     bgSrc: 'Bing',
+//     maskOpacityValue: 30,
+//     bgBlurValue: 20,
+//     newSiteNewTabValue: false,
+//     searchResultNewTabValue: false,
+//     openMarkNewTabValue: false,
+//     historyNewTabValue: false,
+//     randomBgBtn: false,
+//     showOftenUsedBar: false,
+//     showEmailBtn: false,
+//     showBookMarkBar: false,
+//     iconLayout: {
+//         name: '2x5',
+//         row: 2,
+//         col: 5,
+//     },
+//     hideAllIcons: false,
+//     iconRadiusValue: 50,
+//     iconSizeValue: 55,
+//     hideSearchBarValue: false,
+//     hideSearchTypeValue: false,
+//     searchBarRadiusValue: 50,
+//     searchBarSizeValue: 50,
+//     searchBarOpacityValue: 100,
+//     fontSizeValue: 15,
+//     fontColorValue: '#fff',
+//   }
   
   // getters
   const getters = {
@@ -111,6 +142,34 @@ const state = {
     [SET_FONTCOLOR] (state, value) {
         state.fontColorValue = value
     },
+    [RESET_ALL] (state) {
+        state.bgSrc = 'Bing'
+        state.maskOpacityValue = 30
+        state.bgBlurValue = 20
+        state.newSiteNewTabValue = false
+        state.searchResultNewTabValue = false
+        state.openMarkNewTabValue = false
+        state.historyNewTabValue = false
+        state.randomBgBtn = false
+        state.showOftenUsedBar = false
+        state.showEmailBtn = false
+        state.showBookMarkBar = false
+        state.iconLayout = {
+            name: '2x5',
+            row: 2,
+            col: 5,
+        }
+        state.hideAllIcons = false
+        state.iconRadiusValue = 50
+        state.iconSizeValue = 55
+        state.hideSearchBarValue = false
+        state.hideSearchTypeValue = false
+        state.searchBarRadiusValue = 50
+        state.searchBarSizeValue = 50
+        state.searchBarOpacityValue = 100
+        state.fontSizeValue = 15
+        state.fontColorValue = '#fff'
+        }
   }
   
   export default {

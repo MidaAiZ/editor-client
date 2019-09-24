@@ -13,6 +13,7 @@
             <iconSetting />
             <searchBarSetting />
             <fontSetting />
+            <resetAll />
         </div>
     </el-drawer>
 </template>
@@ -28,6 +29,7 @@ import iconLayout from '../component/settingComponents/IconLayout.vue'
 import iconSetting from '../component/settingComponents/IconSetting.vue'
 import searchBarSetting from '../component/settingComponents/SearchBarSetting.vue'
 import fontSetting from '../component/settingComponents/FontSetting.vue'
+import resetAll from '../component/settingComponents/ResetAll.vue'
 
 export default {
     name: 'settingDialog',
@@ -40,11 +42,11 @@ export default {
         iconSetting,
         searchBarSetting,
         fontSetting,
+        resetAll
     },
     data() {
         return {
             settingName: zh_CN.settingName,
-            resetAll: zh_CN.resetAll,
         }
     },
     computed: {

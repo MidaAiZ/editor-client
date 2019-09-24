@@ -22,3 +22,4 @@ export const SET_SEARCHBARSIZE = 'SET_SEARCHBARSIZE' // 设置搜索框大小
 export const SET_SEARCHBAROPACITY = 'SET_SEARCHBAROPACITY' // 设置搜索框透明度
 export const SET_FONTSIZE = 'SET_FONTSIZE' // 设置字体大小
 export const SET_FONTCOLOR = 'SET_FONTCOLOR' // 设置字体颜色
+export const RESET_ALL = 'RESET_ALL' // 恢复默认设置
