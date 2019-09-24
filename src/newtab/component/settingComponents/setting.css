@@ -1,0 +1,119 @@
+.setting-drawer {
+}
+.setting-title {
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+}
+.setting-name {
+    width: 50px;
+    height: 40px;
+    line-height: 40px;
+    float: left;
+}
+.close-setting {
+    float: right;
+    height: 40px;
+    line-height: 35px;
+    cursor: pointer;
+}
+.setting-wrap {
+    height: calc(100vh - 100px);
+    padding-left: 26px;
+    padding-right: 26px;
+    overflow: auto;
+    margin-top: -15px;
+}
+.setting-type-name {
+    font-size: 16px;
+    color: #666;
+}
+.setting-modal {
+    background-color: #f9f9f9;
+    padding: 18px;
+    padding-top: 10px;
+}
+.setting-modal-not-first {
+    margin-top: 20px;
+}
+.setting-bg-item {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.setting-bg-item-last {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.bg-name {
+    font-size: 16px;
+}
+.bg-desc {
+    font-size: 14px;
+    text-indent: 23px;
+    font-weight: lighter;
+    color: #666;
+}
+.bg-mask-setting-item-name {
+    margin-bottom: -3px;
+}
+.setting-tip {
+    font-size: 14px;
+    font-weight: lighter;
+    color: #666;
+    margin-top: -5px;
+}
+.setting-open-item {
+    margin-top: 5px;
+    height: 30px;
+    line-height: 30px;
+}
+.setting-switch {
+    float: right
+}
+.setting-open-title {
+    font-size: 15px;
+    color: #888;
+}
+.setting-layout-wrap {
+    width: 100%;
+    height: 340px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: space-around;
+}
+.setting-layout {
+    width: 30%;
+    height: 100px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.setting-layout-item {
+    width: 100%;
+    height: 70px;
+    background-color: #f9f9f9;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+.layout-title {
+    height: 20px;
+    line-height: 10px;
+    text-align: center;
+    color: #999;
+}
+.layout-block {
+    background-color: #ccc;
+    margin: 1px;
+    border-radius: 4px;
+}

@@ -21,7 +21,7 @@ import background from './section/Background.vue'
 import systemBar from './section/SystemBar.vue'
 import suggestions from './section/Suggestions.vue'
 import customSearch from './section/CustomSearch.vue'
-import settingDialog from './component/SettingDialog.vue'
+import settingDialog from './section/SettingDialog.vue'
 
 export default {
     name: 'root',
