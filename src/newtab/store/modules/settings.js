@@ -14,6 +14,8 @@ import {
     SET_SEARCHBARRADIUS,
     SET_SEARCHBARSIZE,
     SET_SEARCHBAROPACITY,
+    SET_FONTSIZE,
+    SET_FONTCOLOR,
 } from './mutations-type.js'
 // initial state
 const state = {
@@ -42,6 +44,8 @@ const state = {
     searchBarRadiusValue: 50,
     searchBarSizeValue: 50,
     searchBarOpacityValue: 100,
+    fontSizeValue: 15,
+    fontColorValue: '#fff',
   }
   
   // getters
@@ -56,35 +60,35 @@ const state = {
   
   // mutations
   const mutations = {
-      [SET_SETTINGVIS] (state, vis) {
-          state.settingVis = vis
-      },
-      [SET_BGSRC] (state, src) {
-          state.bgSrc = src
-      },
-      [SET_BGMASKOPACITY] (state, value) {
-          state.maskOpacityValue = value
-      },
-      [SET_BGBLUR] (state, blur) {
-          state.bgBlurValue = blur
-      },
-      [SET_NEWTYPE] (state, payload) {
-          state[payload.type] = payload.value
-      },
-      [SET_HOMEBTN] (state, payload) {
+    [SET_SETTINGVIS] (state, vis) {
+        state.settingVis = vis
+    },
+    [SET_BGSRC] (state, src) {
+        state.bgSrc = src
+    },
+    [SET_BGMASKOPACITY] (state, value) {
+        state.maskOpacityValue = value
+    },
+    [SET_BGBLUR] (state, blur) {
+        state.bgBlurValue = blur
+    },
+    [SET_NEWTYPE] (state, payload) {
         state[payload.type] = payload.value
-      },
-      [SET_LAYOUT] (state, payload) {
-          state.iconLayout = payload
-      },
-      [HIDE_ALLICONS] (state, value) {
-          state.hideAllIcons = value
-      },
-      [SET_ICONRADIUS] (state, value) {
-          state.iconRadiusValue = value
-      },
-      [SET_ICONSIZE] (state, value) {
-        state.iconSizeValue = value
+    },
+    [SET_HOMEBTN] (state, payload) {
+    state[payload.type] = payload.value
+    },
+    [SET_LAYOUT] (state, payload) {
+        state.iconLayout = payload
+    },
+    [HIDE_ALLICONS] (state, value) {
+        state.hideAllIcons = value
+    },
+    [SET_ICONRADIUS] (state, value) {
+        state.iconRadiusValue = value
+    },
+    [SET_ICONSIZE] (state, value) {
+    state.iconSizeValue = value
     },
     [HIDE_SEARCHBAR] (state, value) {
         state.hideSearchBarValue = value
@@ -100,7 +104,13 @@ const state = {
     },
     [SET_SEARCHBAROPACITY] (state, value) {
         state.searchBarOpacityValue = value
-    }
+    },
+    [SET_FONTSIZE] (state, value) {
+        state.fontSizeValue = value
+    },
+    [SET_FONTCOLOR] (state, value) {
+        state.fontColorValue = value
+    },
   }
   
   export default {

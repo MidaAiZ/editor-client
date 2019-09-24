@@ -20,3 +20,5 @@ export const HIDE_SEARCHTYPE = 'HIDE_SEARCHTYPE' // 是否隐藏搜索类型
 export const SET_SEARCHBARRADIUS = 'SET_SEARCHBARRADIUS' // 设置搜索框圆角
 export const SET_SEARCHBARSIZE = 'SET_SEARCHBARSIZE' // 设置搜索框大小
 export const SET_SEARCHBAROPACITY = 'SET_SEARCHBAROPACITY' // 设置搜索框透明度
+export const SET_FONTSIZE = 'SET_FONTSIZE' // 设置字体大小
+export const SET_FONTCOLOR = 'SET_FONTCOLOR' // 设置字体颜色

@@ -12,6 +12,7 @@
             <iconLayout />
             <iconSetting />
             <searchBarSetting />
+            <fontSetting />
         </div>
     </el-drawer>
 </template>
@@ -25,7 +26,8 @@ import openWay from '../component/settingComponents/OpenWay.vue'
 import viewSetting from '../component/settingComponents/ViewSetting.vue'
 import iconLayout from '../component/settingComponents/IconLayout.vue'
 import iconSetting from '../component/settingComponents/IconSetting.vue'
-import searchBarSetting from '../component/settingComponents/searchBarSetting.vue'
+import searchBarSetting from '../component/settingComponents/SearchBarSetting.vue'
+import fontSetting from '../component/settingComponents/FontSetting.vue'
 
 export default {
     name: 'settingDialog',
@@ -36,14 +38,12 @@ export default {
         viewSetting,
         iconLayout,
         iconSetting,
-        searchBarSetting
+        searchBarSetting,
+        fontSetting,
     },
     data() {
         return {
             settingName: zh_CN.settingName,
-            font: zh_CN.font,
-            fontSize: zh_CN.fontSize,
-            fontColor: zh_CN.fontColor,
             resetAll: zh_CN.resetAll,
         }
     },
