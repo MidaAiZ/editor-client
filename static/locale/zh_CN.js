@@ -66,7 +66,7 @@
         title: 'Unsplash壁纸库',
         desc: '使用来自Unsplash的优质无版权照片作为壁纸'
     },
-    bgMaskOpacity: '壁纸蒙版透明度',
+    bgMaskOpacity: '壁纸蒙版不透明度',
     bgBlur: '壁纸模糊度',
     targetOpenType: '目标打开方式',
     targetOpenTypeTip: '打开方式仅作用在本插件',
@@ -84,5 +84,16 @@
     hideIcon: '隐藏所有网页图标',
     iconRadius: '图标圆角',
     iconSize: '图标大小',
+    searchBar: '搜索框',
+    hideSearchBar: '隐藏搜索框',
+    hideSearchType: '隐藏搜索类别',
+    searchBarSize: '搜索框大小',
+    searchBarRadius: '搜索框圆角',
+    searchBarOpacity: '搜索框不透明度',
+    font: '字体',
+    fontSize: '字体大小',
+    fontColor: '字体颜色',
+    resetAll: '恢复默认设置',
+    
 }
 export default zh_CN

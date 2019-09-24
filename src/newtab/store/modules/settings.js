@@ -9,6 +9,11 @@ import {
     HIDE_ALLICONS,
     SET_ICONRADIUS,
     SET_ICONSIZE,
+    HIDE_SEARCHBAR,
+    HIDE_SEARCHTYPE,
+    SET_SEARCHBARRADIUS,
+    SET_SEARCHBARSIZE,
+    SET_SEARCHBAROPACITY,
 } from './mutations-type.js'
 // initial state
 const state = {
@@ -32,6 +37,11 @@ const state = {
     hideAllIcons: false,
     iconRadiusValue: 50,
     iconSizeValue: 55,
+    hideSearchBarValue: false,
+    hideSearchTypeValue: false,
+    searchBarRadiusValue: 50,
+    searchBarSizeValue: 50,
+    searchBarOpacityValue: 100,
   }
   
   // getters
@@ -76,6 +86,21 @@ const state = {
       [SET_ICONSIZE] (state, value) {
         state.iconSizeValue = value
     },
+    [HIDE_SEARCHBAR] (state, value) {
+        state.hideSearchBarValue = value
+    },
+    [HIDE_SEARCHTYPE] (state, value) {
+        state.hideSearchTypeValue = value
+    },
+    [SET_SEARCHBARRADIUS] (state, value) {
+        state.searchBarRadiusValue = value
+    },
+    [SET_SEARCHBARSIZE] (state, value) {
+        state.searchBarSizeValue = value
+    },
+    [SET_SEARCHBAROPACITY] (state, value) {
+        state.searchBarOpacityValue = value
+    }
   }
   
   export default {
