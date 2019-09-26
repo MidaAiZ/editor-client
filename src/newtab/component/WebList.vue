@@ -10,14 +10,23 @@
     </div>
 </template>
 <script>
-import zh_CN from '../../../static/locale/zh_CN.js'
+import { mapState } from 'vuex'
+import localeText from '../../../static/locale/index.js'
 
 export default {
     name: 'webList',
     data() {
         return {
-            menuListName: zh_CN.appTypeList
+            menuListName: {}
         }
+    },
+    computed: {
+        ...mapState('locale', [
+            'location',
+        ])
+    },
+    created: function() {
+        this.menuListName = localeText[this.location].appTypeList
     },
 }
 </script>

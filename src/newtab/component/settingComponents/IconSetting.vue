@@ -28,17 +28,17 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
     name: 'iconSetting',
     data() {
         return {
-            icon: zh_CN.icon,
-            hideIcon: zh_CN.hideIcon,
-            iconRadius: zh_CN.iconRadius,
-            iconSize: zh_CN.iconSize,
+            icon: '',
+            hideIcon: '',
+            iconRadius: '',
+            iconSize: '',
         }
     },
     computed: {
@@ -46,7 +46,17 @@ export default {
             'hideAllIcons',
             'iconRadiusValue',
             'iconSizeValue',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
+    },
+    created: function() {
+        this.settingName = localeText[this.location].settingName
+        this.icon = localeText[this.location].icon
+        this.hideIcon = localeText[this.location].hideIcon
+        this.iconRadius = localeText[this.location].iconRadius
+        this.iconSize = localeText[this.location].iconSize
     },
     methods: {
         formatTooltip(val) {

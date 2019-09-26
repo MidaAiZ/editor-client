@@ -19,7 +19,7 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../static/locale/zh_CN.js'
+import localeText from '../../../static/locale/index.js'
 import '../component/settingComponents/setting.css'
 import wallPaper from '../component/settingComponents/WallPaper.vue'
 import wallPaperMask from '../component/settingComponents/WallPaperMask.vue'
@@ -30,6 +30,7 @@ import iconSetting from '../component/settingComponents/IconSetting.vue'
 import searchBarSetting from '../component/settingComponents/SearchBarSetting.vue'
 import fontSetting from '../component/settingComponents/FontSetting.vue'
 import resetAll from '../component/settingComponents/ResetAll.vue'
+
 
 export default {
     name: 'settingDialog',
@@ -46,13 +47,19 @@ export default {
     },
     data() {
         return {
-            settingName: zh_CN.settingName,
+            settingName: '',
         }
     },
     computed: {
         ...mapState('settings', [
             'settingVis',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
+    },
+    created: function() {
+        this.settingName = localeText[this.location].settingName
     },
     methods: {
         closeSetting(vis) {

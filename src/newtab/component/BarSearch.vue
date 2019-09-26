@@ -5,15 +5,24 @@
     </div>
 </template>
 <script>
-import zh_CN from '../../../static/locale/zh_CN.js'
+import { mapState } from 'vuex'
+import localeText from '../../../static/locale/index.js'
 
 export default {
     name: 'barSearch',
     data() {
         return {
-            placeholder: zh_CN.addAppPlaceholder
+            placeholder: ''
         }
-    }
+    },
+    computed: {
+        ...mapState('locale', [
+            'location',
+        ])
+    },
+    created: function() {
+        this.placeholder = localeText[this.location].addAppPlaceholder
+    },
 }
 </script>
 <style scoped>

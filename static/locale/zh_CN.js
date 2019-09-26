@@ -26,6 +26,7 @@
         customize: '自定义'
     },
     addAppPlaceholder: '搜索您想添加的站点，或输入网址点击右边加号直接添加站点',
+    loginSuggest: '登录账户体验更多自定义设置，书签、设置云存储不丢失',
     appTypeList: {
         hottest: '受欢迎的',
         userShared: '用户分享',

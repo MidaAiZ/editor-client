@@ -13,9 +13,9 @@ const BingPrefix = "http://bing.ioliu.cn/v1/"
 
 export default {
     default: {
-        p: `${prefix}`,
+        p: `${BingPrefix}`,
     },
     random: {
-        p: `${prefix}rand`,
-    }
+        p: `${BingPrefix}rand`,
+    },
 }

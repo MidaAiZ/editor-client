@@ -20,7 +20,7 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../static/locale/zh_CN.js'
+import localeText from '../../../static/locale/index.js'
 import logregModal from './Logreg.vue'
 
 export default {
@@ -31,13 +31,19 @@ export default {
     },
     data() {
         return {
-            logreg: zh_CN.logreg,
+            logreg: '',
         }
     },
     computed: {
-    ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
-    ...mapState('settings', ['settingVis']),
-  },
+        ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
+        ...mapState('settings', ['settingVis']),
+        ...mapState('locale', [
+            'location',
+        ])
+    },
+    created: function() {
+        this.logreg = localeText[this.location].logreg
+    },
   methods: {
       setModalVis(vis) {
           this.setLogRegModalVis(vis)

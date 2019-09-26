@@ -22,7 +22,7 @@
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
 import { Chrome } from 'vue-color'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
@@ -32,9 +32,9 @@ export default {
     },
     data() {
         return {
-            font: zh_CN.font,
-            fontSize: zh_CN.fontSize,
-            fontColor: zh_CN.fontColor,
+            font: '',
+            fontSize: '',
+            fontColor: '',
             colorPickerVis: false,
         }
     },
@@ -42,7 +42,15 @@ export default {
         ...mapState('settings', [
             'fontSizeValue',
             'fontColorValue'
+        ]),
+        ...mapState('locale', [
+            'location'
         ])
+    },
+    created: function () {
+        this.font = localeText[this.location].font
+        this.fontSize = localeText[this.location].fontSize
+        this.fontColor = localeText[this.location].fontColor
     },
     mounted: function () {
         let that = this;

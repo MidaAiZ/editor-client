@@ -46,19 +46,19 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
     name: 'openWay',
     data() {
         return {
-            targetOpenType: zh_CN.targetOpenType,
-            targetOpenTypeTip: zh_CN.targetOpenTypeTip,
-            newSiteNewTab: zh_CN.newSiteNewTab,
-            searchResultNewTab: zh_CN.searchResultNewTab,
-            openMarkNewTab: zh_CN.openMarkNewTab,
-            historyNewTab: zh_CN.historyNewTab
+            targetOpenType: '',
+            targetOpenTypeTip: '',
+            newSiteNewTab: '',
+            searchResultNewTab: '',
+            openMarkNewTab: '',
+            historyNewTab: ''
         }
     },
     computed: {
@@ -67,7 +67,19 @@ export default {
             'searchResultNewTabValue',
             'openMarkNewTabValue',
             'historyNewTabValue',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
+    },
+    created: function() {
+        this.resetAll = localeText[this.location].resetAll
+        this.targetOpenType = localeText[this.location].targetOpenType
+        this.targetOpenTypeTip = localeText[this.location].targetOpenTypeTip
+        this.newSiteNewTab = localeText[this.location].newSiteNewTab
+        this.searchResultNewTab = localeText[this.location].searchResultNewTab
+        this.openMarkNewTab = localeText[this.location].openMarkNewTab
+        this.historyNewTab = localeText[this.location].historyNewTab
     },
     methods: {
         toggleNewType(value, type) {

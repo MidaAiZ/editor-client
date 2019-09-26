@@ -19,7 +19,7 @@
                 </p>
             </el-radio>
         </div>
-        <div class="setting-bg-item-last">
+        <div class="setting-bg-item setting-bg-item-last">
             <el-radio @change="changeBgSrc('random')" v-model="bgSrc" label="random">
                 <span class="bg-name">{{ randomBg }}</span>
                 <p class="bg-desc">
@@ -31,25 +31,37 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
     name: 'wallPaper',
     data() {
         return {
-            backgroundImgSetting: zh_CN.backgroundImgSetting,
-            BingBg: zh_CN.BingBg.title,
-            UnsplashBg:zh_CN.UnsplashBg.title,
-            randomBg: zh_CN.randomBg.title,
-            BingDesc: zh_CN.BingBg.desc,
-            UnsplashDesc: zh_CN.UnsplashBg.desc,
-            randomDesc: zh_CN.randomBg.desc,
+            backgroundImgSetting: '',
+            BingBg: '',
+            UnsplashBg: '',
+            randomBg: '',
+            BingDesc: '',
+            UnsplashDesc: '',
+            randomDesc: '',
         }
+    },
+    created: function() {
+        this.backgroundImgSetting = localeText[this.location].backgroundImgSetting
+        this.BingBg = localeText[this.location].BingBg.title
+        this.UnsplashBg = localeText[this.location].UnsplashBg.title
+        this.randomBg = localeText[this.location].randomBg.title
+        this.BingDesc = localeText[this.location].BingBg.desc
+        this.UnsplashDesc = localeText[this.location].UnsplashBg.desc
+        this.randomDesc = localeText[this.location].randomBg.desc
     },
     computed: {
         ...mapState('settings', [
             'bgSrc',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
     },
     methods: {

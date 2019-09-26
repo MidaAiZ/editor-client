@@ -43,20 +43,28 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
     name: 'searchBarSetting',
     data() {
         return {
-            searchBar: zh_CN.searchBar,
-            hideSearchBar: zh_CN.hideSearchBar,
-            hideSearchType: zh_CN.hideSearchType,
-            searchBarSize: zh_CN.searchBarSize,
-            searchBarRadius: zh_CN.searchBarRadius,
-            searchBarOpacity: zh_CN.searchBarOpacity,
+            searchBar: '',
+            hideSearchBar: '',
+            hideSearchType: '',
+            searchBarSize: '',
+            searchBarRadius: '',
+            searchBarOpacity: '',
         }
+    },
+    created: function() {
+        this.searchBar = localeText[this.location].searchBar
+        this.hideSearchBar = localeText[this.location].hideSearchBar
+        this.hideSearchType = localeText[this.location].hideSearchType
+        this.searchBarSize = localeText[this.location].searchBarSize
+        this.searchBarRadius = localeText[this.location].searchBarRadius
+        this.searchBarOpacity = localeText[this.location].searchBarOpacity
     },
     computed: {
         ...mapState('settings', [
@@ -65,6 +73,9 @@ export default {
             'searchBarRadiusValue',
             'searchBarSizeValue',
             'searchBarOpacityValue',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
     },
     methods: {

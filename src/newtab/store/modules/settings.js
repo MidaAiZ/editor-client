@@ -50,7 +50,6 @@ const state = {
   }
 
 //   const defaultSetting = {
-//     settingVis: false,
 //     bgSrc: 'Bing',
 //     maskOpacityValue: 30,
 //     bgBlurValue: 20,

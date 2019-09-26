@@ -10,15 +10,20 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
     name: 'resetAll',
     data() {
         return {
-            resetAll: zh_CN.resetAll
+            resetAll: ''
         }
+    },
+    computed: {
+        ...mapState('locale', [
+            'location',
+        ])
     },
     methods: {
         handleReset() {
@@ -27,7 +32,10 @@ export default {
         ...mapMutations('settings', [
             'RESET_ALL',
         ]),
-    }
+    },
+    created: function() {
+        this.resetAll = localeText[this.location].resetAll
+    },
 }
 </script>
 <style scoped>

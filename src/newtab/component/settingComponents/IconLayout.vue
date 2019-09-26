@@ -81,19 +81,25 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
     name: 'iconLayout',
     data() {
         return {
-            layout: zh_CN.layout,
+            layout: '',
         }
+    },
+    created: function() {
+        this.layout = localeText[this.location].layout
     },
     computed: {
         ...mapState('settings', [
             'iconLayout',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
     },
     methods: {

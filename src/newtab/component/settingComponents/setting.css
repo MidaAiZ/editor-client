@@ -38,12 +38,12 @@
 }
 .setting-bg-item {
     width: 100%;
+    height: 74px;
     margin-top: 10px;
     margin-bottom: 30px;
 }
 .setting-bg-item-last {
     width: 100%;
-    margin-top: 10px;
     margin-bottom: 10px;
 }
 .bg-name {

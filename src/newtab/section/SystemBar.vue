@@ -13,7 +13,7 @@
             <barSearch></barSearch>
             <div v-if="hasLogin === false" style="margin-top: 10px;">
                 <el-alert
-                    title="登录账户体验专业版，书签、设置云存储不丢失"
+                    :title="loginSuggest"
                     type="warning">
                 </el-alert>
             </div>
@@ -22,10 +22,11 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+import localeText from '../../../static/locale/index.js'
 import barTab from '../component/BarTab.vue'
 import barSearch from '../component/BarSearch.vue'
 import webList from '../component/WebList.vue'
-import { mapState } from 'vuex'
 
 export default {
     name: 'systemBar',
@@ -38,10 +39,17 @@ export default {
       return {
         drawer: false,
         direction: 'rtl',
+        loginSuggest: '',
       };
     },
     computed: {
         ...mapState('user', ['hasLogin']),
+        ...mapState('locale', [
+            'location',
+        ])
+    },
+    created: function() {
+        this.loginSuggest = localeText[this.location].loginSuggest
     },
     methods: {
       handleClose(done) {

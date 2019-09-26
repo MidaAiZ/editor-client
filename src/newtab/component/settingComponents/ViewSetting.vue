@@ -43,18 +43,25 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 export default {
     name: 'viewSetting',
     data() {
         return {
-            view: zh_CN.view,
-            showRandomBg: zh_CN.showRandomBg,
-            showOftenUsedWeb: zh_CN.showOftenUsedWeb,
-            showEmail: zh_CN.showEmail,
-            showBookMark: zh_CN.showBookMark,
+            view: '',
+            showRandomBg: '',
+            showOftenUsedWeb: '',
+            showEmail: '',
+            showBookMark: '',
         }
+    },
+    created: function() {
+        this.view = localeText[this.location].view
+        this.showRandomBg = localeText[this.location].showRandomBg
+        this.showOftenUsedWeb = localeText[this.location].showOftenUsedWeb
+        this.showEmail = localeText[this.location].showEmail
+        this.showBookMark = localeText[this.location].showBookMark
     },
     computed: {
         ...mapState('settings', [
@@ -62,6 +69,9 @@ export default {
             'showOftenUsedBar',
             'showEmailBtn',
             'showBookMarkBar',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
     },
     methods: {

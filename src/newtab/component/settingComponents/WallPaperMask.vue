@@ -16,22 +16,29 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../../static/locale/zh_CN.js'
+import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
 export default {
     name: 'wallPaperMask',
     data() {
         return {
-            bgMaskOpacity: zh_CN.bgMaskOpacity,
-            bgBlur: zh_CN.bgBlur,
+            bgMaskOpacity: '',
+            bgBlur: '',
         }
     },
     computed: {
         ...mapState('settings', [
             'maskOpacityValue',
             'bgBlurValue',
+        ]),
+        ...mapState('locale', [
+            'location',
         ])
+    },
+    created: function() {
+        this.bgMaskOpacity = localeText[this.location].bgMaskOpacity
+        this.bgBlur = localeText[this.location].bgBlur
     },
     methods: {
         changeOpacity(value) {
