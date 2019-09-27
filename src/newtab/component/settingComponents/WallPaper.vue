@@ -4,6 +4,14 @@
             {{backgroundImgSetting}}
         </p>
         <div class="setting-bg-item">
+            <el-radio @change="changeBgSrc('default')" v-model="bgSrc" label="default">
+                <span class="bg-name">{{ defaultBg }}</span>
+            </el-radio>
+            <p class="bg-desc">
+                {{ defaultDesc }}
+            </p>
+        </div>
+        <div class="setting-bg-item">
             <el-radio @change="changeBgSrc('Bing')" v-model="bgSrc" label="Bing">
                 <span class="bg-name">{{ BingBg }}</span>
             </el-radio>
@@ -49,6 +57,8 @@ export default {
     },
     created: function() {
         this.backgroundImgSetting = localeText[this.location].backgroundImgSetting
+        this.defaultBg = localeText[this.location].defaultBg.title
+        this.defaultDesc = localeText[this.location].defaultBg.desc
         this.BingBg = localeText[this.location].BingBg.title
         this.UnsplashBg = localeText[this.location].UnsplashBg.title
         this.randomBg = localeText[this.location].randomBg.title

@@ -2,7 +2,10 @@
     <div>
         <div class="bg-mask" :style="{ opacity: (maskOpacityValue / 100) }">
         </div>
-        <div v-if="bgSrc === 'Bing'" class="background bing-src">
+        <div v-if="bgSrc === 'default'" class="background default-src">
+            默认壁纸
+        </div>
+        <div v-if="bgSrc === 'Bing'" id="bing-wall-paper" class="background bing-src" :style="{backgroundImage: `url(${imgUrl})`}">
             Bing
         </div>
         <div v-if="bgSrc === 'Unsplash'" class="background unslash-src">
@@ -15,6 +18,7 @@
 </template>
 <script>
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
+import storageWallPaper from '../utils/wallPaperStorage.js'
 
 export default {
     name: 'background',
@@ -23,15 +27,30 @@ export default {
             imgUrl: ''
         }
     },
-    mounted: function () {
-        // this.getBingWallPaper()
-    },
+    // mounted: async function () {
+    //     // this.getBingWallPaper()
+    //     if (this.bgSrc = 'Bing') {
+    //         const defaultWallPaperUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1366', 'bing-wall-paper')
+    //     }
+    //     // console.log(defaultWallPaperUrl)
+    //     // this.imgUrl = defaultWallPaperUrl
+    // },
     computed: {
         ...mapState('settings', [
             'bgSrc',
             'maskOpacityValue',
             'bgBlurValue',
         ])
+    },
+    watch: {
+        bgSrc: async function(newSrc, oldSrc) {
+            if(newSrc === 'Bing') {
+                const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1920&h=1200', 'bing-wall-paper')
+                console.log('bingSrcx', localUrl)
+                this.imgUrl = localUrl
+            }
+            // const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1366', 'bing-wall-paper')
+        }
     },
     methods: {
         ...mapActions('wallPaper', [
@@ -62,7 +81,7 @@ export default {
         background-attachment: fixed;
         background-position: top center;
     }
-    .bing-src {
-        background-image: url('http://bing.ioliu.cn/v1/rand?w=1920&h=1200');
+    .default-src {
+        background-image: url('../../../static/defaultWallPapers/xiagu.jpg');
     }
 </style>

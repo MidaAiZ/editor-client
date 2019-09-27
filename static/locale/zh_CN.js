@@ -59,6 +59,10 @@
         title: '随机壁纸库',
         desc: '使用一张随机选取的壁纸'
     },
+    defaultBg: {
+        title: '默认壁纸',
+        desc: '使用默认的初始壁纸'
+    },
     BingBg: {
         title: 'Bing壁纸库',
         desc: '使用Bing的每日壁纸库'

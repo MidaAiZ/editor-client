@@ -21,7 +21,7 @@ import {
 // initial state
 const state = {
     settingVis: false,
-    bgSrc: 'Bing',
+    bgSrc: 'default',
     maskOpacityValue: 30,
     bgBlurValue: 20,
     newSiteNewTabValue: false,
@@ -50,7 +50,7 @@ const state = {
   }
 
 //   const defaultSetting = {
-//     bgSrc: 'Bing',
+//     bgSrc: 'default',
 //     maskOpacityValue: 30,
 //     bgBlurValue: 20,
 //     newSiteNewTabValue: false,
