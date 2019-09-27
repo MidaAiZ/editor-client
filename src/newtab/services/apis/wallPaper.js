@@ -12,10 +12,12 @@ const BingPrefix = "http://bing.ioliu.cn/v1/"
 // callback	String	否	JSONP的回调函数名
 
 export default {
-    default: {
-        p: `${BingPrefix}`,
-    },
-    random: {
-        p: `${BingPrefix}rand`,
+    Bing: {
+        default: {
+            p: `${BingPrefix}?`,
+        },
+        random: {
+            p: `${BingPrefix}rand`,
+        },
     },
 }

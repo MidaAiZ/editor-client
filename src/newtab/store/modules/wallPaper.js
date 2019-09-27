@@ -1,6 +1,8 @@
-
+import wallPaperService from '../../services/apis/wallPaper.js';
+import req from '../../services/index'
 // initial state
 const state = {
+    wallPaperUrl: '',
   }
   
   // getters
@@ -10,7 +12,10 @@ const state = {
   
   // actions
   const actions = {
-
+    // async getBingWallPaper () {
+    //     const { data } = await req(wallPaperService.Bing.random)
+    //     console.log(data, 'wall')
+    // }
   }
   
   // mutations
