@@ -45,7 +45,7 @@ export default {
     watch: {
         bgSrc: async function(newSrc, oldSrc) {
             if(newSrc === 'Bing') {
-                const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1920&h=1200', 'bing-wall-paper')
+                const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1?w=1920&h=1200', 'bing-wall-paper')
                 console.log('bingSrcx', localUrl)
                 this.imgUrl = localUrl
             }
@@ -79,9 +79,12 @@ export default {
         z-index: -2;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        background-position: top center;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-position: center 0;
     }
     .default-src {
-        background-image: url('../../../static/defaultWallPapers/xiagu.jpg');
+        background-image: url('../../../static/defaultWallPapers/moren.jpg');
     }
 </style>
