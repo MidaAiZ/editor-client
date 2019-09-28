@@ -2,16 +2,16 @@
     <div>
         <div class="bg-mask" :style="{ opacity: (maskOpacityValue / 100) }">
         </div>
-        <div v-if="bgSrc === 'default'" class="background default-src">
+        <div v-show="bgSrc === 'default'" class="background default-src">
             默认壁纸
         </div>
-        <div v-if="bgSrc === 'Bing'" id="bing-wall-paper" class="background bing-src" :style="{backgroundImage: `url(${imgUrl})`}">
+        <div v-show="bgSrc === 'Bing'" id="bing-wall-paper" class="background bg-not-default bing-src" :style="{backgroundImage: `url(${imgUrl})`}">
             Bing
         </div>
-        <div v-if="bgSrc === 'Unsplash'" class="background unslash-src">
+        <div v-show="bgSrc === 'Unsplash'" class="background bg-not-default unslash-src">
             Unsplash
         </div>
-        <div  v-if="bgSrc === 'random'" class="background random">
+        <div  v-show="bgSrc === 'random'" class="background bg-not-default random">
             random
         </div>
     </div>
@@ -43,16 +43,20 @@ export default {
         ])
     },
     watch: {
-        bgSrc: async function(newSrc, oldSrc) {
+        bgSrc: function(newSrc, oldSrc) {
             if(newSrc === 'Bing') {
-                const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1?w=1920&h=1200', 'bing-wall-paper')
-                console.log('bingSrcx', localUrl)
-                this.imgUrl = localUrl
+                this.imgUrl = require('../../../static/defaultWallPapers/moren.jpg')
+                storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1024&h=768', 'bing-wall-paper', this.setWallPaperCb, false)
+                // console.log('bingSrcx', localUrl)
+                // this.imgUrl = localUrl
             }
             // const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1366', 'bing-wall-paper')
         }
     },
     methods: {
+        setWallPaperCb(localUrl) {
+            this.imgUrl = localUrl
+        },
         ...mapActions('wallPaper', [
             'getBingWallPaper',
         ]),
