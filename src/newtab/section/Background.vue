@@ -8,20 +8,28 @@
         <div v-show="bgSrc === 'Bing'" id="bing-wall-paper" class="background bg-not-default bing-src" :style="{backgroundImage: `url(${imgUrl})`}">
             Bing
         </div>
-        <div v-show="bgSrc === 'Unsplash'" class="background bg-not-default unslash-src">
+        <div v-show="bgSrc === 'Unsplash'" class="background bg-not-default unslash-src" :style="{backgroundImage: `url(${imgUrl})`}">
             Unsplash
         </div>
         <div  v-show="bgSrc === 'random'" class="background bg-not-default random">
             random
         </div>
+        <div class="change-bg-btn">
+            <newBgBrush />
+        </div>
     </div>
 </template>
 <script>
+// import './newBGbrush.scss'
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
-import storageWallPaper from '../utils/wallPaperStorage.js'
+import { storageWallPaper, getUnsplashWallPaper } from '../utils/wallPaperStorage.js'
+import newBgBrush from '../component/NewBgBrush.vue'
 
 export default {
     name: 'background',
+    components: {
+        newBgBrush,
+    },
     data(){
         return{
             imgUrl: ''
@@ -46,9 +54,12 @@ export default {
         bgSrc: function(newSrc, oldSrc) {
             if(newSrc === 'Bing') {
                 this.imgUrl = require('../../../static/defaultWallPapers/moren.jpg')
-                storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1024&h=768', 'bing-wall-paper', this.setWallPaperCb, false)
+                storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1920&h=1080', 'bing-wall-paper', this.setWallPaperCb, false)
                 // console.log('bingSrcx', localUrl)
                 // this.imgUrl = localUrl
+            } else if (newSrc === 'Unsplash') {
+                this.imgUrl = require('../../../static/defaultWallPapers/moren.jpg')
+                getUnsplashWallPaper(this.setWallPaperCb)
             }
             // const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1366', 'bing-wall-paper')
         }
@@ -86,9 +97,16 @@ export default {
         -webkit-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-        background-position: center 0;
+        background-position: center;
     }
     .default-src {
         background-image: url('../../../static/defaultWallPapers/moren.jpg');
     }
+    .change-bg-btn {
+        position: fixed;
+        z-index: 1;
+        bottom: 120px;
+        right: 100px;
+    }
+    
 </style>

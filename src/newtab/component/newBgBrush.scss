@@ -1,0 +1,139 @@
+//colors
+$bg: #deeef6;
+$yellow: #fee747;
+$brush-arm: #efefef;
+$brush-handle: #2b3a49;
+
+//the size of scene
+// $scene-size: 20;
+$brush-border-radius: 0.2px;
+
+// related to percentage of the animation
+$screen-bg-height-percent: 150;
+
+// time
+$period: 3;
+
+
+// *,
+// *::after,
+// *::before{
+//   box-sizing: border-box;
+// }
+
+
+
+// @keyframes slideDown {
+//   0% {
+//     transform: translate3d(0, 0, 0);
+//   }
+//   50% {
+//     transform: translate3d(0, 100%, 0);
+//   }
+//   100% {
+//     transform: translate3d(0, 200%, 0);
+//   }
+// }
+.brush-wrapper {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+}
+.brush {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+
+  animation: brushAnimation $period*1s 0s forwards infinite linear ;
+  &.yellow {
+    .brush__brush {
+      background: $yellow;
+    }
+  }
+  &.yellow {
+    .brush__brush {
+      background: $yellow;
+    }
+  }
+  &__brush {
+    width: 30px;
+    height: 10px;
+    margin: auto;
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+  }
+  &__arm {
+    width: 25px;
+    height: 2px;
+    position: absolute;
+    right: 0;
+    bottom: 28px;
+    background: $brush-arm;
+    border-radius: 1.5px;
+
+    &::before,
+    &::after {
+      content: " ";
+      position: absolute;
+      background: $brush-arm;
+      border-radius: 1.5px;
+    }
+    &::before {
+      right: 0;
+      bottom: 0;
+      height: 15px;
+      width: 2px;
+    }
+    &::after {
+      left: 0;
+      top: 0;
+      height: 15px;
+      width: 2px;
+    }
+    .arm-inner {
+      background: $brush-arm;
+      position: absolute;
+      right: 0;
+      bottom: 13px;
+      width: 33px;
+      height: 2px;
+      border-radius: 1.5px;
+    }
+  }
+  &__handle {
+    width: 12px;
+    height: 21px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    background: $brush-handle;
+    border-radius: 2px;
+  }
+}
+
+@keyframes brushAnimation {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transform-origin: 50%;
+  }
+  33.33333% {
+    transform: translate3d(0, 30px, 0);
+  }
+  45% {
+    transform: rotate3d(0, 0, -1,45deg) translate3d(100%, 0, 0);
+    transform-origin: 300%;
+  }
+  85% {
+    transform: rotate3d(0, 0, -1,45deg) translate3d(100%, 0, 0);
+    transform-origin: 300%;
+  }
+  100% {
+    opacity: 1;
+  }
+}

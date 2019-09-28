@@ -22,7 +22,7 @@ import {
 const state = {
     settingVis: false,
     bgSrc: 'default',
-    maskOpacityValue: 30,
+    maskOpacityValue: 20,
     bgBlurValue: 20,
     newSiteNewTabValue: false,
     searchResultNewTabValue: false,
