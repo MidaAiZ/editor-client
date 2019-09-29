@@ -36,7 +36,7 @@ $period: 3;
 // }
 .brush-wrapper {
   position: absolute;
-  width: 50px;
+  width: 40px;
   height: 50px;
 }
 .brush {
@@ -65,11 +65,11 @@ $period: 3;
     z-index: 1;
   }
   &__arm {
-    width: 25px;
+    width: 21px;
     height: 2px;
     position: absolute;
     right: 0;
-    bottom: 28px;
+    bottom: 30px;
     background: $brush-arm;
     border-radius: 1.5px;
 
@@ -96,15 +96,15 @@ $period: 3;
       background: $brush-arm;
       position: absolute;
       right: 0;
-      bottom: 13px;
-      width: 33px;
+      bottom: 14px;
+      width: 21px;
       height: 2px;
       border-radius: 1.5px;
     }
   }
   &__handle {
-    width: 12px;
-    height: 21px;
+    width: 10px;
+    height: 25px;
     margin: auto;
     left: 0;
     right: 0;
@@ -135,5 +135,88 @@ $period: 3;
   }
   100% {
     opacity: 1;
+  }
+}
+
+
+.brush-wrapper-static {
+  position: absolute;
+  width: 40px;
+  height: 50px;
+}
+.brush-static {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+
+  // animation: brushAnimation $period*1s 0s forwards infinite linear ;
+  &.yellow {
+    .brush__brush {
+      background: $yellow;
+    }
+  }
+  &.yellow {
+    .brush__brush {
+      background: $yellow;
+    }
+  }
+  &__brush {
+    width: 30px;
+    height: 10px;
+    margin: auto;
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+  }
+  &__arm {
+    width: 21px;
+    height: 2px;
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+    background: $brush-arm;
+    border-radius: 1.5px;
+
+    &::before,
+    &::after {
+      content: " ";
+      position: absolute;
+      background: $brush-arm;
+      border-radius: 1.5px;
+    }
+    &::before {
+      right: 0;
+      bottom: 0;
+      height: 15px;
+      width: 2px;
+    }
+    &::after {
+      left: 0;
+      top: 0;
+      height: 15px;
+      width: 2px;
+    }
+    .arm-inner {
+      background: $brush-arm;
+      position: absolute;
+      right: 0;
+      bottom: 14px;
+      width: 21px;
+      height: 2px;
+      border-radius: 1.5px;
+    }
+  }
+  &__handle {
+    width: 10px;
+    height: 25px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    background: $brush-handle;
+    border-radius: 2px;
   }
 }

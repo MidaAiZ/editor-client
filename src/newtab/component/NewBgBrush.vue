@@ -1,6 +1,15 @@
 <template>
     <div class="change-bg-btn">
-        <div class="brush-wrapper">
+        <div v-if="brushAnimate == false" class="brush-wrapper-static">
+            <div class="brush-static yellow">
+                <div class="brush__brush"></div>
+                <div class="brush__arm">
+                <div class="arm-inner"></div>
+                </div>
+                <div class="brush__handle"></div>
+            </div>
+        </div>
+        <div v-if="brushAnimate == true" class="brush-wrapper">
             <div class="brush yellow">
                 <div class="brush__brush"></div>
                 <div class="brush__arm">
@@ -19,7 +28,7 @@ export default {
     name: 'newBgBrush',
     data(){
         return{
-            imgUrl: ''
+            brushAnimate: false
         }
     },
     // mounted: async function () {
