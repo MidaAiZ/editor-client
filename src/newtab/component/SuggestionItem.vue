@@ -30,7 +30,7 @@
         methods:{
             clickItem(){
                 this.$emit('change');
-                console.log('sdfsd')
+//                console.log('sdfsd')
             },
             leaveItem(){
                 this.$emit('leave')
@@ -41,9 +41,11 @@
 <style scoped>
     @import '../component/style/suggestion.css';
     .suggestion-item{
+        position: relative;
         display: inline-block;
         margin-bottom: 20px;
         transition: all .5s;
+        height:50%;
     }
     /*.item-img{*/
         /*width:90px;*/
