@@ -67,10 +67,14 @@ export default {
     methods: {
         setWallPaperCb(localUrl) {
             this.imgUrl = localUrl
+            this.SET_WALLPAPERLOADING(false)
         },
         ...mapActions('wallPaper', [
             'getBingWallPaper',
         ]),
+        ...mapMutations('wallPaper', [
+            'SET_WALLPAPERLOADING'
+        ])
     }
 }
 </script>

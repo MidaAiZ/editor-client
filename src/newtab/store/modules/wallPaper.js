@@ -1,5 +1,4 @@
-import wallPaperService from '../../services/apis/wallPaper.js';
-import req from '../../services/index'
+import { SET_WALLPAPERLOADING } from './mutations-type.js'
 // initial state
 const state = {
     wallPaperUrl: '',
@@ -21,7 +20,9 @@ const state = {
   
   // mutations
   const mutations = {
-      
+      [SET_WALLPAPERLOADING] (state, loading) {
+        state.wallPaperLoading = loading
+      }
   }
   
   export default {

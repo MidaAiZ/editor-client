@@ -23,3 +23,7 @@ export const SET_SEARCHBAROPACITY = 'SET_SEARCHBAROPACITY' // 设置搜索框透
 export const SET_FONTSIZE = 'SET_FONTSIZE' // 设置字体大小
 export const SET_FONTCOLOR = 'SET_FONTCOLOR' // 设置字体颜色
 export const RESET_ALL = 'RESET_ALL' // 恢复默认设置
+
+// wallPaper 相关mutations
+
+export const SET_WALLPAPERLOADING = 'SET_WALLPAPERLOADING' // 恢复默认设置
