@@ -1,5 +1,5 @@
 <template>
-    <div class="change-bg-btn">
+    <div class="change-bg-btn" @click="newWallPaper">
         <div v-if="brushAnimate == false" class="brush-wrapper-static">
             <div class="brush-static yellow">
                 <div class="brush__brush"></div>
@@ -46,6 +46,11 @@ export default {
         //     'bgBlurValue',
         // ])
     },
+    methods: {
+        newWallPaper() {
+            this.brushAnimate = true
+        }
+    }
 }
 </script>
 <style scoped>

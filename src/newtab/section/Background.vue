@@ -105,8 +105,8 @@ export default {
     .change-bg-btn {
         position: fixed;
         z-index: 1;
-        bottom: 120px;
-        right: 100px;
+        bottom: 50px;
+        right: 60px;
     }
     
 </style>

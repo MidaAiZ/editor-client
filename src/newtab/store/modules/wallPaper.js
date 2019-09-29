@@ -3,6 +3,7 @@ import req from '../../services/index'
 // initial state
 const state = {
     wallPaperUrl: '',
+    wallPaperLoading: false,
   }
   
   // getters
