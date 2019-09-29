@@ -8,19 +8,19 @@
                 <i class="el-icon-user-solid"></i>
                 {{logreg}}
             </div>
-            <div v-else>
+            <div @click.stop.prevent="toggleSettingDrawer(true)" v-else>
                 {{userName}}
                 <i class="el-icon-s-tools"></i>
             </div>
         </div>
-        <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" :modal="false" width="400px">
+        <el-dialog :visible.sync="logregModalVis" @close="setModalVis(false)" append-to-body width="400px">
             <logregModal></logregModal>
         </el-dialog>
     </div>
 </template>
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../static/locale/zh_CN.js'
+import localeText from '../../../static/locale/index.js'
 import logregModal from './Logreg.vue'
 
 export default {
@@ -31,18 +31,31 @@ export default {
     },
     data() {
         return {
-            logreg: zh_CN.logreg,
+            logreg: '',
         }
     },
     computed: {
-    ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
-  },
+        ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
+        ...mapState('settings', ['settingVis']),
+        ...mapState('locale', [
+            'location',
+        ])
+    },
+    created: function() {
+        this.logreg = localeText[this.location].logreg
+    },
   methods: {
       setModalVis(vis) {
           this.setLogRegModalVis(vis)
       },
+      toggleSettingDrawer(vis) {
+          this.SET_SETTINGVIS(vis)
+      },
       ...mapMutations('user', [
       'setLogRegModalVis',
+    ]),
+    ...mapMutations('settings', [
+      'SET_SETTINGVIS',
     ]),
   },
 }
@@ -58,7 +71,6 @@ export default {
         width: 150px;
         text-align: left;
         font-size: 20px;
-        font-weight: 400;
         line-height: 40px;
         float: left;
     }
@@ -69,5 +81,8 @@ export default {
         line-height: 40px;
         float: right;
         cursor: pointer;
+    }
+    .setting-title {
+        font-size: 20px;
     }
 </style>

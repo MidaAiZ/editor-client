@@ -7,7 +7,7 @@
                 {{forgetPsw}}
             </div>
             <div class="log-or-reg">
-                <el-button class="login-btn" :loading="loginLoading" @click="login" type="primary">{{loginBtn}}</el-button>
+                <el-button class="login-btn" :loading="loginLoading" @click="handleLogin" type="primary">{{loginBtn}}</el-button>
                 <div class="new-user-btn" @click="filter = 'register'">
                     {{newUser}}
                 </div>
@@ -29,42 +29,57 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
-import zh_CN from '../../../static/locale/zh_CN.js'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
+import localeText from '../../../static/locale/index.js'
 
 export default {
     name: 'logreg',
     data() {
         return {
-            userAccountPlaceholder: zh_CN.userAccountPlaceholder,
-            pswPlaceholder: zh_CN.pswPlaceholder,
-            loginBtn: zh_CN.login,
-            regBtn: zh_CN.register,
-            forgetPsw: zh_CN.forgetPsw,
-            newUser: zh_CN.newUser,
-            backToLog: zh_CN.backToLog,
+            userAccountPlaceholder: '',
+            pswPlaceholder: '',
+            loginBtn: '',
+            regBtn: '',
+            forgetPsw: '',
+            newUser: '',
+            backToLog: '',
             filter: "login",
         }
     },
     computed: {
-    ...mapState('user', ['loginEmail', 'loginPassword', 'loginLoading']),
-  },
-  methods: {
-    inputLogin (value, type) {
-        this.setLoginInfo({
-            type,
-            value,
-        })
+        ...mapState('user', ['loginEmail', 'loginPassword', 'loginLoading']),
+        ...mapState('locale', [
+            'location',
+        ])
     },
-    login() {
-        console.log(this.loginEmail, this.loginPassword)
-        this.setLoginLoading(true)
+    created: function() {
+        this.userAccountPlaceholder = localeText[this.location].userAccountPlaceholder
+        this.pswPlaceholder = localeText[this.location].pswPlaceholder
+        this.loginBtn = localeText[this.location].login
+        this.regBtn = localeText[this.location].register
+        this.forgetPsw = localeText[this.location].forgetPsw
+        this.newUser = localeText[this.location].newUser
+        this.backToLog = localeText[this.location].backToLog
     },
-    ...mapMutations('user', [
-      'setLoginInfo',
-      'setLoginLoading',
-    ]),
-  }
+    methods: {
+        inputLogin (value, type) {
+            this.setLoginInfo({
+                type,
+                value,
+            })
+        },
+        handleLogin() {
+            this.setLoginLoading(true)
+            this.login()
+        },
+        ...mapMutations('user', [
+        'setLoginInfo',
+        'setLoginLoading',
+        ]),
+        ...mapActions('user', [
+        'login',
+        ]),
+    }
 }
 </script>
 <style scoped>

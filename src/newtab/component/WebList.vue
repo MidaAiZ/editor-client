@@ -10,14 +10,23 @@
     </div>
 </template>
 <script>
-import zh_CN from '../../../static/locale/zh_CN.js'
+import { mapState } from 'vuex'
+import localeText from '../../../static/locale/index.js'
 
 export default {
     name: 'webList',
     data() {
         return {
-            menuListName: zh_CN.appTypeList
+            menuListName: {}
         }
+    },
+    computed: {
+        ...mapState('locale', [
+            'location',
+        ])
+    },
+    created: function() {
+        this.menuListName = localeText[this.location].appTypeList
     },
 }
 </script>
@@ -28,11 +37,11 @@ export default {
         overflow: auto;
     }
     .web-list-menu {
-        width: 150px;
+        width: 140px;
         height: calc(100vh - 150px);
         overflow: auto;
     }
     .menu-title {
-        padding-left: 20px;
+        padding-left: 15px;
     }
 </style>

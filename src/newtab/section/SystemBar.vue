@@ -7,14 +7,23 @@
             :direction="direction"
             :show-close="false"
             size="500px"
+            :modal="false"
         >
             <barTab slot="title"></barTab>
             <barSearch></barSearch>
+            <div v-if="hasLogin === false" style="margin-top: 10px;">
+                <el-alert
+                    :title="loginSuggest"
+                    type="warning">
+                </el-alert>
+            </div>
             <webList class="web-list"></webList>
         </el-drawer>
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+import localeText from '../../../static/locale/index.js'
 import barTab from '../component/BarTab.vue'
 import barSearch from '../component/BarSearch.vue'
 import webList from '../component/WebList.vue'
@@ -30,7 +39,17 @@ export default {
       return {
         drawer: false,
         direction: 'rtl',
+        loginSuggest: '',
       };
+    },
+    computed: {
+        ...mapState('user', ['hasLogin']),
+        ...mapState('locale', [
+            'location',
+        ])
+    },
+    created: function() {
+        this.loginSuggest = localeText[this.location].loginSuggest
     },
     methods: {
       handleClose(done) {

@@ -3,6 +3,7 @@
     <div>
       <background />
       <systemBar />
+      <settingDialog />
       <section>
         <v-layout>
           <div id="main">
@@ -20,6 +21,7 @@ import background from './section/Background.vue'
 import systemBar from './section/SystemBar.vue'
 import suggestions from './section/Suggestions.vue'
 import customSearch from './section/CustomSearch.vue'
+import settingDialog from './section/SettingDialog.vue'
 
 export default {
     name: 'root',
@@ -28,6 +30,7 @@ export default {
         background,
         suggestions,
         customSearch,
+        settingDialog,
     }
 }
 </script>
