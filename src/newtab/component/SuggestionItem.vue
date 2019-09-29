@@ -1,26 +1,48 @@
 <template>
     <div class="suggestion-item" :style="width">
         <div class="item-img-container">
-            <span class="item-img-del displayNone"></span>
-            <img :src="itemInfo.img"
+            <span class="item-img-del displayNone" :style="itemDelStyle"></span>
+            <img :src="itemInfo.img" :style="itemImageStyle"
                  class="item-img" @mouseover="clickItem" @mouseleave="leaveItem"/>
         </div>
-        <div class="item-name" @mouseover="clickItem" @mouseleave="leaveItem">
+        <div class="item-name" @mouseover="clickItem" @mouseleave="leaveItem" :style="itemNameStyle">
             {{itemInfo.title}}
         </div>
     </div>
 </template>
 <script>
-
+    import { mapState } from 'vuex'
     export default {
         name: 'suggestions',
-        props: ['itemNumber','itemInfo','dragging'],
+        props: ['itemInfo','dragging'],
         computed:{
+            ...mapState('settings',['fontColorValue','fontSizeValue','iconSizeValue','iconRadiusValue','iconLayout']),
             width:function () {
                 return{
-                    'width': 100/this.itemNumber+'%'
+                    'width': 100/this.iconLayout.col+'%'
+                }
+            },
+            itemNameStyle:function () {
+                return{
+                    'color': this.fontColorValue,
+                    'font-size': this.fontSizeValue+'px'
+                }
+            },
+            itemDelStyle:function () {
+                return{
+                    'width': 5.0*this.iconSizeValue/50 + 'vw',
+                    'height': 5.0*this.iconSizeValue/50 + 'vw',
+                    'border-radius': this.iconRadiusValue + '%'
+                }
+            },
+            itemImageStyle:function () {
+                return{
+                    'width': 5.0*this.iconSizeValue/50 + 'vw',
+                    'height': 5.0*this.iconSizeValue/50 + 'vw',
+                    'border-radius': this.iconRadiusValue + '%'
                 }
             }
+
         },
         data(){
             return{
@@ -65,9 +87,13 @@
     /*}*/
     .item-name{
         text-align: center;
-        font-size:15px;
+        /*font-size:15px;*/
         padding-top: 20px;
         width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        /*color: #ffffff;*/
+        opacity:0.9;
     }
     .item-img-container{
         width:100%;

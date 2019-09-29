@@ -1,6 +1,6 @@
 const state = {
     rowNumber: 2,
-    itemNumber: 6,
+    itemNumber: 5,
     homeWebList:[
         {
             id: 1,

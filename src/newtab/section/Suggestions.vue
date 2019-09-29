@@ -6,7 +6,7 @@
                 <draggable v-model="pagingArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
                            @end="onEnd" @choose="onChoose" @change="onChange">
                     <transition-group type="transition" name="list-complete" tag="div">
-                        <suggestion-item :item-number="itemNumber" :dragging="dragging" v-for="item in page" draggable="true"
+                        <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
                                          :item-info="item" :key="item.id" v-on:change="changeDrag" @mousedown="mouse_down"
                                          v-on:leave="leaveDrag" class="list-complete-item">
                         </suggestion-item>
@@ -99,7 +99,7 @@
             },
             suggestionsWidth: function () {
                 return {
-                    'width': 10 * this.itemNumber + 'vw',
+                    'width': 10 * this.iconLayout.col + 'vw',
                 }
             },
             slideWidth: function () {
@@ -116,6 +116,7 @@
                 }
             },
             ...mapState('homeWebList', ['homeWebList']),
+            ...mapState('settings',['iconLayout']),
             ...mapGetters('homeWebList', ['totalSize', 'pagingArray']),
         },
         data() {
@@ -394,9 +395,10 @@
         height: 15px;
         border-radius: 50%;
         border: none;
-        background: #aaaaaa;
+        background: white;
         display: inline-block;
         margin-right: 15px;
+        opacity: 0.5
     }
 
     .active {

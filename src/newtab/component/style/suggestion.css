@@ -1,14 +1,15 @@
 .item-img{
-    width:90px;
-    height: 90px;
-    border-radius: 50%;
+    /*width:90px;*/
+    /*height: 90px;*/
+    /*border-radius: 50%;*/
     cursor: pointer;
 }
 .item-img-del{
-    width:90px;
-    height: 90px;
-    border-radius: 50%;
-    background: #c8ebfb;
+    /*width:90px;*/
+    /*height: 90px;*/
+    /*border-radius: 50%;*/
+    background: #fff;
+    opacity: 0.5;
     box-shadow: #ccc 0 0 2px;
 }
 .displayNone{
