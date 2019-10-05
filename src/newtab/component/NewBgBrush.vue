@@ -48,6 +48,7 @@ export default {
         newWallPaper() {
             this.SET_WALLPAPERLOADING(true)
             this.SET_BGSRC('Unsplash')
+            this.getNewWallPaper()
         },
         ...mapMutations('wallPaper', [
             'SET_WALLPAPERLOADING',
@@ -55,6 +56,9 @@ export default {
         ...mapMutations('settings', [
             'SET_BGSRC',
         ]),
+        ...mapActions('wallPaper', [
+            'getNewWallPaper'
+        ])
     }
 }
 </script>

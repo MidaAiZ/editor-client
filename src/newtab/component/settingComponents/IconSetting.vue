@@ -22,7 +22,7 @@
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ iconSize }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" v-model="iconSizeValue" @input="setIconSize($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :min="50" :max="100" v-model="iconSizeValue" @input="setIconSize($event)"></el-slider>
         </div>
     </div>
 </template>

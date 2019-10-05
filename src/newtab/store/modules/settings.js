@@ -39,7 +39,7 @@ const state = {
     },
     hideAllIcons: false,
     iconRadiusValue: 50,
-    iconSizeValue: 55,
+    iconSizeValue: 50,
     hideSearchBarValue: false,
     hideSearchTypeValue: false,
     searchBarRadiusValue: 50,

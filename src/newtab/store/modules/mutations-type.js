@@ -26,4 +26,6 @@ export const RESET_ALL = 'RESET_ALL' // 恢复默认设置
 
 // wallPaper 相关mutations
 
-export const SET_WALLPAPERLOADING = 'SET_WALLPAPERLOADING' // 恢复默认设置
+export const SET_WALLPAPERLOADING = 'SET_WALLPAPERLOADING' // 设置壁纸加载状态
+export const SET_WALLPAPER = 'SET_WALLPAPER' // 设置壁纸加载状态
+
