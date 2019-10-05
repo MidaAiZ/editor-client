@@ -19,7 +19,9 @@
             ...mapState('settings',['fontColorValue','fontSizeValue','iconSizeValue','iconRadiusValue','iconLayout']),
             width:function () {
                 return{
-                    'width': 100/this.iconLayout.col+'%'
+                    'width': 100.0/this.iconLayout.col+'%',
+//                    'height': 16+'vh',
+                    'margin-bottom': 20+'px'
                 }
             },
             itemNameStyle:function () {
@@ -36,11 +38,34 @@
                 }
             },
             itemImageStyle:function () {
-                return{
-                    'width': 6.0+(this.iconSizeValue-50)/20 + 'vw',
-                    'height': 6.0+(this.iconSizeValue-50)/20 + 'vw',
+                let imgStyle = {
+                    'width': '',
+                    'height': '',
                     'border-radius': this.iconRadiusValue + '%'
+                };
+                let col = this.iconLayout.col;
+                switch (this.iconLayout.row){
+                    case 2:
+                        if(col === 4){
+                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
+                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
+                        }else {
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
+                        }
+                        break;
+                    case 3:
+                        if (col === 3 || col === 4 || col === 5){
+                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
+                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
+                        }else{
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
+                        }
+                        break;
+                    default:
                 }
+                return imgStyle
             }
 
         },
@@ -65,9 +90,9 @@
     .suggestion-item{
         position: relative;
         display: inline-block;
-        margin-bottom: 20px;
-        transition: all .5s;
-        height:50%;
+        /*margin-bottom: 20px;*/
+        /*transition: all .5s;*/
+        /*height:50%;*/
     }
     /*.item-img{*/
         /*width:90px;*/
@@ -88,7 +113,7 @@
     .item-name{
         text-align: center;
         /*font-size:15px;*/
-        padding-top: 20px;
+        padding-top: 15px;
         width: 100%;
         text-overflow: ellipsis;
         white-space: nowrap;

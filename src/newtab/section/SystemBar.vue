@@ -68,6 +68,7 @@ export default {
         opacity: 0.5;
         color: #fff;
         transition: all 0.3s;
+        z-index: 11;
     }
     .open-system-bar-btn:hover {
         transform: scale(1.1);

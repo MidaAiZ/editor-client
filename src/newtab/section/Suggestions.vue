@@ -99,7 +99,8 @@
             },
             suggestionsWidth: function () {
                 return {
-                    'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50)/10.0 + 'vw',
+                    'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+//                    'height': 20 * this.iconLayout.row+'vh'
                 }
             },
             slideWidth: function () {
@@ -321,70 +322,73 @@
 <style scoped>
     /*@import '../component/style/suggestion.css';*/
     #suggestions {
-        margin-top: 60px;
-        height: 340px;
+        margin-top: 4vh;
+        /*height: 340px;*/
         /*width: 1100px;*/
         position: relative;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
-
-    .list-complete-item {
-        transition: all 1s;
-    }
-
-    .flip-list-move {
-        transition: transform 1s;
-    }
-
-    .no-move {
-        transition: transform 0s;
-    }
-
-    .slide {
-        /*width: 100%;*/
-        position: absolute;
+    #suggestions .swiper-container{
         height: 100%;
-        overflow: hidden;
-        transition: left 0.5s;
-        /*position: relative;*/
     }
 
-    ul {
-        list-style: none;
-    }
+    /*.list-complete-item {*/
+        /*transition: all 1s;*/
+    /*}*/
 
-    .slide-item {
-        position: absolute;
-        top: 0;
-        text-align: left;
-        list-style: none;
-        height: 90%;
+    /*.flip-list-move {*/
+        /*transition: transform 1s;*/
+    /*}*/
+
+    /*.no-move {*/
+        /*transition: transform 0s;*/
+    /*}*/
+
+    /*.slide {*/
+        /*!*width: 100%;*!*/
+        /*position: absolute;*/
+        /*height: 100%;*/
+        /*overflow: hidden;*/
         /*transition: left 0.5s;*/
-        display: inline-block;
-    }
+        /*!*position: relative;*!*/
+    /*}*/
 
-    .list-enter-to {
-        transition: all .5s ease;
-        transform: translateX(0);
-    }
+    /*ul {*/
+        /*list-style: none;*/
+    /*}*/
 
-    .list-leave-active {
-        transition: all .5s ease;
-        transform: translateX(-100%)
-    }
+    /*.slide-item {*/
+        /*position: absolute;*/
+        /*top: 0;*/
+        /*text-align: left;*/
+        /*list-style: none;*/
+        /*height: 90%;*/
+        /*!*transition: left 0.5s;*!*/
+        /*display: inline-block;*/
+    /*}*/
 
-    .list-enter {
-        transform: translateX(100%)
-    }
+    /*.list-enter-to {*/
+        /*transition: all .5s ease;*/
+        /*transform: translateX(0);*/
+    /*}*/
 
-    .list-leave {
-        transform: translateX(0)
-    }
+    /*.list-leave-active {*/
+        /*transition: all .5s ease;*/
+        /*transform: translateX(-100%)*/
+    /*}*/
+
+    /*.list-enter {*/
+        /*transform: translateX(100%)*/
+    /*}*/
+
+    /*.list-leave {*/
+        /*transform: translateX(0)*/
+    /*}*/
 
     .bullet {
         position: absolute;
         width: 100%;
-        bottom: 10px;
+        bottom: -6vh;
         margin: 0 auto;
         z-index: 10;
         text-align: center;
@@ -399,6 +403,9 @@
         display: inline-block;
         margin-right: 15px;
         opacity: 0.5
+    }
+    .bullet:last-child{
+        margin-right: 0;
     }
 
     .active {
