@@ -1,15 +1,16 @@
 <template>
     <div class="sys-bar-title">
         <div class="logo">
-            LOGO&NAME
-        </div>
-        <div class="logreg">
             <div v-if="hasLogin == false" @click.stop.prevent="setModalVis(true)">
                 <i class="el-icon-user-solid"></i>
                 {{logreg}}
             </div>
-            <div @click.stop.prevent="toggleSettingDrawer(true)" v-else>
+            <div v-else>
                 {{userName}}
+            </div>
+        </div>
+        <div class="logreg">
+            <div @click.stop.prevent="toggleSettingDrawer(true)">
                 <i class="el-icon-s-tools"></i>
             </div>
         </div>
@@ -36,7 +37,7 @@ export default {
     },
     computed: {
         ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
-        ...mapState('settings', ['settingVis']),
+        ...mapState('drawersVis', ['settingVis']),
         ...mapState('locale', [
             'location',
         ])
@@ -49,13 +50,15 @@ export default {
           this.setLogRegModalVis(vis)
       },
       toggleSettingDrawer(vis) {
+          this.SET_SYSBARVIS(false)
           this.SET_SETTINGVIS(vis)
       },
       ...mapMutations('user', [
       'setLogRegModalVis',
     ]),
-    ...mapMutations('settings', [
+    ...mapMutations('drawersVis', [
       'SET_SETTINGVIS',
+      'SET_SYSBARVIS',
     ]),
   },
 }

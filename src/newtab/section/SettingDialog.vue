@@ -51,7 +51,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('settings', [
+        ...mapState('drawersVis', [
             'settingVis',
         ]),
         ...mapState('locale', [
@@ -65,7 +65,7 @@ export default {
         closeSetting(vis) {
             this.SET_SETTINGVIS(vis)
         },
-        ...mapMutations('settings', [
+        ...mapMutations('drawersVis', [
             'SET_SETTINGVIS',
         ]),
     }

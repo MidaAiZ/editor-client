@@ -1,11 +1,12 @@
 <template>
     <div>
-        <el-button class="open-system-bar-btn" @click="drawer = true" icon="el-icon-menu" size="medium" circle>
+        <el-button class="open-system-bar-btn" @click="SET_SYSBARVIS(true)" icon="el-icon-menu" size="medium" circle>
         </el-button>
         <el-drawer
-            :visible.sync="drawer"
+            :visible.sync="systemBarVis"
             :direction="direction"
             :show-close="false"
+            @close="SET_SYSBARVIS(false)"
             size="500px"
             :modal="false"
         >
@@ -22,7 +23,7 @@
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import localeText from '../../../static/locale/index.js'
 import barTab from '../component/BarTab.vue'
 import barSearch from '../component/BarSearch.vue'
@@ -37,7 +38,6 @@ export default {
     },
     data() {
       return {
-        drawer: false,
         direction: 'rtl',
         loginSuggest: '',
       };
@@ -46,7 +46,8 @@ export default {
         ...mapState('user', ['hasLogin']),
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        ...mapState('drawersVis', ['systemBarVis']),
     },
     created: function() {
         this.loginSuggest = localeText[this.location].loginSuggest
@@ -54,7 +55,10 @@ export default {
     methods: {
       handleClose(done) {
         done();
-      }
+      },
+      ...mapMutations('drawersVis', [
+            'SET_SYSBARVIS',
+        ]),
     }
 }
 </script>
@@ -68,6 +72,7 @@ export default {
         opacity: 0.5;
         color: #fff;
         transition: all 0.3s;
+        z-index: 11;
     }
     .open-system-bar-btn:hover {
         transform: scale(1.1);
