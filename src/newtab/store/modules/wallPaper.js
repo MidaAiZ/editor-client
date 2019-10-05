@@ -18,14 +18,11 @@ const state = {
   
   // actions
   const actions = {
-    async getNewWallPaper (state) {
+    async getNewWallPaper ({commit}, state) {
       getUnsplashWallPaper((src) => {
-        state.wallPaperLoading = false;
-        state.wallPaperSrc = src
-        console.log('callback', src)
+        commit(SET_WALLPAPER, src);
+        commit(SET_WALLPAPERLOADING, false)
       })
-      // console.log('wallSrc', wallSrc)
-      // commit([SET_WALLPAPER], wallSrc)
     }
   }
   

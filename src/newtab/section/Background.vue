@@ -3,7 +3,6 @@
         <div class="bg-mask" :style="{ opacity: (maskOpacityValue / 100) }">
         </div>
         <div class="background bg-not-default unslash-src" :style="{backgroundImage: `url(${this.bgSrc === 'default' ? require('../../../static/defaultWallPapers/moren.jpg') : this.wallPaperSrc})`}">
-            Unsplash
         </div>
         <div class="change-bg-btn">
             <newBgBrush />
