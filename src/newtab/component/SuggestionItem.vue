@@ -1,7 +1,7 @@
 <template>
     <div class="suggestion-item" :style="width">
         <div class="item-img-container">
-            <span class="item-img-del displayNone" :style="itemDelStyle"></span>
+            <span class="item-img-del displayNone" :style="itemImageStyle"></span>
             <img :src="itemInfo.img" :style="itemImageStyle"
                  class="item-img" @mouseover="clickItem" @mouseleave="leaveItem"/>
         </div>
@@ -37,8 +37,8 @@
             },
             itemImageStyle:function () {
                 return{
-                    'width': 5.0*this.iconSizeValue/50 + 'vw',
-                    'height': 5.0*this.iconSizeValue/50 + 'vw',
+                    'width': 6.0+(this.iconSizeValue-50)/20 + 'vw',
+                    'height': 6.0+(this.iconSizeValue-50)/20 + 'vw',
                     'border-radius': this.iconRadiusValue + '%'
                 }
             }

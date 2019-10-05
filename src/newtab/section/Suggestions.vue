@@ -99,7 +99,7 @@
             },
             suggestionsWidth: function () {
                 return {
-                    'width': 10 * this.iconLayout.col + 'vw',
+                    'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50)/10.0 + 'vw',
                 }
             },
             slideWidth: function () {
@@ -116,7 +116,7 @@
                 }
             },
             ...mapState('homeWebList', ['homeWebList']),
-            ...mapState('settings',['iconLayout']),
+            ...mapState('settings',['iconLayout','iconSizeValue']),
             ...mapGetters('homeWebList', ['totalSize', 'pagingArray']),
         },
         data() {
