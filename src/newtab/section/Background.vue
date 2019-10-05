@@ -2,17 +2,8 @@
     <div>
         <div class="bg-mask" :style="{ opacity: (maskOpacityValue / 100) }">
         </div>
-        <div v-show="bgSrc === 'default'" class="background default-src">
-            默认壁纸
-        </div>
-        <div v-show="bgSrc === 'Bing'" id="bing-wall-paper" class="background bg-not-default bing-src" :style="{backgroundImage: `url(${imgUrl})`}">
-            Bing
-        </div>
-        <div v-show="bgSrc === 'Unsplash'" class="background bg-not-default unslash-src" :style="{backgroundImage: `url(${imgUrl})`}">
+        <div class="background bg-not-default unslash-src" :style="{backgroundImage: `url(${this.bgSrc === 'default' ? require('../../../static/defaultWallPapers/moren.jpg') : this.wallPaperSrc})`}">
             Unsplash
-        </div>
-        <div  v-show="bgSrc === 'random'" class="background bg-not-default random">
-            random
         </div>
         <div class="change-bg-btn">
             <newBgBrush />
@@ -32,7 +23,11 @@ export default {
     },
     data(){
         return{
-            imgUrl: ''
+            // imgUrl: (this.bgSrc !== 'default' && JSON.parse(localStorage.getItem(`storageWallPaper`)))
+            // ?
+            // this.src,
+            // :
+            // require('../../../static/defaultWallPapers/moren.jpg'),
         }
     },
     // mounted: async function () {
@@ -48,28 +43,18 @@ export default {
             'bgSrc',
             'maskOpacityValue',
             'bgBlurValue',
-        ])
-    },
-    watch: {
-        bgSrc: function(newSrc, oldSrc) {
-            if(newSrc === 'Bing') {
-                this.imgUrl = require('../../../static/defaultWallPapers/moren.jpg')
-                storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1920&h=1080', 'bing-wall-paper', this.setWallPaperCb, false)
-                // console.log('bingSrcx', localUrl)
-                // this.imgUrl = localUrl
-            } else if (newSrc === 'Unsplash') {
-                this.imgUrl = require('../../../static/defaultWallPapers/moren.jpg')
-                getUnsplashWallPaper(this.setWallPaperCb)
-            }
-            // const localUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1366', 'bing-wall-paper')
-        }
+        ]),
+        ...mapState('wallPaper', [
+            'wallPaperSrc',
+        ]),
     },
     methods: {
         setWallPaperCb(localUrl) {
             this.imgUrl = localUrl
+            this.SET_WALLPAPERLOADING(false)
         },
-        ...mapActions('wallPaper', [
-            'getBingWallPaper',
+        ...mapMutations('wallPaper', [
+            'SET_WALLPAPERLOADING'
         ]),
     }
 }
@@ -99,14 +84,11 @@ export default {
         background-size: cover;
         background-position: center;
     }
-    .default-src {
-        background-image: url('../../../static/defaultWallPapers/moren.jpg');
-    }
     .change-bg-btn {
         position: fixed;
         z-index: 1;
-        bottom: 120px;
-        right: 100px;
+        bottom: 50px;
+        right: 60px;
     }
     
 </style>

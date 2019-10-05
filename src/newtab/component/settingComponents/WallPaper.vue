@@ -12,26 +12,10 @@
             </p>
         </div>
         <div class="setting-bg-item">
-            <el-radio @change="changeBgSrc('Bing')" v-model="bgSrc" label="Bing">
-                <span class="bg-name">{{ BingBg }}</span>
-            </el-radio>
-            <p class="bg-desc">
-                {{ BingDesc }}
-            </p>
-        </div>
-        <div class="setting-bg-item">
             <el-radio @change="changeBgSrc('Unsplash')" v-model="bgSrc" label="Unsplash">
                 <span class="bg-name">{{ UnsplashBg }}</span>
                 <p class="bg-desc">
                     {{ UnsplashDesc }}
-                </p>
-            </el-radio>
-        </div>
-        <div class="setting-bg-item setting-bg-item-last">
-            <el-radio @change="changeBgSrc('random')" v-model="bgSrc" label="random">
-                <span class="bg-name">{{ randomBg }}</span>
-                <p class="bg-desc">
-                    {{ randomDesc }}
                 </p>
             </el-radio>
         </div>

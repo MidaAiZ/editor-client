@@ -1,8 +1,14 @@
-import wallPaperService from '../../services/apis/wallPaper.js';
-import req from '../../services/index'
+import { SET_WALLPAPERLOADING, SET_WALLPAPER } from './mutations-type.js'
+import { getUnsplashWallPaper } from '../../utils/wallPaperStorage.js'
 // initial state
 const state = {
     wallPaperUrl: '',
+    wallPaperLoading: false,
+    wallPaperSrc: JSON.parse(localStorage.getItem(`storageWallPaper`))
+    ?
+    JSON.parse(localStorage.getItem(`storageWallPaper`)).wallPaper
+    :
+    require('../../../../static/defaultWallPapers/moren.jpg'),
   }
   
   // getters
@@ -12,15 +18,26 @@ const state = {
   
   // actions
   const actions = {
-    // async getBingWallPaper () {
-    //     const { data } = await req(wallPaperService.Bing.random)
-    //     console.log(data, 'wall')
-    // }
+    async getNewWallPaper (state) {
+      getUnsplashWallPaper((src) => {
+        state.wallPaperLoading = false;
+        state.wallPaperSrc = src
+        console.log('callback', src)
+      })
+      // console.log('wallSrc', wallSrc)
+      // commit([SET_WALLPAPER], wallSrc)
+    }
   }
   
   // mutations
   const mutations = {
-      
+      [SET_WALLPAPERLOADING] (state, loading) {
+        state.wallPaperLoading = loading
+      },
+      [SET_WALLPAPER] (state, src) {
+        console.log('mutation')
+        state.wallPaperSrc = src
+      }
   }
   
   export default {

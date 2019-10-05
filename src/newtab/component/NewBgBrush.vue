@@ -1,6 +1,6 @@
 <template>
-    <div class="change-bg-btn">
-        <div v-if="brushAnimate == false" class="brush-wrapper-static">
+    <div class="change-bg-btn" @click="newWallPaper">
+        <div v-if="wallPaperLoading == false" class="brush-wrapper-static">
             <div class="brush-static yellow">
                 <div class="brush__brush"></div>
                 <div class="brush__arm">
@@ -9,7 +9,7 @@
                 <div class="brush__handle"></div>
             </div>
         </div>
-        <div v-if="brushAnimate == true" class="brush-wrapper">
+        <div v-if="wallPaperLoading == true" class="brush-wrapper">
             <div class="brush yellow">
                 <div class="brush__brush"></div>
                 <div class="brush__arm">
@@ -28,7 +28,7 @@ export default {
     name: 'newBgBrush',
     data(){
         return{
-            brushAnimate: false
+            // brushAnimate: false
         }
     },
     // mounted: async function () {
@@ -40,12 +40,26 @@ export default {
     //     // this.imgUrl = defaultWallPaperUrl
     // },
     computed: {
-        // ...mapState('settings', [
-        //     'bgSrc',
-        //     'maskOpacityValue',
-        //     'bgBlurValue',
-        // ])
+        ...mapState('wallPaper', [
+            'wallPaperLoading',
+        ])
     },
+    methods: {
+        newWallPaper() {
+            this.SET_WALLPAPERLOADING(true)
+            this.SET_BGSRC('Unsplash')
+            this.getNewWallPaper()
+        },
+        ...mapMutations('wallPaper', [
+            'SET_WALLPAPERLOADING',
+        ]),
+        ...mapMutations('settings', [
+            'SET_BGSRC',
+        ]),
+        ...mapActions('wallPaper', [
+            'getNewWallPaper'
+        ])
+    }
 }
 </script>
 <style scoped>

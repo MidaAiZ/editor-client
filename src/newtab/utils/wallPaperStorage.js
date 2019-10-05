@@ -39,13 +39,14 @@ const setWallPaper = (imgSrc, srcUrl, callBack) => {
         storageWallPaper.date = todaysDate;
         storageWallPaper.imgSrc = imgSrc;
         // 将JSON保存到本地存储中
-        callBack(storageWallPaper.wallPaper)
         try {
+            console.log('村本地')
             localStorage.setItem("storageWallPaper", JSON.stringify(storageWallPaper));
         }
         catch (e) {
             console.log("Storage failed: " + e);
         }
+        callBack(storageWallPaper.wallPaper)
     };
 }
 
@@ -55,7 +56,7 @@ const getUnsplashWallPaper = (callBack) => {
         .then(json => {
             // Your code
             // console.log(json[0].urls, 'unsplash')
-            setWallPaper('Unsplash', json.urls.full, callBack)
+            setWallPaper('Unsplash', json.urls.regular, callBack)
         });
 }
 
