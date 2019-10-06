@@ -2,6 +2,7 @@ import {
     SET_BGSRC, 
     SET_BGBLUR, 
     SET_BGMASKOPACITY, 
+    SET_CLOUDSAVE,
     SET_NEWTYPE, 
     SET_HOMEBTN,
     SET_LAYOUT,
@@ -23,6 +24,7 @@ import localSave from '../../utils/localSave.js'
     maskOpacityValue: 30,
     bgBlurValue: 20,
     newSiteNewTabValue: false,
+    cloudSave: false,
     searchResultNewTabValue: false,
     openMarkNewTabValue: false,
     historyNewTabValue: false,
@@ -73,6 +75,10 @@ const state = localStorage.getItem('settings') ? {
     },
     [SET_BGBLUR] (state, blur) {
         state.bgBlurValue = blur
+        localSave('settings', {...state})
+    },
+    [SET_CLOUDSAVE] (state, cloudSave) {
+        state.cloudSave = cloudSave
         localSave('settings', {...state})
     },
     [SET_NEWTYPE] (state, payload) {

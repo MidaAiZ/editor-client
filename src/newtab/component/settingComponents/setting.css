@@ -70,6 +70,7 @@
     line-height: 30px;
 }
 .setting-switch {
+    margin-top: 5px;
     float: right
 }
 .setting-open-title {

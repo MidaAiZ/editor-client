@@ -7,6 +7,7 @@
         <div class="setting-wrap">
             <wallPaper />
             <wallPaperMask />
+            <cloudSaveBtn />
             <openWay />
             <viewSetting />
             <iconLayout />
@@ -21,6 +22,7 @@
 import { mapGetters, mapState, mapMutations } from 'vuex'
 import localeText from '../../../static/locale/index.js'
 import '../component/settingComponents/setting.css'
+import cloudSaveBtn from '../component/settingComponents/CloudSaveBtn.vue'
 import wallPaper from '../component/settingComponents/WallPaper.vue'
 import wallPaperMask from '../component/settingComponents/WallPaperMask.vue'
 import openWay from '../component/settingComponents/OpenWay.vue'
@@ -43,7 +45,8 @@ export default {
         iconSetting,
         searchBarSetting,
         fontSetting,
-        resetAll
+        resetAll,
+        cloudSaveBtn
     },
     data() {
         return {

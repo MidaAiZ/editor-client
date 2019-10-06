@@ -18,6 +18,9 @@ export default {
     computed: {
         
     },
+    created: function () {
+        // 从封装好的函数中获取所有书签
+    },
     methods: {
         
     }

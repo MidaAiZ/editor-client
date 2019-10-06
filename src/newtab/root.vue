@@ -34,6 +34,7 @@ export default {
         settingDialog,
     },
     created: function () {
+      // chrome.bookmarks.getTree((marks) => console.log(marks))
       // 初始化用户设置
       if (!localStorage.getItem('settings')) {
         localSave('settings', {
@@ -41,6 +42,7 @@ export default {
           maskOpacityValue: 30,
           bgBlurValue: 20,
           newSiteNewTabValue: false,
+          cloudSave: false,
           searchResultNewTabValue: false,
           openMarkNewTabValue: false,
           historyNewTabValue: false,
