@@ -1,68 +1,70 @@
 <template>
-    <div id="suggestions" :style="suggestionsWidth">
-        <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}">
-            <swiper-slide v-for="(page,index) in pagingArray">
-                <!--<div v-for="(row,index) in page">-->
-                <draggable v-model="pagingArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
-                           @end="onEnd" @choose="onChoose" @change="onChange">
-                    <transition-group type="transition" name="list-complete" tag="div">
-                        <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
-                                         :item-info="item" :key="item.id" v-on:change="changeDrag" @mousedown="mouse_down"
-                                         v-on:leave="leaveDrag" class="list-complete-item">
-                        </suggestion-item>
-                    </transition-group>
-                </draggable>
-                <!--</div>-->
-            </swiper-slide>
-            <!--<div class="swiper-pagination" slot="pagination"></div>-->
-        </swiper>
+    <div>
+        <div id="suggestions" :style="suggestionsWidth">
+            <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}">
+                <swiper-slide v-for="(page,index) in pagingArray">
+                    <!--<div v-for="(row,index) in page">-->
+                    <draggable v-model="pagingArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
+                               @end="onEnd" @choose="onChoose" @change="onChange">
+                        <transition-group type="transition" name="list-complete" tag="div">
+                            <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
+                                             :item-info="item" :key="item.id" v-on:change="changeDrag" @mousedown="mouse_down"
+                                             v-on:leave="leaveDrag" class="list-complete-item">
+                            </suggestion-item>
+                        </transition-group>
+                    </draggable>
+                    <!--</div>-->
+                </swiper-slide>
+                <!--<div class="swiper-pagination" slot="pagination"></div>-->
+            </swiper>
+            <!--<el-button @click="changeItem(8)">8</el-button>-->
+            <!--<el-button @click="changeItem(7)">7</el-button>-->
+            <!--<el-button @click="changeItem(6)">6</el-button>-->
+            <!--<el-button @click="changeItem(5)">5</el-button>-->
+            <!--<el-button @click="changeItem(4)">4</el-button>-->
+            <!--<draggable v-model="myArray">-->
+            <!--<transition-group type="transition" name="flip-list">-->
+            <!--<div v-for="element in myArray" :key="element.id">-->
+            <!--{{element.name}}-->
+            <!--</div>-->
+            <!--</transition-group>-->
+            <!--</draggable>-->
+            <!--<draggable v-model="pagingArray">-->
+            <!--<transition-group name="flip-list" type="transition">-->
+            <!--<suggestion-item :item-number="itemNumber" v-for="item in homeWebList" v-on:click.stop.prevent-->
+            <!--:item-info="item" :key="item.id">-->
+            <!--</suggestion-item>-->
+            <!--</transition-group>-->
+
+            <!--</draggable>-->
+            <!--<div class="slide" :style="slideWidth" @mousedown="mouse_down">-->
+            <!--<transition-group-->
+            <!--tag="div"-->
+            <!--class='ac_scroll-ul'-->
+            <!--name="list">-->
+            <!--<span class="slide-item"-->
+            <!--v-for="(page, index) in pagingArray"-->
+            <!--:key="index"-->
+            <!--:style="[itemWidth,{left: 2.5*itemNumber+15*index*itemNumber+'vw'}]">-->
+            <!--<suggestion-item :item-number="itemNumber" v-for="item in page" v-on:click.stop.prevent-->
+            <!--:item-info="item" :key="item.id" >-->
+            <!--</suggestion-item>-->
+            <!--</span>-->
+            <!--</transition-group>-->
+            <!--</div>-->
+            <!--<div class="bullet">-->
+            <!--<span v-for="(item, index) in pagingArray" :class="{ 'active':index===currentIndex }"-->
+            <!--@click="changeIndex(index)" :key="index">-->
+            <!--</span>-->
+            <!--</div>-->
+        </div>
         <div class="bullet">
             <span v-for="(item, index) in pagingArray" :class="{ 'active':index===currentIndex }"
                   @click="changeIndex(index)" :key="index">
             </span>
         </div>
-
-        <!--<el-button @click="changeItem(8)">8</el-button>-->
-        <!--<el-button @click="changeItem(7)">7</el-button>-->
-        <!--<el-button @click="changeItem(6)">6</el-button>-->
-        <!--<el-button @click="changeItem(5)">5</el-button>-->
-        <!--<el-button @click="changeItem(4)">4</el-button>-->
-        <!--<draggable v-model="myArray">-->
-        <!--<transition-group type="transition" name="flip-list">-->
-        <!--<div v-for="element in myArray" :key="element.id">-->
-        <!--{{element.name}}-->
-        <!--</div>-->
-        <!--</transition-group>-->
-        <!--</draggable>-->
-        <!--<draggable v-model="pagingArray">-->
-        <!--<transition-group name="flip-list" type="transition">-->
-        <!--<suggestion-item :item-number="itemNumber" v-for="item in homeWebList" v-on:click.stop.prevent-->
-        <!--:item-info="item" :key="item.id">-->
-        <!--</suggestion-item>-->
-        <!--</transition-group>-->
-
-        <!--</draggable>-->
-        <!--<div class="slide" :style="slideWidth" @mousedown="mouse_down">-->
-        <!--<transition-group-->
-        <!--tag="div"-->
-        <!--class='ac_scroll-ul'-->
-        <!--name="list">-->
-        <!--<span class="slide-item"-->
-        <!--v-for="(page, index) in pagingArray"-->
-        <!--:key="index"-->
-        <!--:style="[itemWidth,{left: 2.5*itemNumber+15*index*itemNumber+'vw'}]">-->
-        <!--<suggestion-item :item-number="itemNumber" v-for="item in page" v-on:click.stop.prevent-->
-        <!--:item-info="item" :key="item.id" >-->
-        <!--</suggestion-item>-->
-        <!--</span>-->
-        <!--</transition-group>-->
-        <!--</div>-->
-        <!--<div class="bullet">-->
-        <!--<span v-for="(item, index) in pagingArray" :class="{ 'active':index===currentIndex }"-->
-        <!--@click="changeIndex(index)" :key="index">-->
-        <!--</span>-->
-        <!--</div>-->
     </div>
+
 </template>
 <script>
     import SuggestionItem from '../component/SuggestionItem.vue'
@@ -98,8 +100,14 @@
                 }
             },
             suggestionsWidth: function () {
-                return {
-                    'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50)/10.0 + 'vw',
+                if (this.iconLayout.col===3||this.iconLayout.col===4||this.iconLayout.col===5){
+                    return {
+                        'width': 10 * 5+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                    }
+                }else{
+                    return {
+                        'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                    }
                 }
             },
             slideWidth: function () {
@@ -321,71 +329,75 @@
 <style scoped>
     /*@import '../component/style/suggestion.css';*/
     #suggestions {
-        margin-top: 60px;
-        height: 340px;
+        margin-top: 4vh;
+        /*height: 340px;*/
         /*width: 1100px;*/
         position: relative;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
-
-    .list-complete-item {
-        transition: all 1s;
-    }
-
-    .flip-list-move {
-        transition: transform 1s;
-    }
-
-    .no-move {
-        transition: transform 0s;
-    }
-
-    .slide {
-        /*width: 100%;*/
-        position: absolute;
+    #suggestions .swiper-container{
         height: 100%;
-        overflow: hidden;
-        transition: left 0.5s;
-        /*position: relative;*/
     }
 
-    ul {
-        list-style: none;
-    }
+    /*.list-complete-item {*/
+        /*transition: all 1s;*/
+    /*}*/
 
-    .slide-item {
-        position: absolute;
-        top: 0;
-        text-align: left;
-        list-style: none;
-        height: 90%;
+    /*.flip-list-move {*/
+        /*transition: transform 1s;*/
+    /*}*/
+
+    /*.no-move {*/
+        /*transition: transform 0s;*/
+    /*}*/
+
+    /*.slide {*/
+        /*!*width: 100%;*!*/
+        /*position: absolute;*/
+        /*height: 100%;*/
+        /*overflow: hidden;*/
         /*transition: left 0.5s;*/
-        display: inline-block;
-    }
+        /*!*position: relative;*!*/
+    /*}*/
 
-    .list-enter-to {
-        transition: all .5s ease;
-        transform: translateX(0);
-    }
+    /*ul {*/
+        /*list-style: none;*/
+    /*}*/
 
-    .list-leave-active {
-        transition: all .5s ease;
-        transform: translateX(-100%)
-    }
+    /*.slide-item {*/
+        /*position: absolute;*/
+        /*top: 0;*/
+        /*text-align: left;*/
+        /*list-style: none;*/
+        /*height: 90%;*/
+        /*!*transition: left 0.5s;*!*/
+        /*display: inline-block;*/
+    /*}*/
 
-    .list-enter {
-        transform: translateX(100%)
-    }
+    /*.list-enter-to {*/
+        /*transition: all .5s ease;*/
+        /*transform: translateX(0);*/
+    /*}*/
 
-    .list-leave {
-        transform: translateX(0)
-    }
+    /*.list-leave-active {*/
+        /*transition: all .5s ease;*/
+        /*transform: translateX(-100%)*/
+    /*}*/
+
+    /*.list-enter {*/
+        /*transform: translateX(100%)*/
+    /*}*/
+
+    /*.list-leave {*/
+        /*transform: translateX(0)*/
+    /*}*/
 
     .bullet {
-        position: absolute;
-        width: 100%;
-        bottom: 10px;
-        margin: 0 auto;
+        /*position: absolute;*/
+        /*width: 100%;*/
+        /*bottom: -6vh;*/
+        /*margin: 0 auto;*/
+        margin-top: 3vh;
         z-index: 10;
         text-align: center;
     }
@@ -399,6 +411,9 @@
         display: inline-block;
         margin-right: 15px;
         opacity: 0.5
+    }
+    .bullet span:last-child{
+        margin-right: 0;
     }
 
     .active {

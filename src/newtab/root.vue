@@ -4,14 +4,12 @@
       <background />
       <systemBar />
       <settingDialog />
-      <section>
-        <v-layout>
-          <div id="main">
-            <customSearch />
-            <suggestions />
-          </div>
-        </v-layout>
-      </section>
+      <div id="content">
+        <div id="main">
+          <customSearch />
+          <suggestions />
+        </div>
+      </div>
     </div>
       
   </v-app>
@@ -78,6 +76,21 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
+    justify-content: center;
+    /*margin-top: 100px;*/
+  }
+
+  #content{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom:0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
   }
 </style>
