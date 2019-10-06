@@ -1,0 +1,8 @@
+.search-popover{
+    padding:0 !important;
+    width: 40vw;
+}
+
+.el-popover__title{
+    display:none;
+}

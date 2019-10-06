@@ -4,18 +4,29 @@
             <span v-for="(item,index) in tabList" class="search-tab" :class="{searchClick:index === tabIndex}" @click="changeTab(index)">{{item}}</span>
         </div>
         <div id="search-input-container">
-            <span class="input-icon-container" :style="inputIconStyle">
-                <img src="https://picsum.photos/50/50" class="input-icon"/>
-                <div class="select-triangle"></div>
-            </span>
+            <el-popover placement="bottom-start" title="标题" trigger="click" width="6vw"
+                        :visible-arrow="showArrow" popper-class="search-popover">
+                <span class="input-icon-container" :style="inputIconStyle" slot="reference">
+                    <img src="https://picsum.photos/50/50" class="input-icon"/>
+                    <div class="select-triangle"></div>
+                </span>
+                <search-popover></search-popover>
+            </el-popover>
+
             <input :placeholder="searchPlaceholder" class="search-input" :style="searchInputStyle" @focus="inputFocus" @blur="inputBlur"/>
         </div>
     </div>
 </template>
 <script>
 import zh_CN from '../../../static/locale/zh_CN.js'
+import searchPopover from '../component/SearchPopover.vue'
+import '../component/style/popover.css'
 import {mapState} from 'vuex'
 export default {
+    components:{
+        searchPopover
+    },
+    props: ['isShow'],
     computed:{
         ...mapState('settings',['searchBarSizeValue','searchBarRadiusValue','searchBarOpacityValue']),
         inputIconStyle:function () {
@@ -40,7 +51,9 @@ export default {
         return{
             tabList:zh_CN.searchTab,
             searchPlaceholder: zh_CN.searchPlaceholder,
-            tabIndex:0
+            tabIndex:0,
+            showArrow: false
+//            isShow: false
         }
     },
     methods:{
@@ -52,7 +65,13 @@ export default {
         },
         inputBlur(){
             document.getElementById('custom-search').style.opacity = this.searchBarOpacityValue/100.0;
-        }
+        },
+        showPopover(){
+            this.$emit('show')
+        },
+//        closePopover(){
+//            this.isShow = false;
+//        }
     }
 }
 </script>
@@ -98,10 +117,11 @@ export default {
         border-width:0;
         padding-left:75px;
         padding-right: 20px;
-        width:30vw;
+        width:40vw;
         height: 6vh;
         font-size: 16px;
         background: white;
+        box-sizing: border-box;
     }
     .input-icon{
         height: 30px;
@@ -131,5 +151,31 @@ export default {
         border-top: 8px solid #999;
         border-right: 5px solid transparent;
         border-left: 5px solid transparent;
+    }
+    .displayNone{
+        display: none;
+    }
+
+    .popover-show{
+        position:absolute;
+        left: 0;
+        top: calc(100% + 10px);
+        background-color: white;
+        padding: 30px;
+        z-index: 10001;
+        width: 30vw;
+    }
+    .popover-mask{
+        position: fixed;
+        left: 0;
+        top: 0;
+        width:100vw;
+        height:100vh;
+        transform: scale(2);
+        background-color: black;
+        z-index: 10000;
+        -moz-opacity: 0.3;
+        opacity: .30;
+        filter: alpha(opacity=30);
     }
 </style>
