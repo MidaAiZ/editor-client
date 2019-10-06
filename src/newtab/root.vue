@@ -2,6 +2,9 @@
   <v-app>
     <div>
       <background />
+      <div v-if="showBookMarkBar">
+        <bookmarks />
+      </div>
       <systemBar />
       <settingDialog />
       <div id="content">
@@ -15,11 +18,13 @@
   </v-app>
 </template>
 <script>
+import { mapState } from 'vuex'
 import background from './section/Background.vue'
 import systemBar from './section/SystemBar.vue'
 import suggestions from './section/Suggestions.vue'
 import customSearch from './section/CustomSearch.vue'
 import settingDialog from './section/SettingDialog.vue'
+import bookmarks from './section/Bookmarks.vue'
 import localSave from './utils/localSave.js'
 
 export default {
@@ -30,6 +35,16 @@ export default {
         suggestions,
         customSearch,
         settingDialog,
+        bookmarks,
+    },
+    data(){
+        return{
+        }
+    },
+    computed: {
+        ...mapState('settings', [
+          'showBookMarkBar'
+        ])
     },
     created: function () {
       // chrome.bookmarks.getTree((marks) => console.log(marks))

@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="bookmarks-wrap">
+        打法是否
     </div>
 </template>
 <script>
@@ -27,5 +28,11 @@ export default {
 }
 </script>
 <style scoped>
-    
+    .bookmarks-wrap {
+        width: 100%;
+        height: 30px;
+        background-color: #fff;
+        opacity: 0.8;
+        z-index: 11;
+    }
 </style>

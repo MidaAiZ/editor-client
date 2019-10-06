@@ -1,6 +1,12 @@
 <template>
     <div>
-        <el-button class="open-system-bar-btn" @click="SET_SYSBARVIS(true)" icon="el-icon-menu" size="medium" circle>
+        <el-button
+            class="open-system-bar-btn"
+            @click="SET_SYSBARVIS(true)"
+            icon="el-icon-menu"
+            size="medium"
+            :style="{top: (showBookMarkBar ? '55px' : '25px')}"
+            circle>
         </el-button>
         <el-drawer
             :visible.sync="systemBarVis"
@@ -48,6 +54,9 @@ export default {
             'location',
         ]),
         ...mapState('drawersVis', ['systemBarVis']),
+        ...mapState('settings', [
+            'showBookMarkBar'
+        ])
     },
     created: function() {
         this.loginSuggest = localeText[this.location].loginSuggest
@@ -66,7 +75,6 @@ export default {
     .open-system-bar-btn {
         position: fixed;
         right: 25px;
-        top: 25px;
         border: 0px;
         background-color: #555;
         opacity: 0.5;
