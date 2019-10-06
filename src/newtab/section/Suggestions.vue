@@ -1,68 +1,70 @@
 <template>
-    <div id="suggestions" :style="suggestionsWidth">
-        <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}">
-            <swiper-slide v-for="(page,index) in pagingArray">
-                <!--<div v-for="(row,index) in page">-->
-                <draggable v-model="pagingArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
-                           @end="onEnd" @choose="onChoose" @change="onChange">
-                    <transition-group type="transition" name="list-complete" tag="div">
-                        <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
-                                         :item-info="item" :key="item.id" v-on:change="changeDrag" @mousedown="mouse_down"
-                                         v-on:leave="leaveDrag" class="list-complete-item">
-                        </suggestion-item>
-                    </transition-group>
-                </draggable>
-                <!--</div>-->
-            </swiper-slide>
-            <!--<div class="swiper-pagination" slot="pagination"></div>-->
-        </swiper>
+    <div>
+        <div id="suggestions" :style="suggestionsWidth">
+            <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}">
+                <swiper-slide v-for="(page,index) in pagingArray">
+                    <!--<div v-for="(row,index) in page">-->
+                    <draggable v-model="pagingArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
+                               @end="onEnd" @choose="onChoose" @change="onChange">
+                        <transition-group type="transition" name="list-complete" tag="div">
+                            <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
+                                             :item-info="item" :key="item.id" v-on:change="changeDrag" @mousedown="mouse_down"
+                                             v-on:leave="leaveDrag" class="list-complete-item">
+                            </suggestion-item>
+                        </transition-group>
+                    </draggable>
+                    <!--</div>-->
+                </swiper-slide>
+                <!--<div class="swiper-pagination" slot="pagination"></div>-->
+            </swiper>
+            <!--<el-button @click="changeItem(8)">8</el-button>-->
+            <!--<el-button @click="changeItem(7)">7</el-button>-->
+            <!--<el-button @click="changeItem(6)">6</el-button>-->
+            <!--<el-button @click="changeItem(5)">5</el-button>-->
+            <!--<el-button @click="changeItem(4)">4</el-button>-->
+            <!--<draggable v-model="myArray">-->
+            <!--<transition-group type="transition" name="flip-list">-->
+            <!--<div v-for="element in myArray" :key="element.id">-->
+            <!--{{element.name}}-->
+            <!--</div>-->
+            <!--</transition-group>-->
+            <!--</draggable>-->
+            <!--<draggable v-model="pagingArray">-->
+            <!--<transition-group name="flip-list" type="transition">-->
+            <!--<suggestion-item :item-number="itemNumber" v-for="item in homeWebList" v-on:click.stop.prevent-->
+            <!--:item-info="item" :key="item.id">-->
+            <!--</suggestion-item>-->
+            <!--</transition-group>-->
+
+            <!--</draggable>-->
+            <!--<div class="slide" :style="slideWidth" @mousedown="mouse_down">-->
+            <!--<transition-group-->
+            <!--tag="div"-->
+            <!--class='ac_scroll-ul'-->
+            <!--name="list">-->
+            <!--<span class="slide-item"-->
+            <!--v-for="(page, index) in pagingArray"-->
+            <!--:key="index"-->
+            <!--:style="[itemWidth,{left: 2.5*itemNumber+15*index*itemNumber+'vw'}]">-->
+            <!--<suggestion-item :item-number="itemNumber" v-for="item in page" v-on:click.stop.prevent-->
+            <!--:item-info="item" :key="item.id" >-->
+            <!--</suggestion-item>-->
+            <!--</span>-->
+            <!--</transition-group>-->
+            <!--</div>-->
+            <!--<div class="bullet">-->
+            <!--<span v-for="(item, index) in pagingArray" :class="{ 'active':index===currentIndex }"-->
+            <!--@click="changeIndex(index)" :key="index">-->
+            <!--</span>-->
+            <!--</div>-->
+        </div>
         <div class="bullet">
             <span v-for="(item, index) in pagingArray" :class="{ 'active':index===currentIndex }"
                   @click="changeIndex(index)" :key="index">
             </span>
         </div>
-
-        <!--<el-button @click="changeItem(8)">8</el-button>-->
-        <!--<el-button @click="changeItem(7)">7</el-button>-->
-        <!--<el-button @click="changeItem(6)">6</el-button>-->
-        <!--<el-button @click="changeItem(5)">5</el-button>-->
-        <!--<el-button @click="changeItem(4)">4</el-button>-->
-        <!--<draggable v-model="myArray">-->
-        <!--<transition-group type="transition" name="flip-list">-->
-        <!--<div v-for="element in myArray" :key="element.id">-->
-        <!--{{element.name}}-->
-        <!--</div>-->
-        <!--</transition-group>-->
-        <!--</draggable>-->
-        <!--<draggable v-model="pagingArray">-->
-        <!--<transition-group name="flip-list" type="transition">-->
-        <!--<suggestion-item :item-number="itemNumber" v-for="item in homeWebList" v-on:click.stop.prevent-->
-        <!--:item-info="item" :key="item.id">-->
-        <!--</suggestion-item>-->
-        <!--</transition-group>-->
-
-        <!--</draggable>-->
-        <!--<div class="slide" :style="slideWidth" @mousedown="mouse_down">-->
-        <!--<transition-group-->
-        <!--tag="div"-->
-        <!--class='ac_scroll-ul'-->
-        <!--name="list">-->
-        <!--<span class="slide-item"-->
-        <!--v-for="(page, index) in pagingArray"-->
-        <!--:key="index"-->
-        <!--:style="[itemWidth,{left: 2.5*itemNumber+15*index*itemNumber+'vw'}]">-->
-        <!--<suggestion-item :item-number="itemNumber" v-for="item in page" v-on:click.stop.prevent-->
-        <!--:item-info="item" :key="item.id" >-->
-        <!--</suggestion-item>-->
-        <!--</span>-->
-        <!--</transition-group>-->
-        <!--</div>-->
-        <!--<div class="bullet">-->
-        <!--<span v-for="(item, index) in pagingArray" :class="{ 'active':index===currentIndex }"-->
-        <!--@click="changeIndex(index)" :key="index">-->
-        <!--</span>-->
-        <!--</div>-->
     </div>
+
 </template>
 <script>
     import SuggestionItem from '../component/SuggestionItem.vue'
@@ -98,9 +100,14 @@
                 }
             },
             suggestionsWidth: function () {
-                return {
-                    'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50.0)/10.0 + 'vw',
-//                    'height': 20 * this.iconLayout.row+'vh'
+                if (this.iconLayout.col===3||this.iconLayout.col===4||this.iconLayout.col===5){
+                    return {
+                        'width': 10 * 5+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                    }
+                }else{
+                    return {
+                        'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                    }
                 }
             },
             slideWidth: function () {
@@ -386,10 +393,11 @@
     /*}*/
 
     .bullet {
-        position: absolute;
-        width: 100%;
-        bottom: -6vh;
-        margin: 0 auto;
+        /*position: absolute;*/
+        /*width: 100%;*/
+        /*bottom: -6vh;*/
+        /*margin: 0 auto;*/
+        margin-top: 3vh;
         z-index: 10;
         text-align: center;
     }
@@ -404,7 +412,7 @@
         margin-right: 15px;
         opacity: 0.5
     }
-    .bullet:last-child{
+    .bullet span:last-child{
         margin-right: 0;
     }
 

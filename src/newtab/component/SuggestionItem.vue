@@ -47,20 +47,23 @@
                 switch (this.iconLayout.row){
                     case 2:
                         if(col === 4){
-                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
-                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
+                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
+                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
                         }else {
-                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
-                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 5 / (this.iconLayout.row + 3) + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 5 / (this.iconLayout.row + 3) + 'vw';
                         }
                         break;
                     case 3:
-                        if (col === 3 || col === 4 || col === 5){
-                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
-                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+1+'vw';
+                        if (col === 3 || col === 4){
+                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
+                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
+                        }else if(col === 5){
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) + 'vw';
                         }else{
-                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
-                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 3 / (this.iconLayout.row + 1) + 'vw';
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 9 / (this.iconLayout.row + 7) + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 9 / (this.iconLayout.row + 7) + 'vw';
                         }
                         break;
                     default:

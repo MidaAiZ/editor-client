@@ -20,13 +20,13 @@ export default {
         ...mapState('settings',['searchBarSizeValue','searchBarRadiusValue','searchBarOpacityValue']),
         inputIconStyle:function () {
             return{
-                'border-radius': 5.0*(this.searchBarRadiusValue*2.0)/100+'vh'+' 0 0 '+5.0*(this.searchBarRadiusValue*2.0)/100+'vh'
+                'border-radius': 4.0*(this.searchBarRadiusValue*2.0)/100+'vh'+' 0 0 '+4.0*(this.searchBarRadiusValue*2.0)/100+'vh'
 //                'height': 5*(50.0+this.searchBarSizeValue)/100+'vh',
             }
         },
         searchInputStyle:function () {
             return{
-                'border-radius': 5.0*(this.searchBarRadiusValue*2.0)/100+'vh'
+                'border-radius': 4.0*(this.searchBarRadiusValue*2.0)/100+'vh'
             }
         },
         searchStyle:function () {
@@ -92,15 +92,15 @@ export default {
         position: relative;
     }
     .search-input{
-        border-radius:5vh;
+        border-radius:4vh;
         /*height: 35px;*/
         outline-style:none;
         border-width:0;
         padding-left:75px;
         padding-right: 20px;
-        width:35vw;
-        height: 7vh;
-        font-size: 18px;
+        width:30vw;
+        height: 6vh;
+        font-size: 16px;
         background: white;
     }
     .input-icon{
