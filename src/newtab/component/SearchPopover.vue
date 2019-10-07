@@ -1,6 +1,6 @@
 <template>
     <div id="search-popover" :style="borderRadius">
-        <span class="search-engine-container" v-for="(item,index) in engineList">
+        <span class="search-engine-container" v-for="(item,index) in engineList" @click="changeEngine(index)">
             <div class="search-engine">
                 <span v-if="index === engineList.length-1" class="add-icon">
                     <span class="icon-container"><i class="el-icon-circle-plus-outline"></i></span>
@@ -9,6 +9,9 @@
                 <div class="engine-name">{{item.name}}</div>
             </div>
         </span>
+        <el-drawer :visible="drawer" title="搜索" size="500px">
+
+        </el-drawer>
     </div>
 </template>
 <script>
@@ -32,11 +35,18 @@
         },
         data(){
             return{
+                drawer: false
 //                isShow:false
             }
         },
         methods:{
+            changeEngine:function (index) {
+                if(index === this.engineList.length-1){
+                    this.drawer = true;
+                }else{
 
+                }
+            }
         }
     }
 </script>
