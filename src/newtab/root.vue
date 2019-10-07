@@ -2,7 +2,7 @@
   <v-app>
     <div>
       <background />
-      <div v-if="showBookMarkBar">
+      <div class="bookmarks-wrap" v-if="showBookMarkBar">
         <bookmarks />
       </div>
       <systemBar />
@@ -47,7 +47,6 @@ export default {
         ])
     },
     created: function () {
-      // chrome.bookmarks.getTree((marks) => console.log(marks))
       // 初始化用户设置
       if (!localStorage.getItem('settings')) {
         localSave('settings', {
@@ -107,5 +106,14 @@ export default {
     align-items: center;
     justify-content: center;
     z-index: 5;
+  }
+
+  .bookmarks-wrap{
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 12;
   }
 </style>

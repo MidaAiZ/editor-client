@@ -22,21 +22,8 @@ export default {
     },
     data(){
         return{
-            // imgUrl: (this.bgSrc !== 'default' && JSON.parse(localStorage.getItem(`storageWallPaper`)))
-            // ?
-            // this.src,
-            // :
-            // require('../../../static/defaultWallPapers/moren.jpg'),
         }
     },
-    // mounted: async function () {
-    //     // this.getBingWallPaper()
-    //     if (this.bgSrc = 'Bing') {
-    //         const defaultWallPaperUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1366', 'bing-wall-paper')
-    //     }
-    //     // console.log(defaultWallPaperUrl)
-    //     // this.imgUrl = defaultWallPaperUrl
-    // },
     computed: {
         ...mapState('settings', [
             'bgSrc',
