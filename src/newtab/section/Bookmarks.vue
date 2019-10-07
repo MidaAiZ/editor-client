@@ -1,5 +1,5 @@
 <template>
-    <div class="bookmarks-wrap">
+    <div class="bookmarks">
         <div class="bookmarks-main">
             <div class="bookmarks-bar">
                 <span class="main-bookmarks-title">
@@ -75,7 +75,7 @@ export default {
 }
 </script>
 <style scoped>
-    .bookmarks-wrap {
+    .bookmarks {
         width: 100%;
         height: 30px;
         background-color: #fff;

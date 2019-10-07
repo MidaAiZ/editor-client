@@ -9,11 +9,9 @@
       <settingDialog />
       <div id="content">
         <div id="main">
-          <customSearch v-on:show="showPop" :is-show="isShow"></customSearch>
+          <customSearch></customSearch>
           <suggestions ></suggestions>
-          <search-popover v-if="isShow"></search-popover>
         </div>
-        <div class="popover-mask" :class="{displayNone: !isShow}" @click="closePopover"></div>
       </div>
     </div>
       
@@ -110,7 +108,7 @@ export default {
     z-index: 5;
   }
 
-  .bookmarks-wrap{
+  .bookmarks-wrap {
     width: 100%;
     height: 30px;
     position: absolute;
