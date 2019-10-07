@@ -1,6 +1,7 @@
 <template>
     <div class="bookmarks-item">
-        <img class="fav-icon" :src="iconSrc"></img>
+        <img v-if="!item.children" class="fav-icon" :src="iconSrc"></img>
+        <i class="el-icon-folder folder-icon" v-else></i>
         {{item.title}}
     </div>
 </template>
@@ -39,6 +40,7 @@ export default {
         height: 30px;
         font-size: 13px;
         overflow: hidden;
+        text-align: center;
         text-overflow:ellipsis;
         white-space: nowrap;
         cursor: pointer;

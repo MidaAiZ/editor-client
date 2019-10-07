@@ -3,6 +3,7 @@ import { SET_SETTINGVIS, SET_SYSBARVIS } from './mutations-type.js'
 const state = {
     systemBarVis: false,
     settingVis: false,
+    bookmarksAndHistory: false,
   }
   
   // getters
@@ -19,11 +20,9 @@ const state = {
   const mutations = {
     [SET_SETTINGVIS] (state, vis) {
         state.settingVis = vis
-        // localSave('settings', {...state})
     },
     [SET_SYSBARVIS] (state, vis) {
         state.systemBarVis = vis
-        // localSave('settings', {...state})
     },
   }
   
