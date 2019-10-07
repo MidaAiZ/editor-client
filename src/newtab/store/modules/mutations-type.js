@@ -1,5 +1,6 @@
 // home 页的mutation
 export const SET_SYSBARVIS = 'SET_SYSBARVIS' // 打开主添加面板
+export const SET_BMHIS = 'SET_BMHIS' // 打开书签和历史记录
 // user 的mutation
 export const setLogRegModalVis = 'setLogRegModalVis' // 登录mutation
 

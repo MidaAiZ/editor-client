@@ -15,7 +15,7 @@
                 {{otherBookmarks.title}}
             </span>
         </div>
-        <div class="manage-btn-wrap">
+        <div class="manage-btn-wrap" @click="openBmHis(true)">
             <manageBtn />
         </div>
     </div>
@@ -70,7 +70,13 @@ export default {
                 children,
                 createdAt,
             }
-        }
+        },
+        openBmHis(vis) {
+            this.SET_BMHIS(vis)
+        },
+        ...mapMutations('drawersVis', [
+            'SET_BMHIS'
+        ])
     }
 }
 </script>

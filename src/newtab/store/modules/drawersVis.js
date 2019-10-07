@@ -1,4 +1,4 @@
-import { SET_SETTINGVIS, SET_SYSBARVIS } from './mutations-type.js'
+import { SET_SETTINGVIS, SET_SYSBARVIS, SET_BMHIS } from './mutations-type.js'
 // initial state
 const state = {
     systemBarVis: false,
@@ -24,6 +24,9 @@ const state = {
     [SET_SYSBARVIS] (state, vis) {
         state.systemBarVis = vis
     },
+    [SET_BMHIS] (state, vis) {
+      state.bookmarksAndHistory = vis
+  },
   }
   
   export default {

@@ -1,0 +1,8 @@
+.manage-dialog {
+    height: 88vh;
+    padding: 0;
+}
+
+.el-dialog__body {
+    padding: 0 !important;
+}

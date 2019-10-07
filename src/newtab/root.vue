@@ -7,6 +7,7 @@
       </div>
       <systemBar />
       <settingDialog />
+      <manage />
       <div id="content">
         <div id="main">
           <customSearch></customSearch>
@@ -25,6 +26,7 @@ import suggestions from './section/Suggestions.vue'
 import customSearch from './section/CustomSearch.vue'
 import settingDialog from './section/SettingDialog.vue'
 import bookmarks from './section/Bookmarks.vue'
+import manage from './section/Manage.vue'
 import localSave from './utils/localSave.js'
 
 export default {
@@ -36,6 +38,7 @@ export default {
         customSearch,
         settingDialog,
         bookmarks,
+        manage
     },
     data(){
         return{

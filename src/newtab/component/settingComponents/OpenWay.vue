@@ -53,7 +53,7 @@ export default {
     name: 'openWay',
     data() {
         return {
-            targetOpenType: '',
+            // targetOpenType: '',
             targetOpenTypeTip: '',
             newSiteNewTab: '',
             searchResultNewTab: '',
@@ -62,6 +62,9 @@ export default {
         }
     },
     computed: {
+        targetOpenType: function() {
+            return localeText[this.location].targetOpenType
+        },
         ...mapState('settings', [
             'newSiteNewTabValue',
             'searchResultNewTabValue',
@@ -74,7 +77,7 @@ export default {
     },
     created: function() {
         this.resetAll = localeText[this.location].resetAll
-        this.targetOpenType = localeText[this.location].targetOpenType
+        // this.targetOpenType = localeText[this.location].targetOpenType
         this.targetOpenTypeTip = localeText[this.location].targetOpenTypeTip
         this.newSiteNewTab = localeText[this.location].newSiteNewTab
         this.searchResultNewTab = localeText[this.location].searchResultNewTab
