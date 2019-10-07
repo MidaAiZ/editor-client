@@ -1,6 +1,11 @@
 .search-popover{
     padding:0 !important;
-    width: 40vw;
+    border:none !important;
+    /*border-width: 0 !important;*/
+    /*overflow: hidden;*/
+    overflow: visible;
+    background:transparent;
+    border-radius: 4vh !important;
 }
 
 .el-popover__title{

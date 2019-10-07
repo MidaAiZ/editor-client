@@ -4,7 +4,7 @@
             <span v-for="(item,index) in tabList" class="search-tab" :class="{searchClick:index === tabIndex}" @click="changeTab(index)">{{item}}</span>
         </div>
         <div id="search-input-container">
-            <el-popover placement="bottom-start" title="标题" trigger="click" width="6vw"
+            <el-popover placement="bottom-start" title="标题" trigger="click" width="6vw" :style="popoverRadius"
                         :visible-arrow="showArrow" popper-class="search-popover">
                 <span class="input-icon-container" :style="inputIconStyle" slot="reference">
                     <img src="https://picsum.photos/50/50" class="input-icon"/>
@@ -45,6 +45,12 @@ export default {
                 'transform':'scale('+(50.0+this.searchBarSizeValue)/100+')',
                 'opacity': this.searchBarOpacityValue/100.0
             }
+        },
+        popoverRadius:function () {
+            return{
+                'border-radius': 4.0*(this.searchBarRadiusValue*2.0)/100+'vh'+' !important'
+            }
+
         }
     },
     data(){

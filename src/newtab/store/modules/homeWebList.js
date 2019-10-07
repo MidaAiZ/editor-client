@@ -1,6 +1,4 @@
 const state = {
-    rowNumber: 2,
-    itemNumber: 5,
     homeWebList:[
         {
             id: 1,
@@ -206,7 +204,37 @@ const state = {
             index: 29
         }
     ],
-
+    searchEngineList:[
+        {
+            url: '',
+            img: 'https://picsum.photos/40/40',
+            name: '搜索'
+        },{
+            url: '',
+            img: 'https://picsum.photos/41/41',
+            name: 'Yahoo!'
+        },{
+            url: '',
+            img: 'https://picsum.photos/42/42',
+            name: '百度'
+        },{
+            url: '',
+            img: 'https://picsum.photos/43/43',
+            name: 'YandexRU'
+        },{
+            url: '',
+            img: 'https://picsum.photos/44/44',
+            name: '360'
+        },{
+            url: '',
+            img: 'https://picsum.photos/45/45',
+            name: '百度'
+        },{
+            url: '',
+            img: 'https://picsum.photos/46/46',
+            name: '搜狗'
+        }
+    ],
 };
 
 function compare(property) {
