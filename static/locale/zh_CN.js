@@ -100,7 +100,8 @@
     fontColor: '字体颜色',
     resetAll: '恢复默认设置',
     cloudSaveBtn: '云同步',
-    cloudSaveTip: '您的设置、书签等会被同步到云端'
+    cloudSaveTip: '您的设置、书签等会被同步到云端',
+    manageBtn: '管理'
     
 }
 export default zh_CN

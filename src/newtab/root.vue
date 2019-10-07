@@ -2,6 +2,9 @@
   <v-app>
     <div>
       <background />
+      <div class="bookmarks-wrap" v-if="showBookMarkBar">
+        <bookmarks />
+      </div>
       <systemBar />
       <settingDialog />
       <div id="content">
@@ -17,12 +20,13 @@
   </v-app>
 </template>
 <script>
+import { mapState } from 'vuex'
 import background from './section/Background.vue'
 import systemBar from './section/SystemBar.vue'
 import suggestions from './section/Suggestions.vue'
 import customSearch from './section/CustomSearch.vue'
 import settingDialog from './section/SettingDialog.vue'
-import searchPopover from  './component/SearchPopover.vue'
+import bookmarks from './section/Bookmarks.vue'
 import localSave from './utils/localSave.js'
 
 export default {
@@ -33,23 +37,18 @@ export default {
         suggestions,
         customSearch,
         settingDialog,
-        searchPopover
+        bookmarks,
     },
     data(){
         return{
-           isShow:false
         }
     },
-    methods:{
-        closePopover(){
-            this.isShow = false;
-        },
-        showPop(){
-            this.isShow = true
-        }
+    computed: {
+        ...mapState('settings', [
+          'showBookMarkBar'
+        ])
     },
     created: function () {
-      // chrome.bookmarks.getTree((marks) => console.log(marks))
       // 初始化用户设置
       if (!localStorage.getItem('settings')) {
         localSave('settings', {
@@ -110,20 +109,13 @@ export default {
     justify-content: center;
     z-index: 5;
   }
-  .displayNone{
-    display: none;
-  }
-  .popover-mask{
-    position: fixed;
+
+  .bookmarks-wrap{
+    width: 100%;
+    height: 30px;
+    position: absolute;
     left: 0;
     top: 0;
-    width:100vw;
-    height:100vh;
-    /*transform: scale(2);*/
-    background-color: black;
-    z-index: 10000;
-    -moz-opacity: 0.3;
-    opacity: .30;
-    filter: alpha(opacity=30);
+    z-index: 12;
   }
 </style>
