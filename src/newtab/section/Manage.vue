@@ -3,7 +3,7 @@
         :visible="bookmarksAndHistory"
         custom-class="manage-dialog"
         @close="closeBmHis(false)"
-        width="80%"
+        width="90%"
         top="6vh"
         :title="manageTitle"
     >

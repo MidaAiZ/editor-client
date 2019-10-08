@@ -1,7 +1,7 @@
 import localSave from './localSave.js';
 
 const getBookmarks = (callback) => {
-    chrome.bookmarks.getTree((markstree) => renderMarks(markstree, callback))
+    chrome.bookmarks.getTree((markstree) => renderMarks(markstree, 0, callback))
 }
 
 const getBookmarksSub = (id, callback) => {
