@@ -1,8 +1,19 @@
 <template>
     <div>
         <div v-if="filter === 'login'" class="logreg-wrap">
-            <input class="logreg-input" :placeholder="userAccountPlaceholder" :value="loginEmail" @input="inputLogin($event.target.value, 'loginEmail')" />
-            <input class="logreg-input" :placeholder="pswPlaceholder" type="password" :value="loginPassword" @input="inputLogin($event.target.value, 'loginPassword')" />
+            <input 
+                class="logreg-input"
+                :placeholder="userAccountPlaceholder" 
+                :value="loginEmail" 
+                @input="inputLogin($event.target.value, 'loginEmail')" 
+            />
+            <input
+                class="logreg-input"
+                :placeholder="pswPlaceholder"
+                type="password"
+                :value="loginPassword" 
+                @input="inputLogin($event.target.value, 'loginPassword')"
+            />
             <div class="forget-psw-wrap">
                 {{forgetPsw}}
             </div>
@@ -14,13 +25,26 @@
             </div>
         </div>
         <div v-if="filter === 'register'" class="logreg-wrap">
-            <input class="logreg-input" :placeholder="userAccountPlaceholder" />
-            <input class="logreg-input" :placeholder="pswPlaceholder" />
-            <div class="forget-psw-wrap">
-                {{forgetPsw}}
-            </div>
+            <input
+                class="logreg-input"
+                :placeholder="userAccountPlaceholder"
+                @input="inputRegisterInfo($event.target.value, 'registerEmail')"
+            />
+            <input
+                class="logreg-input"
+                :placeholder="userName" 
+                @input="inputRegisterInfo($event.target.value, 'registerName')" 
+            />
+            <input 
+                class="logreg-input" 
+                :placeholder="pswPlaceholder" 
+                type="password" 
+                @input="inputRegisterInfo($event.target.value, 'registerPassword')" 
+            />
             <div class="log-or-reg">
-                <el-button class="login-btn" type="primary">{{regBtn}}</el-button>
+                <el-button class="login-btn" type="primary" @click="handleRegister">
+                    {{ regBtn }}
+                </el-button>
                 <div class="new-user-btn" @click="filter = 'login'">
                     {{backToLog}}
                 </div>
@@ -50,7 +74,10 @@ export default {
         ...mapState('user', ['loginEmail', 'loginPassword', 'loginLoading']),
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        userName: function() {
+            return localeText[this.location].userName
+        }
     },
     created: function() {
         this.userAccountPlaceholder = localeText[this.location].userAccountPlaceholder
@@ -72,19 +99,33 @@ export default {
             this.setLoginLoading(true)
             this.login()
         },
+        inputRegisterInfo (value, type) {
+            this.setRegisterInfo({
+                type,
+                value,
+            })
+        },
+        handleRegister() {
+            this.setRegisterLoading(true)
+            this.register()
+        },
         ...mapMutations('user', [
         'setLoginInfo',
         'setLoginLoading',
+        'setRegisterName',
+        'setRegisterInfo',
+        'setRegisterLoading'
         ]),
         ...mapActions('user', [
         'login',
+        'register',
         ]),
     }
 }
 </script>
 <style scoped>
     .logreg-wrap {
-        width: 100%;
+        width: 360px;
         padding: 20px;
     }
     .logreg-input {
@@ -92,6 +133,7 @@ export default {
         height: 40px;
         border-radius: 6px;
         margin-top: 15px;
+        margin-left: 20px;
         border: 0;
         background-color: #efefef;
         outline: 0;
@@ -100,9 +142,9 @@ export default {
     .forget-psw-wrap {
         width: 320px;
         height: 30px;
+        margin-left: 20px;
         line-height: 30px;
         text-align: right;
-        padding-right: 20px;
         cursor: pointer;
         font-weight: lighter;
         margin-top: 10px;
@@ -113,13 +155,13 @@ export default {
     }
     .login-btn {
         width: 190px;
-        margin-left: 65px;
+        margin-left: 85px;
         height: 40px;
         border-radius: 40px;
     }
     .new-user-btn {
         width: 190px;
-        margin-left: 65px;
+        margin-left: 85px;
         height: 40px;
         text-align: center;
         line-height: 40px;

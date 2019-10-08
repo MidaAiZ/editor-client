@@ -76,6 +76,7 @@ export default {
         font-size: 20px;
         line-height: 40px;
         float: left;
+        cursor: pointer;
     }
     .logreg {
         width: 200px;

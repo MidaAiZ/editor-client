@@ -47,6 +47,7 @@
     },
     logreg: '登录/注册',
     login: '登录',
+    userName: '用户名',
     newUser: '注册新用户',
     register: '注册',
     userAccountPlaceholder: '邮箱',

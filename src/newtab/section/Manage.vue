@@ -11,7 +11,7 @@
             <el-tabs type="border-card" v-model="activeManage" @tab-click="changeManage">
                 <el-tab-pane :label="bookmarksName" name="bookmarks">
                     <div class="manage-item">
-                    书签
+                        <manageBookmarks />
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="historyName" name="history" class="manage-item">
@@ -27,10 +27,12 @@
 import { mapGetters, mapState, mapMutations } from 'vuex'
 import localeText from '../../../static/locale/index.js'
 import './Manage.css'
+import manageBookmarks from '../component/manageComponents/ManageBookmarks.vue'
 
 export default {
     name: 'Manage',
     components: {
+        manageBookmarks,
     },
     data() {
         return {
