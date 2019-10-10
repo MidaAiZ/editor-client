@@ -6,7 +6,7 @@ const state = {
     wallPaperLoading: false,
     wallPaperSrc: JSON.parse(localStorage.getItem(`storageWallPaper`))
     ?
-    JSON.parse(localStorage.getItem(`storageWallPaper`)).wallPaper
+    JSON.parse(localStorage.getItem(`storageWallPaper`)).img
     :
     require('../../../../static/defaultWallPapers/moren.jpg'),
   }
