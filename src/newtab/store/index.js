@@ -8,6 +8,7 @@ import user from './modules/user'
 import locale from './modules/locale'
 import wallPaper from './modules/wallPaper'
 import drawersVis from './modules/drawersVis'
+import engineList from './modules/engineList'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     user,
     locale,
     wallPaper,
-    drawersVis
+    drawersVis,
+    engineList
   },
 })

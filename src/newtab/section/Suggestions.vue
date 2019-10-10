@@ -2,7 +2,7 @@
     <div style="z-index:1">
         <div id="suggestions" :style="suggestionsWidth">
             <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}">
-                <swiper-slide v-for="(page,index) in pagingArray">
+                <swiper-slide v-for="(page,index) in pagingArray" :key="index">
                     <draggable v-model="pagingArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
                                @end="onEnd" @choose="onChoose" @change="onChange">
                         <transition-group type="transition" name="list-complete" tag="div">
