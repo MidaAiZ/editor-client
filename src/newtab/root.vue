@@ -20,7 +20,7 @@
   </v-app>
 </template>
 <script>
-import { mapState,mapMutations } from 'vuex'
+import { mapState,mapMutations, mapActions } from 'vuex'
 import background from './section/Background.vue'
 import systemBar from './section/SystemBar.vue'
 import suggestions from './section/Suggestions.vue'
@@ -55,7 +55,8 @@ export default {
         ...mapMutations('engineList',['CLOSE_ENGINE_POPOVER']),
         closeEnginePopover(){
             this.CLOSE_ENGINE_POPOVER();
-        }
+        },
+        ...mapActions('user', ['judgeLogin'])
     },
     created: function () {
       // 初始化用户设置
@@ -89,6 +90,8 @@ export default {
           fontSizeValue: 15,
           fontColorValue: '#fff',
         })
+      } else {
+        this.judgeLogin()
       }
     },
 }

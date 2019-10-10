@@ -1,6 +1,10 @@
 import host from './_host.js'
 
 const user = {
+        profile: {
+            p: `${host}users/profile`,
+            m: 'GET'
+        },
         register: {
             p: `${host}users`,
             m: 'POST'

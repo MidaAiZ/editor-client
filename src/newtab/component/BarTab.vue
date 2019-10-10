@@ -6,7 +6,7 @@
                 {{logreg}}
             </div>
             <div v-else>
-                {{userName}}
+                {{userNameValue}}
             </div>
         </div>
         <div class="logreg">
@@ -36,7 +36,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('user', ['logregModalVis', 'hasLogin', 'userName']),
+        ...mapState('user', ['logregModalVis', 'hasLogin', 'userNameValue']),
         ...mapState('drawersVis', ['settingVis']),
         ...mapState('locale', [
             'location',
