@@ -18,7 +18,7 @@ import {
     SET_FONTCOLOR,
     RESET_ALL,
 } from './mutations-type.js'
-import localSave from '../../utils/localSave.js'
+import { localSave } from '../../utils/localSave.js'
   const defaultSetting = {
     bgSrc: 'default',
     maskOpacityValue: 30,

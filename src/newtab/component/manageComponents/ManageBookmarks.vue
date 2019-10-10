@@ -1,6 +1,9 @@
 <template>
     <div class="manage-bookmarks-section">
         <div class="manage-bookmarks-sider">
+            <div v-for="marks in marksTree[0].children" class="bookmarks-folder-wrapper">
+                {{ marks.title }}
+            </div>
             <!-- <el-tree
                 :data="marksTree"
                 show-checkbox

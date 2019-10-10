@@ -27,7 +27,7 @@ import customSearch from './section/CustomSearch.vue'
 import settingDialog from './section/SettingDialog.vue'
 import bookmarks from './section/Bookmarks.vue'
 import manage from './section/Manage.vue'
-import localSave from './utils/localSave.js'
+import { localSave } from './utils/localSave.js'
 
 export default {
     name: 'root',
