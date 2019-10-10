@@ -1,48 +1,34 @@
 <template>
     <div class="manage-bookmarks-section">
         <div class="manage-bookmarks-sider">
-            <div v-for="marks in marksTree[0].children" class="bookmarks-folder-wrapper">
-                {{ marks.title }}
-            </div>
-            <!-- <el-tree
-                :data="marksTree"
-                show-checkbox
-                node-key="id"
-                default-expand-all
-                :expand-on-click-node="true"
-            >
-                <span class="custom-tree-node" slot-scope="{ node, data }">
-                    <span>{{ data.title }}</span>
-                    <span>
-                    <el-button
-                        type="text"
-                        size="mini"
-                        @click="() => append(data)">
-                        Append
-                    </el-button>
-                    <el-button
-                        type="text"
-                        size="mini"
-                        @click="() => remove(node, data)">
-                        Delete
-                    </el-button>
-                    </span>
-                </span>
-                </el-tree> -->
+            <manageBookmarksSider />
         </div>
+        <draggable class="manage-bookmarks-wrap" v-model="mainMarksTree">
+                <div v-for="marks in mainMarksTree" class="bookmarks-item-wrapper" :key="marks.id">
+                    <manageBookmarksItem :mark="marks" />
+                </div>
+        </draggable>
     </div>
 </template>
 <script>
+import draggable from 'vuedraggable'
+import vueWaterfallEasy from "vue-waterfall-easy"
 import { mapGetters, mapState, mapMutations } from 'vuex'
 import { getBookmarks, getBookmarksSub } from '../../utils/bookmarks.js'
+import manageBookmarksItem from './ManageBookmarksItem.vue'
+import manageBookmarksSider from './ManageBookmarksSider.vue'
 
 export default {
     name: 'manageBookmarks',
     components: {
+        draggable,
+        manageBookmarksItem,
+        manageBookmarksSider
     },
     data() {
         return {
-            marksTree: []
+            mainMarksTree: [],
+            otherMarksTree: []
         }
     },
     computed: {
@@ -54,7 +40,8 @@ export default {
     },
     methods: {
         getMarksTreeCb(title, tree, date) {
-            this.marksTree = tree
+            console.log('manage', tree[0].children)
+            this.mainMarksTree = tree[0].children
         }
     }
 }
@@ -63,11 +50,19 @@ export default {
     .manage-bookmarks-section {
         width: 100%;
         height: calc(88vh - 125px);
-        overflow: auto
+        overflow: auto;
+        padding: auto;
+        background: #fefefe;
     }
     .manage-bookmarks-sider {
         width: 20%;
-        float: left;
+        height: calc(88vh - 125px);
+        float:left;
+    }
+    .manage-bookmarks-wrap {
+        width: 79%;
+        height: calc(88vh - 125px);
+        float: right;
     }
     .custom-tree-node {
         flex: 1;
@@ -76,5 +71,11 @@ export default {
         justify-content: space-between;
         font-size: 14px;
         padding-right: 8px;
+    }
+    .bookmarks-item-wrapper {
+        width: 20%;
+        float: left;
+        display: inline;
+        padding: 10px;
     }
 </style>

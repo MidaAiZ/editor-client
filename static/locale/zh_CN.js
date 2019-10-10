@@ -106,5 +106,6 @@
     manageTitle: '管理书签、历史记录',
     bookmarksName: '书签',
     historyName: '历史记录',
+    newFolder: '新建文件夹',
 }
 export default zh_CN
