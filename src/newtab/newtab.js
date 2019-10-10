@@ -7,11 +7,13 @@ import store from './store'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import Draggable from 'vuedraggable'
+import VueCropper from 'vue-cropper'
 
 Vue.use(Vuex);
 Vue.use(Element);
 Vue.use(VueAwesomeSwiper);
 Vue.use(Draggable);
+Vue.use(VueCropper);
 
 new Vue({
     el: '#newtab',
