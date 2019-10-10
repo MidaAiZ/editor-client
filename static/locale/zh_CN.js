@@ -50,6 +50,7 @@
     userName: '用户名',
     newUser: '注册新用户',
     register: '注册',
+    logout: '登出',
     userAccountPlaceholder: '邮箱',
     pswPlaceholder: '密码',
     forgetPsw: '忘记密码',

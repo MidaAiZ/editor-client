@@ -1,11 +1,12 @@
 import req from '../../services/index.js'
 import user from '../../services/apis/user.js'
 import { localSave } from '../../utils/localSave.js'
+import { Message } from 'element-ui';
 // initial state
 const state = {
   logregModalVis: false,
   hasLogin: localStorage.getItem('userData') ? true : false,
-  userNameValue: JSON.parse(localStorage.getItem('userData')).name || '',
+  userNameValue: localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).name : '',
   loginNameValue: '',
   loginEmail: '',
   loginPassword: '',
@@ -70,6 +71,20 @@ const actions = {
             localSave('userData', userData)
             commit('setUserName', userData.name)
             commit('loginSuccess', true)
+            return true
+        } else {
+            commit('setUserName', '')
+            commit('loginSuccess', false)
+        }
+    },
+    async logoutFunc({ commit }) {
+        console.log('正在登出')
+        const { data } = await req(user.logout)
+        if (data.code === 'Success') {
+            localStorage.removeItem('userData')
+            commit('loginSuccess', false)
+            commit('setUserName', '')
+            Message.success({message: "登出成功"})
         }
     }
 }

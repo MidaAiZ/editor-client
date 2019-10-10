@@ -23,7 +23,7 @@ export default {
     computed: {
         
     },
-    created: function () {
+    mounted: function () {
         // 获取所有书签icon
         let targetUrl = this.item.url
         let iconUrl = `chrome://favicon/size/32@2x/${targetUrl}`

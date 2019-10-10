@@ -5,8 +5,11 @@
                 <i class="el-icon-user-solid"></i>
                 {{logreg}}
             </div>
-            <div v-else>
+            <div @mouseover.stop.prevent="toggleLogoutVis(true)" @mouseleave="toggleLogoutVis(false)" v-else>
                 {{userNameValue}}
+                <span class="logout-btn" v-if="logoutVis" @click.stop.prevent="handleLogout">
+                    {{logout}}
+                </span>
             </div>
         </div>
         <div class="logreg">
@@ -20,7 +23,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import localeText from '../../../static/locale/index.js'
 import logregModal from './Logreg.vue'
 
@@ -33,6 +36,7 @@ export default {
     data() {
         return {
             logreg: '',
+            logoutVis: false
         }
     },
     computed: {
@@ -40,7 +44,10 @@ export default {
         ...mapState('drawersVis', ['settingVis']),
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        logout: function() {
+            return localeText[this.location].logout
+        }
     },
     created: function() {
         this.logreg = localeText[this.location].logreg
@@ -53,8 +60,18 @@ export default {
           this.SET_SYSBARVIS(false)
           this.SET_SETTINGVIS(vis)
       },
-      ...mapMutations('user', [
+      toggleLogoutVis(vis) {
+          this.logoutVis  = vis
+      },
+      handleLogout() {
+          console.log('开始处理登出')
+          this.logoutFunc()
+      },
+    ...mapMutations('user', [
       'setLogRegModalVis',
+    ]),
+    ...mapActions('user', [
+        'logoutFunc'
     ]),
     ...mapMutations('drawersVis', [
       'SET_SETTINGVIS',
@@ -88,5 +105,11 @@ export default {
     }
     .setting-title {
         font-size: 20px;
+    }
+    .logout-btn {
+        font-size: 13px;
+        line-height: 35px;
+        margin-left: 10px;
+        color: #ffc81f;
     }
 </style>

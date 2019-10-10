@@ -13,6 +13,10 @@ const user = {
             p: `${host}login`,
             m: 'POST'
         },
+        logout: {
+            p: `${host}logout`,
+            m: 'POST'
+        }
     }
 
 export default user

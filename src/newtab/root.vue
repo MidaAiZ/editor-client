@@ -92,6 +92,8 @@ export default {
         })
       } else {
         this.judgeLogin()
+          .then((res) => console.log('rootLogin', res))
+        // console.log('rootLogin', loginInfo)
       }
     },
 }
