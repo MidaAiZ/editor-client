@@ -3,7 +3,7 @@
         <div class="manage-bookmarks-sider">
             <manageBookmarksSider />
         </div>
-        <draggable class="manage-bookmarks-wrap" v-model="mainMarksTree">
+        <draggable animation="150" class="manage-bookmarks-wrap" v-model="mainMarksTree">
                 <div v-for="marks in mainMarksTree" class="bookmarks-item-wrapper" :key="marks.id">
                     <manageBookmarksItem :mark="marks" />
                 </div>

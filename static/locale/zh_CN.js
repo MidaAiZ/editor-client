@@ -107,5 +107,7 @@
     bookmarksName: '书签',
     historyName: '历史记录',
     newFolder: '新建文件夹',
+    openFolder: '打开文件夹',
+    closeFolder: '关闭文件夹'
 }
 export default zh_CN
