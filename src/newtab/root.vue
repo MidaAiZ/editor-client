@@ -12,6 +12,7 @@
         <div id="main">
           <customSearch></customSearch>
           <suggestions ></suggestions>
+          <div class="engine-popover-mask" :class="{displayNone: !searchPopoverVisible}" @click="closeEnginePopover"></div>
         </div>
       </div>
     </div>
@@ -19,7 +20,7 @@
   </v-app>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState,mapMutations } from 'vuex'
 import background from './section/Background.vue'
 import systemBar from './section/SystemBar.vue'
 import suggestions from './section/Suggestions.vue'
@@ -47,7 +48,14 @@ export default {
     computed: {
         ...mapState('settings', [
           'showBookMarkBar'
-        ])
+        ]),
+        ...mapState('engineList',['searchPopoverVisible'])
+    },
+    methods:{
+        ...mapMutations('engineList',['CLOSE_ENGINE_POPOVER']),
+        closeEnginePopover(){
+            this.CLOSE_ENGINE_POPOVER();
+        }
     },
     created: function () {
       // 初始化用户设置
@@ -118,5 +126,20 @@ export default {
     left: 0;
     top: 0;
     z-index: 12;
+  }
+  .engine-popover-mask{
+    background-color: #000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 6;
+    -moz-opacity: 0.1;
+    opacity:.10;
+    filter: alpha(opacity=10);
+  }
+  .displayNone{
+    display: none;
   }
 </style>

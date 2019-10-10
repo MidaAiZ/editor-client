@@ -1,19 +1,20 @@
 <template>
     <div id="custom-search" :style="searchStyle">
         <div id="search-tab-container">
-            <span v-for="(item,index) in tabList" class="search-tab" :class="{searchClick:index === tabIndex}" @click="changeTab(index)">{{item}}</span>
+            <span v-for="(item,index) in tabList" class="search-tab" :class="{searchClick:index === tabIndex}" @click="changeTab(index)" :key="index">{{item}}</span>
         </div>
         <div id="search-input-container">
-            <el-popover placement="bottom-start" title="标题" trigger="click" width="6vw" :style="popoverRadius"
+            <el-popover placement="bottom-start" title="标题" trigger="manual" width="6vw" :style="popoverRadius" v-model="searchPopoverVisible"
                         :visible-arrow="showArrow" popper-class="search-popover">
-                <span class="input-icon-container" :style="inputIconStyle" slot="reference">
-                    <img src="https://picsum.photos/50/50" class="input-icon"/>
+                <span class="input-icon-container" :style="inputIconStyle" slot="reference" @click="openPopover">
+                    <img :src="currentSearchEngine.img" class="input-icon"/>
                     <div class="select-triangle"></div>
                 </span>
                 <search-popover></search-popover>
             </el-popover>
 
-            <input :placeholder="searchPlaceholder" class="search-input" :style="searchInputStyle" @focus="inputFocus" @blur="inputBlur"/>
+            <input :placeholder="searchPlaceholder" v-model="inputValue" class="search-input" :style="searchInputStyle" @focus="inputFocus" @blur="inputBlur"/>
+            <span class="input-clear-button" v-show="inputValue!==null&&inputValue!==''" @click="clearInput"><i class="el-icon-close"></i></span>
         </div>
     </div>
 </template>
@@ -21,13 +22,14 @@
 import zh_CN from '../../../static/locale/zh_CN.js'
 import searchPopover from '../component/SearchPopover.vue'
 import '../component/style/popover.css'
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 export default {
     components:{
         searchPopover
     },
     props: ['isShow'],
     computed:{
+        ...mapState('engineList',['searchPopoverVisible','currentSearchEngine']),
         ...mapState('settings',['searchBarSizeValue','searchBarRadiusValue','searchBarOpacityValue']),
         inputIconStyle:function () {
             return{
@@ -50,7 +52,6 @@ export default {
             return{
                 'border-radius': 4.0*(this.searchBarRadiusValue*2.0)/100+'vh'+' !important'
             }
-
         }
     },
     data(){
@@ -58,11 +59,14 @@ export default {
             tabList:zh_CN.searchTab,
             searchPlaceholder: zh_CN.searchPlaceholder,
             tabIndex:0,
-            showArrow: false
+            showArrow: false,
+            popoverVis: false,
+            inputValue: ''
 //            isShow: false
         }
     },
     methods:{
+        ...mapMutations('engineList',['OPEN_ENGINE_POPOVER']),
         changeTab(index){
             this.tabIndex = index;
         },
@@ -75,9 +79,26 @@ export default {
         showPopover(){
             this.$emit('show')
         },
-//        closePopover(){
-//            this.isShow = false;
-//        }
+        openPopover(){
+            this.OPEN_ENGINE_POPOVER();
+        },
+        clearInput(){
+            this.inputValue='';
+        },
+        search(){
+            let url = this.currentSearchEngine.url;
+            url=url.replace('#content#',this.inputValue);
+            window.open(url)
+        }
+    },
+    mounted(){
+        let self= this;
+        document.onkeydown = function(event){
+            let e = event||window.event||arguments.caller.arguments[0];
+            if (e && e.keyCode === 13 && this.inputValue!==''){
+                self.search();
+            }
+        }
     }
 }
 </script>
@@ -122,7 +143,7 @@ export default {
         outline-style:none;
         border-width:0;
         padding-left:75px;
-        padding-right: 20px;
+        padding-right: 40px;
         width:40vw;
         height: 6vh;
         font-size: 16px;
@@ -183,5 +204,14 @@ export default {
         -moz-opacity: 0.3;
         opacity: .30;
         filter: alpha(opacity=30);
+    }
+    .input-clear-button{
+        position: absolute;
+        top:50%;
+        right: 10px;
+        transform: translate(-50%,-50%);
+        font-size: 16px;
+        font-weight: 400;
+        cursor:pointer;
     }
 </style>

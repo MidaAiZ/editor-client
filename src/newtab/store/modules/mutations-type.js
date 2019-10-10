@@ -32,3 +32,14 @@ export const RESET_ALL = 'RESET_ALL' // 恢复默认设置
 export const SET_WALLPAPERLOADING = 'SET_WALLPAPERLOADING' // 设置壁纸加载状态
 export const SET_WALLPAPER = 'SET_WALLPAPER' // 设置壁纸加载状态
 
+
+//搜索引擎 相关的mutation
+export const DELETE_CHOOSE_ENGINE = 'DELETE_CHOOSE_ENGINE'; // 删除已选中的搜索引擎
+export const ADD_CHOOSE_ENGINE = 'ADD_CHOOSE_ENGINE'; // 添加已有的搜索引擎
+export const OPEN_ENGINE_POPOVER = 'OPEN_ENGINE_POPOVER'; // 打开搜索引擎弹出框
+export const CLOSE_ENGINE_POPOVER = 'CLOSE_ENGINE_POPOVER'; // 关闭搜索引擎弹出框
+export const CHANGE_CURRENT_ENGINE = 'CHANGE_CURRENT_ENGINE'; // 修改当前搜索引擎
+export const ADD_CUSTOM_ENGINE = 'ADD_CUSTOM_ENGINE'; // 添加自定义搜索引擎
+export const DELETE_CUSTOME_ENGINE = 'DELETE_CUSTOME_ENGINE'; // 删除自定义搜索引擎
+export const OPEN_CUSTOM_ENGINE = 'OPEN_CUSTOM_ENGINE'; // 打开自定义搜索引擎
+export const CLOSE_CUSTOM_ENGINE = 'CLOSE_CUSTOM_ENGINE'; // 关闭自定义搜索引擎
