@@ -57,13 +57,23 @@
                 }
             },
             suggestionsWidth: function () {
-                if (this.iconLayout.col===3||this.iconLayout.col===4||this.iconLayout.col===5){
+                if (this.iconLayout.col===4||this.iconLayout.col===5){
                     return {
-                        'width': 10 * 5+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                        'width': 12 * 5+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                        'margin-top': 15/this.iconLayout.row + 'vh',
+                        'margin-bottom': 12/this.iconLayout.row + 'vh'
+                    }
+                }else if(this.iconLayout.col===3){
+                    return {
+                        'width': 7 * 5+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                        'margin-top': 15/this.iconLayout.row + 'vh',
+                        'margin-bottom': 12/this.iconLayout.row + 'vh'
                     }
                 }else{
                     return {
-                        'width': 10 * this.iconLayout.col+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                        'width': 11 * this.iconLayout.col+ (this.iconSizeValue-50.0)/10.0 + 'vw',
+                        'margin-top': 15/this.iconLayout.row + 'vh',
+                        'margin-bottom': 12/this.iconLayout.row + 'vh'
                     }
                 }
             },
@@ -286,7 +296,7 @@
 <style scoped>
     /*@import '../component/style/suggestion.css';*/
     #suggestions {
-        margin-top: 4vh;
+        /* margin-top: 4vh; */
         /*height: 340px;*/
         /*width: 1100px;*/
         position: relative;
@@ -354,14 +364,14 @@
         /*width: 100%;*/
         /*bottom: -6vh;*/
         /*margin: 0 auto;*/
-        margin-top: 3vh;
+        /* margin-top: 3vh; */
         z-index: 10;
         text-align: center;
     }
 
     .bullet span {
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
         border: none;
         background: white;

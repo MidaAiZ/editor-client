@@ -8,12 +8,14 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import Draggable from 'vuedraggable'
 import VueCropper from 'vue-cropper'
+import VueResource from 'vue-resource'
 
 Vue.use(Vuex);
 Vue.use(Element);
 Vue.use(VueAwesomeSwiper);
 Vue.use(Draggable);
 Vue.use(VueCropper);
+Vue.use(VueResource);
 
 new Vue({
     el: '#newtab',

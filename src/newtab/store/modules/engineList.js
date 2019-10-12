@@ -155,6 +155,27 @@ const mutations = {
         state.customEngineList.push(customEngine);
         state.searchEngineList.push(customEngine);
         console.log(state.customEngineList);
+    },
+    [DELETE_CUSTOME_ENGINE] (state, customEngine){
+        let result = state.customEngineList.filter(engine => {
+            return engine.id !== customEngine.id;
+        })
+        state.customEngineList = result;
+        let result1 = state.searchEngineList.filter(engine => {
+            return engine.id !== customEngine.id;
+        })
+        state.searchEngineList = result1;
+    },
+    [OPEN_CUSTOM_ENGINE] (state,index){
+        state.customEngineList[index].isChoose = true;
+        state.searchEngineList.push(state.customEngineList[index]);
+    },
+    [CLOSE_CUSTOM_ENGINE] (state,index){
+        let result = state.searchEngineList.filter(engine => {
+            return engine.id !== state.customEngineList[index].id;
+        })
+        state.searchEngineList = result;
+        state.customEngineList[index].isChoose = false;
     }
 }
 

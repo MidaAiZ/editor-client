@@ -45,8 +45,8 @@
                                         <span class="engine-item-name">{{item.name}}</span>
                                     </span>
                                     <span class="engine-list-item-right">
-                                        <el-switch v-model="item.isChoose"></el-switch>
-                                        <span class="delete-custom-engine-button"><i class="el-icon-close"></i></span>
+                                        <el-switch v-model="item.isChoose" @change='customEngineChange(index)'></el-switch>
+                                        <span class="delete-custom-engine-button" @click="deleteCustomEngine(item)"><i class="el-icon-close"></i></span>
                                     </span>
                                 </div>
                             </div>
@@ -246,18 +246,28 @@
             addCustomEngine(){
                 this.customEngine.id = this.maxID + 1;
                 this.customEngine.isChoose = true;
-                this.ADD_CUSTOM_ENGINE(this.customEngine);
-                // this.customEngine.url = '';
-                // this.customEngine.img = '';
-                // this.customEngine.name = '';
+                this.ADD_CUSTOM_ENGINE({...this.customEngine});
+                this.customEngine.url = '';
+                this.customEngine.img = '';
+                this.customEngine.name = '';
                 this.isAdd = false;
+            },
+            deleteCustomEngine(item){
+                this.DELETE_CUSTOME_ENGINE(item);
+            },
+            customEngineChange(index){
+                if(this.customEngineList[index].isChoose){
+                    this.OPEN_CUSTOM_ENGINE(index);
+                }else{
+                    this.CLOSE_CUSTOM_ENGINE(index);                                        
+                }
             }
         }
     }
 </script>
 <style scoped>
     #search-popover {
-        width: 40vw;
+        width: 35vw;
         padding: 0;
         overflow: hidden;
         background-color: white;
