@@ -18,6 +18,8 @@ import {
     SET_FONTCOLOR,
     RESET_ALL,
 } from './mutations-type.js'
+import settings from '../../services/apis/settings.js'
+import req from '../../services/index.js'
 import { localSave } from '../../utils/localSave.js'
   const defaultSetting = {
     bgSrc: 'default',
@@ -60,7 +62,14 @@ const state = localStorage.getItem('settings') ? {
   
   // actions
   const actions = {
-
+    async getDefaultSettings ({ commit }) { // 获取默认设置
+        const { data } = await req(settings.default, {})
+        console.log(data)
+        localSave('settings', data.data)
+    },
+    async judgeCloudSettings ({ commit }) { // 判断本地内容给是否和云端冲突
+        
+    }
   }
   
   // mutations

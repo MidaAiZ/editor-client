@@ -56,11 +56,13 @@ export default {
         closeEnginePopover(){
             this.CLOSE_ENGINE_POPOVER();
         },
-        ...mapActions('user', ['judgeLogin'])
+        ...mapActions('user', ['judgeLogin']),
+        ...mapActions('settings', ['getDefaultSettings'])
     },
     created: function () {
       // 初始化用户设置
       if (!localStorage.getItem('settings')) {
+        // getDefault()
         localSave('settings', {
           bgSrc: 'default',
           maskOpacityValue: 30,
@@ -90,6 +92,7 @@ export default {
           fontSizeValue: 15,
           fontColorValue: '#fff',
         })
+        this.getDefaultSettings()
       } else {
         this.judgeLogin()
           .then((res) => console.log('rootLogin', res))

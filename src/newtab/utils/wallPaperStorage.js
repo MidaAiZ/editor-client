@@ -1,10 +1,6 @@
-import Unsplash from 'unsplash-js';
 import { saveImg } from './localSave.js'
-
-const unsplash = new Unsplash({
-    applicationId: "13eb1a55029048fe62b7f870a010909cf4df45b971ee460df55ab50d21307671",
-    secret: "2541289de77a508a8052332f50b6ecaa46be93bc078cf757656c487467a2e59e"
-  });
+import req from '../services/index.js'
+import wallPaper from '../services/apis/wallPaper.js'
 
 const storageWallPaper = (imgSrc, srcUrl, wallDomId, callBack) => {
     //在本地存储中保存图片
@@ -23,17 +19,12 @@ const storageWallPaper = (imgSrc, srcUrl, wallDomId, callBack) => {
 }
 
 const setWallPaper = (imgSrc, srcUrl, callBack) => {
-    saveImg("storageWallPaper", srcUrl, callBack)
+    saveImg("storageWallPaper", srcUrl, callBack) // 将图片缓存在本地
 }
 
-const getUnsplashWallPaper = (callBack) => {
-    unsplash.photos.getRandomPhoto({query: 'wallpapers'})
-        .then(res => res.json())
-        .then(json => {
-            // Your code
-            // console.log(json[0].urls, 'unsplash')
-            setWallPaper('Unsplash', json.urls.regular, callBack)
-        });
+const getUnsplashWallPaper = async (callBack) => {
+    const { data } = await req(wallPaper.random)
+    setWallPaper('Unsplash', data.data, callBack)
 }
 
 export {

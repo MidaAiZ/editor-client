@@ -1,5 +1,6 @@
 import req from '../../services/index.js'
 import user from '../../services/apis/user.js'
+import settings from '../../services/apis/settings.js'
 import { localSave } from '../../utils/localSave.js'
 import { Message } from 'element-ui';
 // initial state
@@ -61,7 +62,6 @@ const actions = {
         // commit('setLoginLoading', false)
         // console.log('data', data)
         if (data.code === 'Success') {
-            console.log('已登录')
             let userData = {
                 name: data.data.number,
                 email: data.data.email,
@@ -77,8 +77,7 @@ const actions = {
             commit('loginSuccess', false)
         }
     },
-    async logoutFunc({ commit }) {
-        console.log('正在登出')
+    async logoutFunc ({ commit }) {
         const { data } = await req(user.logout)
         if (data.code === 'Success') {
             localStorage.removeItem('userData')
@@ -86,7 +85,7 @@ const actions = {
             commit('setUserName', '')
             Message.success({message: "登出成功"})
         }
-    }
+    },
 }
 
 // mutations
