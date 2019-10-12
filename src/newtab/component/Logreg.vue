@@ -1,17 +1,11 @@
 <template>
     <div>
         <div v-if="filter === 'login'" class="logreg-wrap">
-            <!-- <input 
+            <input 
                 class="logreg-input"
                 :placeholder="userAccountPlaceholder" 
                 :value="loginEmail" 
                 @input="inputLogin($event.target.value, 'loginEmail')" 
-            /> -->
-            <input 
-                class="logreg-input"
-                :placeholder="userName" 
-                :value="loginNameValue" 
-                @input="inputLogin($event.target.value, 'loginNameValue')" 
             />
             <input
                 class="logreg-input"

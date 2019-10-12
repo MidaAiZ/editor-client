@@ -36,7 +36,7 @@ const actions = {
     },
     async login ({ commit }) {
         let loginData = new FormData();
-        loginData.append('number', state.loginNameValue)
+        loginData.append('email', state.loginEmail)
         loginData.append('password', state.loginPassword)
         // loginData.append('email', state.registerEmail)
         console.log(user.login, 'login', loginData)
