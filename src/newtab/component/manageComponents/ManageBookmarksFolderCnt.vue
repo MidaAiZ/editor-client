@@ -1,9 +1,11 @@
 <template>
     <div class="folder-cnt">
-        <div v-show="showFolder" v-for="mark in folderMarks" :key="mark.id" class="manage-bookmarks-title-wrap">
-            <img class="fav-icon" :src="`chrome://favicon/size/32@2x/${mark.url}`"></img>
-            <span class="manage-bookmarks-title">{{ mark.title }}</span>
-        </div>
+        <draggable :list="folderMarks" group="bookmark">
+            <div v-show="showFolder" v-for="mark in folderMarks" :key="mark.id" class="manage-bookmarks-title-wrap">
+                <img class="fav-icon" :src="`chrome://favicon/size/32@2x/${mark.url}`"></img>
+                <span class="manage-bookmarks-title">{{ mark.title }}</span>
+            </div>
+        </draggable>
         <div class="open-folder-btn" @click="showFolderCnt">
             {{showFolder ? closeFolder : openFolder}}
         </div>
@@ -11,6 +13,7 @@
 </template>
 <script>
 // import './newBGbrush.scss'
+import draggable from 'vuedraggable'
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import { getBookmarks, getBookmarksBarFolder, getBookmarksSub } from '../../utils/bookmarks.js'
 import localeText from '../../../../static/locale/index.js'
@@ -19,6 +22,7 @@ export default {
     name: 'manageBookmarksFolderCnt',
     props: ['id'],
     components: {
+        draggable
     },
     data(){
         return{
