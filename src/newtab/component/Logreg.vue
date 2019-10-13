@@ -30,17 +30,20 @@
                 :placeholder="userAccountPlaceholder"
                 @input="inputRegisterInfo($event.target.value, 'registerEmail')"
             />
+            <p v-if="registerEmailTipVis" class="register-tip">{{registerEmailTip}}</p>
             <input
                 class="logreg-input"
                 :placeholder="userName" 
                 @input="inputRegisterInfo($event.target.value, 'registerName')" 
             />
+            <p v-if="userNameTipVis" class="register-tip">{{userNameTip}}</p>
             <input 
                 class="logreg-input" 
                 :placeholder="pswPlaceholder" 
                 type="password" 
                 @input="inputRegisterInfo($event.target.value, 'registerPassword')" 
             />
+            <p v-if="registerPswTipVis" class="register-tip">{{registerPswTip}}</p>
             <div class="log-or-reg">
                 <el-button class="login-btn" type="primary" @click="handleRegister">
                     {{ regBtn }}
@@ -60,14 +63,10 @@ export default {
     name: 'logreg',
     data() {
         return {
-            userAccountPlaceholder: '',
-            pswPlaceholder: '',
-            loginBtn: '',
-            regBtn: '',
-            forgetPsw: '',
-            newUser: '',
-            backToLog: '',
             filter: "login",
+            registerEmailTipVis: false,
+            registerPswTipVis: false,
+            userNameTipVis: false
         }
     },
     computed: {
@@ -77,16 +76,39 @@ export default {
         ]),
         userName: function() {
             return localeText[this.location].userName
+        },
+        userAccountPlaceholder: function() {
+            return localeText[this.location].userAccountPlaceholder
+        },
+        pswPlaceholder: function() {
+            return localeText[this.location].pswPlaceholder
+        },
+        loginBtn: function() {
+            return localeText[this.location].login
+        },
+        regBtn: function() {
+            return localeText[this.location].register
+        },
+        forgetPsw: function() {
+            return localeText[this.location].forgetPsw
+        },
+        newUser: function() {
+            return localeText[this.location].newUser
+        },
+        backToLog: function() {
+            return localeText[this.location].backToLog
+        },
+        userNameTip: function() {
+            return localeText[this.location].userNameTip
+        },
+        registerEmailTip: function() {
+            return localeText[this.location].registerEmailTip
+        },
+        registerPswTip: function() {
+            return localeText[this.location].registerPswTip
         }
     },
     created: function() {
-        this.userAccountPlaceholder = localeText[this.location].userAccountPlaceholder
-        this.pswPlaceholder = localeText[this.location].pswPlaceholder
-        this.loginBtn = localeText[this.location].login
-        this.regBtn = localeText[this.location].register
-        this.forgetPsw = localeText[this.location].forgetPsw
-        this.newUser = localeText[this.location].newUser
-        this.backToLog = localeText[this.location].backToLog
     },
     methods: {
         inputLogin (value, type) {
@@ -100,6 +122,42 @@ export default {
             this.login()
         },
         inputRegisterInfo (value, type) {
+            const regEmail = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,}))$/;
+            const regPsw = /^[a-zA-Z0-9.,!@#$%&'*+\/\]\[=?^_`{|}~-]{6,20}$/;
+            const regNumber = /^[a-zA-Z0-9_\u4e00-\u9fa5]{2,16}$/;
+            if (type === 'registerEmail') {
+                // console.log(regEmail.test(value))
+                if (regEmail.test(value)) {
+                    this.setRegisterInfo({
+                        type,
+                        value,
+                    })
+                    this.registerEmailTipVis = false
+                } else {
+                    this.registerEmailTipVis = true
+                }
+            } else if (type === 'registerName') {
+                // console.log(regNumber.test(value))
+                if (regNumber.test(value)) {
+                    this.setRegisterInfo({
+                        type,
+                        value,
+                    })
+                    this.userNameTipVis = false
+                } else {
+                    this.userNameTipVis = true
+                }
+            } else if (type === 'registerPassword') {
+                if (regPsw.test(value)) {
+                    this.setRegisterInfo({
+                        type,
+                        value,
+                    })
+                    this.registerPswTipVis = false
+                } else {
+                    this.registerPswTipVis = true
+                }
+            }
             this.setRegisterInfo({
                 type,
                 value,
@@ -168,5 +226,13 @@ export default {
         font-weight: lighter;
         margin-top: 20px;
         cursor: pointer;
+    }
+    .register-tip {
+        width: 340px;
+        height: 13px;
+        text-align: right;
+        line-height: 13px;
+        font-size: 13px;
+        color: #fa8072;
     }
 </style>
