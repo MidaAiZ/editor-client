@@ -29,6 +29,7 @@ import settingDialog from './section/SettingDialog.vue'
 import bookmarks from './section/Bookmarks.vue'
 import manage from './section/Manage.vue'
 import { localSave } from './utils/localSave.js'
+import defaultSettings from './utils/defaultOpt.js'
 
 export default {
     name: 'root',
@@ -57,47 +58,29 @@ export default {
             this.CLOSE_ENGINE_POPOVER();
         },
         ...mapActions('user', ['judgeLogin']),
-        ...mapActions('settings', ['getDefaultSettings'])
+        ...mapActions('settings', ['getDefaultSettings']),
+        ...mapActions('categories', ['getCategories'])
     },
     created: function () {
       // 初始化用户设置
       if (!localStorage.getItem('settings')) {
         // getDefault()
-        localSave('settings', {
-          bgSrc: 'default',
-          maskOpacityValue: 30,
-          bgBlurValue: 20,
-          newSiteNewTabValue: false,
-          cloudSave: false,
-          searchResultNewTabValue: false,
-          openMarkNewTabValue: false,
-          historyNewTabValue: false,
-          randomBgBtn: false,
-          showOftenUsedBar: false,
-          showEmailBtn: false,
-          showBookMarkBar: false,
-          iconLayout: {
-              name: '2x5',
-              row: 2,
-              col: 5,
-          },
-          hideAllIcons: false,
-          iconRadiusValue: 50,
-          iconSizeValue: 50,
-          hideSearchBarValue: false,
-          hideSearchTypeValue: false,
-          searchBarRadiusValue: 50,
-          searchBarSizeValue: 50,
-          searchBarOpacityValue: 100,
-          fontSizeValue: 15,
-          fontColorValue: '#fff',
-        })
+        localSave('settings', defaultSettings)
         this.getDefaultSettings()
       } else {
         this.judgeLogin()
-          .then((res) => console.log('rootLogin', res))
+          .then((res) => {
+            console.log('rootLogin', res)
+            if(res) {
+
+            } else {
+
+            }
+          })
         // console.log('rootLogin', loginInfo)
       }
+      // 初始化网站分类
+      this.getCategories()
     },
 }
 </script>

@@ -9,6 +9,7 @@ import locale from './modules/locale'
 import wallPaper from './modules/wallPaper'
 import drawersVis from './modules/drawersVis'
 import engineList from './modules/engineList'
+import categories from './modules/categories'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     locale,
     wallPaper,
     drawersVis,
-    engineList
+    engineList,
+    categories
   },
 })

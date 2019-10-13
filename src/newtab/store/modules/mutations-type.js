@@ -43,3 +43,6 @@ export const ADD_CUSTOM_ENGINE = 'ADD_CUSTOM_ENGINE'; // 添加自定义搜索�
 export const DELETE_CUSTOME_ENGINE = 'DELETE_CUSTOME_ENGINE'; // 删除自定义搜索引擎
 export const OPEN_CUSTOM_ENGINE = 'OPEN_CUSTOM_ENGINE'; // 打开自定义搜索引擎
 export const CLOSE_CUSTOM_ENGINE = 'CLOSE_CUSTOM_ENGINE'; // 关闭自定义搜索引擎
+
+// 获取网站分类 相关的mutation
+export const SET_CATEGORIES = 'SET_CATEGORIES' // 获取网站分类

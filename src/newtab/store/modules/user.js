@@ -82,6 +82,7 @@ const actions = {
         } else {
             commit('setUserName', '')
             commit('loginSuccess', false)
+            return false
         }
     },
     async logoutFunc ({ commit, rootState }) {
