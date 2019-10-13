@@ -20,7 +20,7 @@ const state = {
 
 // getters
 const getters = {
-  
+//   test: 1,
 }
 
 // actions
@@ -83,7 +83,7 @@ const actions = {
             localStorage.removeItem('userData')
             commit('loginSuccess', false)
             commit('setUserName', '')
-            Message.success({message: "登出成功"})
+            Message.success({message: "退出成功"})
         }
     },
 }

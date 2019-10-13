@@ -2,7 +2,13 @@
     <div>
         <div class="bg-mask" :style="{ opacity: (maskOpacityValue / 100) }">
         </div>
-        <div class="background bg-not-default unslash-src" :style="{backgroundImage: `url(${this.bgSrc === 'default' ? require('../../../static/defaultWallPapers/moren.jpg') : this.wallPaperSrc})`}">
+        <div
+            class="background bg-not-default unsplash-src"
+            :style="{
+                backgroundImage: `url(${this.bgSrc === 'default' ? require('../../../static/defaultWallPapers/moren.jpg') : this.wallPaperSrc})`,
+                filter: `blur(${bgBlurValue / 10}px)`,
+                transform: `scale(${1 + bgBlurValue / 1000})`
+                }">
         </div>
         <div class="change-bg-btn">
             <newBgBrush />
@@ -60,9 +66,9 @@ export default {
         top: 0;
         left: 0;
         right: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
+        width:100%;
+        height:100%;
+        z-index: -1;
         background-repeat: no-repeat;
         background-attachment: fixed;
         -webkit-background-size: cover;
@@ -70,11 +76,26 @@ export default {
         background-size: cover;
         background-position: center;
     }
+    /* .background:after{
+        content: "";
+        width:100%;
+        height:100%;
+        position: absolute;
+        left:0;
+        top:0;
+        background: inherit;
+        filter: blur(10px);
+        -webkit-filter: blur(10px);
+        z-index: 1;
+        padding: 0;
+        margin: 0;
+    } */
     .change-bg-btn {
         position: fixed;
         z-index: 11;
         bottom: 50px;
         right: 60px;
+        cursor: pointer;
     }
     
 </style>
