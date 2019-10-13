@@ -33,6 +33,18 @@ const actions = {
         console.log(user.register, 'register', registerData)
         const { data } = await req(user.register, {}, registerData)
         console.log('data', data)
+        if(data.code === 'Success') {
+            console.log("注册成功")
+            commit('setLoginInfo', {
+                type: 'loginEmail',
+                value: state.registerEmail
+            })
+            commit('setLoginInfo', {
+                type: 'loginPassword',
+                value: state.registerPassword
+            })
+            dispatch('login')
+        }
     },
     async login ({ commit }) {
         let loginData = new FormData();
