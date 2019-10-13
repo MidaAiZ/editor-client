@@ -16,7 +16,7 @@
             <el-popover placement="bottom-start" trigger="click" v-model="sugPopoverVisible" :visible-arrow="false"
                 popper-class="search-popover">
                 <input :placeholder="searchPlaceholder" v-model="inputValue" class="search-input"
-                    :style="searchInputStyle" @focus="inputFocus" @blur="inputBlur" @input="inputChange"
+                    :style="searchInputStyle" @focus="inputFocus" @blur="inputBlur" @keyup="inputChange"
                     slot="reference" />
                 <div class='sug-container' :style='sugContainerBorder'>
                     <div class="sug-item" v-for="(item,index) in sugList" :key="index" @click="sugClick(index)">
@@ -39,6 +39,9 @@
         mapMutations
     } from 'vuex'
     import req from '../services/index.js'
+    import {
+        isObject
+    } from 'util'
     export default {
         components: {
             searchPopover
@@ -70,8 +73,8 @@
                     'border-radius': 4.0 * (this.searchBarRadiusValue * 2.0) / 100 + 'vh' + ' !important'
                 }
             },
-            sugContainerBorder:function(){
-                return{
+            sugContainerBorder: function () {
+                return {
                     'border-radius': 4.0 * (this.searchBarRadiusValue * 2.0) / 100 + 'vh'
                 }
             },
@@ -96,9 +99,17 @@
             },
             inputFocus() {
                 document.getElementById('custom-search').style.opacity = 1;
+                let self = this;
+                document.onkeydown = function (event) {
+                    let e = event || window.event || arguments.caller.arguments[0];
+                    if (e && e.keyCode === 13 && this.inputValue !== '') {
+                        self.search();
+                    }
+                }
             },
             inputBlur() {
                 document.getElementById('custom-search').style.opacity = this.searchBarOpacityValue / 100.0;
+                document.onkeydown = null;
             },
             showPopover() {
                 this.$emit('show')
@@ -108,6 +119,7 @@
             },
             clearInput() {
                 this.inputValue = '';
+                this.sugList = [];
             },
             search() {
                 let url = this.currentSearchEngine.url;
@@ -115,6 +127,7 @@
                 window.open(url)
             },
             async inputChange() {
+                console.log('change');
                 let sugurl = {
                     p: 'http://suggestion.baidu.com/su',
                     m: 'GET'
@@ -128,30 +141,39 @@
                 } = await req(sugurl, input)
                 console.log(data);
                 let str = `${data}`;
-                str = str.match(/\[(\S*)\]/)[1];
-                str = str.replace(/\"/g,'');
-                // str = str.replace('')
-                this.sugList = str.split(',');
-                console.log(str);
-                // console.log(data.window.baidu.sug.then(function(res){
-                //     console.log(res)
-                // }));
-                // console.log(window.baidu.sug.s);
+                let regex = /\[(.*?)\]/g;
+                let options = str.match(regex);
+                this.sugList = eval('(' + options[options.length - 1] + ')');
+                // if (str !== '') {
+                //     str = str.replace(/\"/g, '');
+                //     this.sugList = str.split(',');
+                // }
 
+                // console.log(str);
             },
-            sugClick(index){
+            sugClick(index) {
                 this.inputValue = this.sugList[index];
                 this.search();
+            },
+            //取出中括号里的值
+            getBracketStr(str) {
+                let result = '';
+                if (isObjectEmpty(str)) {
+                    return result;
+                }
+                let regex = /\[(.+?)\]/g;
+                let options = str.match(regex);
+                if (!isObjectEmpty(options)) {
+                    let option = options[0];
+                    if (!isObjectEmpty(option)) {
+                        result = option.substring(1, option.length - 1)
+                    }
+                }
+                return
             }
         },
         mounted() {
-            let self = this;
-            document.onkeydown = function (event) {
-                let e = event || window.event || arguments.caller.arguments[0];
-                if (e && e.keyCode === 13 && this.inputValue !== '') {
-                    self.search();
-                }
-            }
+
         }
     }
 </script>
@@ -280,21 +302,26 @@
         font-weight: 400;
         cursor: pointer;
     }
-    .sug-container{
-        width: 35vw;  
+
+    .sug-container {
+        width: 35vw;
         overflow: hidden;
         box-sizing: border-box;
+        background-color: white;
     }
-    .sug-item{
+
+    .sug-item {
         padding-left: 30px;
         padding-right: 30px;
         font-size: 16px;
         display: flex;
         align-items: center;
-        height: 30px;
+        padding-top: 3px;
+        padding-bottom: 3px;
         cursor: pointer;
     }
-    .sug-item:hover{
+
+    .sug-item:hover {
         background-color: #eee;
     }
 </style>

@@ -6,7 +6,7 @@
                  class="item-img" @mouseover="clickItem" @mouseleave="leaveItem"/>
         </div>
         <div class="item-name" @mouseover="clickItem" @mouseleave="leaveItem" :style="itemNameStyle">
-            {{itemInfo.title}}
+            {{itemInfo.title+itemInfo.index}}
         </div>
     </div>
 </template>

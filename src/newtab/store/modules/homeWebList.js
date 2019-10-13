@@ -227,8 +227,6 @@ const getters = {
         return state.homeWebList.sort(compare('index'))
     },
     pagingArray:(state,getters,store) => {
-        // const {rootState} = store;
-        // console.log(store);
         let rowNumber = store.settings.iconLayout.row;    //一页多少行
         let colNumber = store.settings.iconLayout.col;    //一行多少个
         let sortedWebList = getters.sortArray;
@@ -237,12 +235,6 @@ const getters = {
         let pageArray = [];
         for(let i=0; i<pages; i++){
             let tempArray = (i===(pages-1)?sortedWebList.slice(i*everyPageNumber):sortedWebList.slice(i*everyPageNumber,(i+1)*everyPageNumber));
-            // let rows = Math.ceil(tempArray.length/state.itemNumber);
-            // let rowArray = [];
-            // for(let j=0; j<rows; j++){
-            //     rowArray.push(j===(rows-1)?tempArray.slice(j*state.itemNumber):tempArray.slice(j*state.itemNumber,(j+1)*state.itemNumber))
-            // }
-            // pageArray.push(rowArray)
             pageArray.push(tempArray)
         }
         return pageArray
