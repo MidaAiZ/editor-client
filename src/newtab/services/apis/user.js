@@ -6,7 +6,7 @@ const user = {
             m: 'GET'
         },
         register: {
-            p: `${host}users`,
+            p: `${host}users/register`,
             m: 'POST'
         },
         login: {

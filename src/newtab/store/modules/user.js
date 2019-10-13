@@ -32,9 +32,9 @@ const actions = {
         registerData.append('email', state.registerEmail)
         console.log(user.register, 'register', registerData)
         const { data } = await req(user.register, {}, registerData)
-        console.log('data', data)
+        // console.log('data', data)
         if(data.code === 'Success') {
-            console.log("注册成功")
+            // console.log("注册成功")
             commit('setLoginInfo', {
                 type: 'loginEmail',
                 value: state.registerEmail
