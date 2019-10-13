@@ -32,11 +32,8 @@ const actions = {
         registerData.append('number', state.registerName)
         registerData.append('password', state.registerPassword)
         registerData.append('email', state.registerEmail)
-        console.log(user.register, 'register', registerData)
         const { data } = await req(user.register, {}, registerData)
-        // console.log('data', data)
         if(data.code === 'Success') {
-            console.log("注册成功", rootState.locale.location)
             commit('setLoginInfo', {
                 type: 'loginEmail',
                 value: state.registerEmail
@@ -53,11 +50,8 @@ const actions = {
         let loginData = new FormData();
         loginData.append('email', state.loginEmail)
         loginData.append('password', state.loginPassword)
-        // loginData.append('email', state.registerEmail)
-        console.log(user.login, 'login', loginData)
         const { data } = await req(user.login, {}, loginData)
         commit('setLoginLoading', false)
-        console.log('data', data)
         if (data.code === 'Success') {
             let userData = {
                 name: data.data.user.number,
@@ -74,8 +68,6 @@ const actions = {
     },
     async judgeLogin ({ commit }) { // 判断是否登录
         const { data } = await req(user.profile)
-        // commit('setLoginLoading', false)
-        // console.log('data', data)
         if (data.code === 'Success') {
             let userData = {
                 name: data.data.number,
@@ -106,7 +98,6 @@ const actions = {
 // mutations
 const mutations = {
     setLogRegModalVis (state, vis) {
-        console.log('guan')
         state.logregModalVis = vis
     },
     setLoginInfo (state, payload) { // 填写登录信息
@@ -119,7 +110,6 @@ const mutations = {
         state.hasLogin = success
     },
     setUserName (state, name) {
-        console.log('nameee', name)
         state.userNameValue = name
     },
     setRegisterInfo (state, payload) { // 填写注册信息
