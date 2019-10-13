@@ -54,6 +54,14 @@
     newUser: '注册新用户',
     register: '注册',
     logout: '登出',
+    registerMessage: {
+        success: '注册成功',
+        fail: '注册失败'
+    },
+    logoutMessage: {
+        success: '退出登录成功',
+        fail: '退出登录失败'
+    },
     userAccountPlaceholder: '邮箱',
     pswPlaceholder: '密码',
     forgetPsw: '忘记密码',

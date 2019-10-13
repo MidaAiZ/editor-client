@@ -2,6 +2,7 @@ import req from '../../services/index.js'
 import user from '../../services/apis/user.js'
 import settings from '../../services/apis/settings.js'
 import { localSave } from '../../utils/localSave.js'
+import localeText from '../../../../static/locale/index.js'
 import { Message } from 'element-ui';
 // initial state
 const state = {
@@ -25,7 +26,8 @@ const getters = {
 
 // actions
 const actions = {
-    async register ({ commit, state, dispatch }) {
+    async register ({ commit, state, dispatch, rootState }) {
+        // const { commit, dispatch, state, rootState } = store
         let registerData = new FormData();
         registerData.append('number', state.registerName)
         registerData.append('password', state.registerPassword)
@@ -34,7 +36,7 @@ const actions = {
         const { data } = await req(user.register, {}, registerData)
         // console.log('data', data)
         if(data.code === 'Success') {
-            // console.log("注册成功")
+            console.log("注册成功", rootState.locale.location)
             commit('setLoginInfo', {
                 type: 'loginEmail',
                 value: state.registerEmail
@@ -44,6 +46,7 @@ const actions = {
                 value: state.registerPassword
             })
             dispatch('login')
+            Message.success({message: localeText[rootState.locale.location].registerMessage.success})
         }
     },
     async login ({ commit }) {
@@ -89,13 +92,13 @@ const actions = {
             commit('loginSuccess', false)
         }
     },
-    async logoutFunc ({ commit }) {
+    async logoutFunc ({ commit, rootState }) {
         const { data } = await req(user.logout)
         if (data.code === 'Success') {
             localStorage.removeItem('userData')
             commit('loginSuccess', false)
             commit('setUserName', '')
-            Message.success({message: "退出成功"})
+            Message.success({message: localeText[rootState.locale.location].logoutMessage.success})
         }
     },
 }
