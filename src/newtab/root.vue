@@ -60,7 +60,8 @@ export default {
         ...mapActions('user', ['judgeLogin']),
         ...mapActions('settings', ['getDefaultSettings']),
         ...mapActions('categories', ['getCategories']),
-        ...mapActions('homeMenus', ['getDefaultMenus']),
+        ...mapActions('homeWebList', ['getDefaultMenus']),
+        
     },
     created: function () {
       // 初始化用户设置

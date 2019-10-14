@@ -54,7 +54,6 @@
                 return {
                     'border-radius': 4.0 * (this.searchBarRadiusValue * 2.0) / 100 + 'vh' + ' 0 0 ' + 4.0 * (this
                         .searchBarRadiusValue * 2.0) / 100 + 'vh'
-                    //                'height': 5*(50.0+this.searchBarSizeValue)/100+'vh',
                 }
             },
             searchInputStyle: function () {
@@ -144,12 +143,6 @@
                 let regex = /\[(.*?)\]/g;
                 let options = str.match(regex);
                 this.sugList = eval('(' + options[options.length - 1] + ')');
-                // if (str !== '') {
-                //     str = str.replace(/\"/g, '');
-                //     this.sugList = str.split(',');
-                // }
-
-                // console.log(str);
             },
             sugClick(index) {
                 this.inputValue = this.sugList[index];
