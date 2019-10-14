@@ -1,43 +1,53 @@
 import { ADD_CHOOSE_ENGINE, DELETE_CHOOSE_ENGINE, OPEN_ENGINE_POPOVER, CLOSE_ENGINE_POPOVER, CHANGE_CURRENT_ENGINE, 
     ADD_CUSTOM_ENGINE,DELETE_CUSTOME_ENGINE,OPEN_CUSTOM_ENGINE,CLOSE_CUSTOM_ENGINE} from './mutations-type.js'
 // initial state
+const baidu = require('../../../../static/logos/baidu.svg')
+const yahoo = require('../../../../static/logos/yahoo.svg')
+const sougou = require('../../../../static/logos/sougou.svg')
+const bing = require('../../../../static/logos/bing.svg')
+const google = require('../../../../static/logos/google.svg')
+const yandex = require('../../../../static/logos/yandex.svg')
+const search360 = require('../../../../static/logos/360.svg')
+const naver = require('../../../../static/logos/naver.svg')
+const duckduckgo = require('../../../../static/logos/duckduckgo.svg')
+
 const state = {
     searchPopoverVisible: false,
     currentSearchEngine:{
         url: 'http://www.baidu.com/s?wd=#content#',
-        img: 'https://picsum.photos/55/55',
+        img: baidu,
         name: '百度',
     },
     searchEngineList:[
         {
             id: 5,
             url: 'http://www.baidu.com/s?wd=#content#',
-            img: 'https://picsum.photos/55/55',
+            img: baidu,
             name: '百度',
             isChoose: true
         },{
             id: 0,
             url: 'https://www.google.com/search?q=#content#',
-            img: 'https://picsum.photos/50/50',
+            img: google,
             name: '谷歌',
             isChoose: true
         },
         {
             id: 1,
             url: 'https://search.yahoo.com/search?p=#content#',
-            img: 'https://picsum.photos/51/51',
+            img: yahoo,
             name: 'Yahoo!',
             isChoose: true
         },{
             id: 4,
             url: 'http://www.so.com/s?q=#content#',
-            img: 'https://picsum.photos/54/54',
+            img: search360,
             name: '360搜索',
             isChoose: true
         },{
             id: 6,
             url: 'https://www.sogou.com/web?query=#content#',
-            img: 'https://picsum.photos/56/56',
+            img: sougou,
             name: '搜狗',
             isChoose: true
         }
@@ -46,56 +56,56 @@ const state = {
         {
             id: 0,
             url: 'https://www.google.com/search?q=#content#',
-            img: 'https://picsum.photos/50/50',
+            img: google,
             name: '谷歌',
             isChoose: true
         },
         {
             id: 1,
             url: 'https://search.yahoo.com/search?p=#content#',
-            img: 'https://picsum.photos/51/51',
+            img: yahoo,
             name: 'Yahoo!',
             isChoose: true
         },{
             id: 3,
             url: 'https://yandex.ru/search/?text=#content#',
-            img: 'https://picsum.photos/53/53',
+            img: yandex,
             name: 'YandexRU',
             isChoose: false
         },{
             id: 4,
             url: 'http://www.so.com/s?q=#content#',
-            img: 'https://picsum.photos/54/54',
+            img: search360,
             name: '360搜索',
             isChoose: true
         },{
             id: 5,
             url: 'http://www.baidu.com/s?wd=#content#',
-            img: 'https://picsum.photos/55/55',
+            img: baidu,
             name: '百度',
             isChoose: true
         },{
             id: 6,
             url: 'https://www.sogou.com/web?query=#content#',
-            img: 'https://picsum.photos/56/56',
+            img: sougou,
             name: '搜狗',
             isChoose: true
         },{
             id: 7,
             url: 'https://search.naver.com/search.naver?query=#content#',
-            img: 'https://picsum.photos/57/57',
+            img: naver,
             name: 'NAVER',
             isChoose: false
         },{
             id: 8,
             url: 'https://duckduckgo.com/?p=#content#',
-            img: 'https://picsum.photos/56/56',
+            img: duckduckgo,
             name: 'Duckduckgo',
             isChoose: false
         },{
             id: 9,
             url: 'https://cn.bing.com/search?q=#content#',
-            img: 'https://picsum.photos/57/57',
+            img: bing,
             name: '必应',
             isChoose: false
         }
