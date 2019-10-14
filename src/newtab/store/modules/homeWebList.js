@@ -126,7 +126,7 @@ const state = {
             title: '天猫精选',
             img: 'https://picsum.photos/118/118',
             url: '',
-            index: 11
+            index: 18
         },
         {
             id: 19,
