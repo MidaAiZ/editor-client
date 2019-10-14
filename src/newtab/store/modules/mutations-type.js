@@ -45,4 +45,8 @@ export const OPEN_CUSTOM_ENGINE = 'OPEN_CUSTOM_ENGINE'; // 打开自定义搜索
 export const CLOSE_CUSTOM_ENGINE = 'CLOSE_CUSTOM_ENGINE'; // 关闭自定义搜索引擎
 
 // 获取网站分类 相关的mutation
-export const SET_CATEGORIES = 'SET_CATEGORIES' // 获取网站分类
+export const SET_CATEGORIES = 'SET_CATEGORIES' // 设置网站分类
+
+// 主页添加网站 相关的mutation
+
+export const SET_HOMEMENUS = 'SET_HOMEMENUS' // 设置主页网站

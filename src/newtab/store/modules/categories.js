@@ -5,7 +5,7 @@ import localeText from '../../../../static/locale/index.js'
 import {
     SET_CATEGORIES
 } from './mutations-type.js'
-import defaultCategories from '../../utils/defaultOpt.js'
+import {defaultCategories} from '../../utils/defaultOpt.js'
 // import { Message } from 'element-ui';
 // initial state
 const state = {
@@ -30,7 +30,7 @@ const actions = {
 // mutations
 const mutations = {
     
-    SET_CATEGORIES (state, categories) { // 设置网站分类
+    [SET_CATEGORIES] (state, categories) { // 设置网站分类
         state.categories = categories
     },
 }

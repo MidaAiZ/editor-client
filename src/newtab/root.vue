@@ -59,7 +59,8 @@ export default {
         },
         ...mapActions('user', ['judgeLogin']),
         ...mapActions('settings', ['getDefaultSettings']),
-        ...mapActions('categories', ['getCategories'])
+        ...mapActions('categories', ['getCategories']),
+        ...mapActions('homeMenus', ['getDefaultMenus']),
     },
     created: function () {
       // 初始化用户设置
@@ -81,6 +82,8 @@ export default {
       }
       // 初始化网站分类
       this.getCategories()
+      // 初始化主页网站列表
+      this.getDefaultMenus()
     },
 }
 </script>
