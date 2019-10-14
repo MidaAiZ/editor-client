@@ -1,12 +1,12 @@
 <template>
     <div style="z-index:1">
-        <div id="suggestions" :style="suggestionsWidth">
-            <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}">
-                <swiper-slide v-for="(page,index) in pagedArray" :key="index">
+        <div id="suggestions" :style="[suggestionsWidth,suggestionsHeight]">
+            <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}" style='height:100%'>
+                <swiper-slide v-for="(page,index) in pagedArray" :key="index" class='suggestion-swiper'>
                     <draggable v-model="pagedArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
                         @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate'
                         @remove='onRemove' @add='onAdd'>
-                        <transition-group type="transition" name="list-complete" tag="div">
+                        <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
                             <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
                                 :item-info="item" :key="item.id" v-on:change="changeDrag" @mousedown="mouse_down"
                                 v-on:leave="leaveDrag" class="list-complete-item">
@@ -25,6 +25,7 @@
 
 </template>
 <script>
+    import '../component/style/suggestion-swiper.css'
     import SuggestionItem from '../component/SuggestionItem.vue'
     import draggable from 'vuedraggable'
     import {
@@ -48,6 +49,20 @@
             draggable
         },
         computed: {
+            pagedArray:function(){
+                let result = []
+                let rowNumber = this.iconLayout.row; //一页多少行
+                let colNumber = this.iconLayout.col; //一行多少个
+                let pages = Math.ceil(this.totalSize / (rowNumber * colNumber));
+                let everyPageNumber = rowNumber * colNumber;
+                for (let i = 0; i < pages; i++) {
+                    let tempArray = (i === (pages - 1) ? this.sortArray.slice(i * everyPageNumber) : this.sortArray
+                        .slice(i *
+                            everyPageNumber, (i + 1) * everyPageNumber));
+                    result.push(tempArray)
+                }
+                return result;
+            },
             dragOptions() {
                 return {
                     animation: 200,
@@ -65,21 +80,42 @@
                     return {
                         'width': 12 * 5 + (this.iconSizeValue - 50.0) / 10.0 + 'vw',
                         'margin-top': 15 / this.iconLayout.row + 'vh',
-                        'margin-bottom': 12 / this.iconLayout.row + 'vh'
+                        'margin-bottom': 8 / this.iconLayout.row + 'vh'
                     }
                 } else if (this.iconLayout.col === 3) {
                     return {
                         'width': 7 * 5 + (this.iconSizeValue - 50.0) / 10.0 + 'vw',
                         'margin-top': 15 / this.iconLayout.row + 'vh',
-                        'margin-bottom': 12 / this.iconLayout.row + 'vh'
+                        'margin-bottom': 8 / this.iconLayout.row + 'vh'
                     }
                 } else {
                     return {
                         'width': 11 * this.iconLayout.col + (this.iconSizeValue - 50.0) / 10.0 + 'vw',
                         'margin-top': 15 / this.iconLayout.row + 'vh',
-                        'margin-bottom': 12 / this.iconLayout.row + 'vh'
+                        'margin-bottom': 8 / this.iconLayout.row + 'vh'
                     }
                 }
+            },
+            suggestionsHeight: function () {
+                let heightStyle = {
+                    'height': ''
+                }
+                if(this.iconLayout.row === 2){
+                    if(this.iconLayout.col === 4){
+                        heightStyle.height = (16+7) * this.iconLayout.row + 'vh'
+                    }else{
+                        heightStyle.height = (13+9) * this.iconLayout.row + 'vh'
+                    }
+                }else{
+                    if(this.iconLayout.col===3|| this.iconLayout.col===4){
+                        heightStyle.height = (16+5) * this.iconLayout.row + 'vh'
+                    }else if(this.iconLayout.col === 5){
+                        heightStyle.height = (14+5) * this.iconLayout.row + 'vh'
+                    }else{
+                        heightStyle.height = (13+5) * this.iconLayout.row + 'vh'
+                    }
+                }
+                return heightStyle;
             },
             slideWidth: function () {
                 return {
@@ -105,7 +141,7 @@
                 itemNumber: 6,
                 isDrag: false,
                 dragging: false,
-                pagedArray: [],
+                // pagedArray: [],
                 startIndex: 0,
                 swiperOption: {
                     on: {
@@ -151,9 +187,9 @@
             console.log(this.currentIndex);
             let self = this;
             let judge = false;
-            this.paging();
+            // this.paging();
             document.onmousemove = function (e) {
-                let pages = self.pagingArray.length;
+                let pages = self.pagedArray.length;
                 if (self.dragging) {
                     if (e.clientX < 200 && !judge) {
                         judge = true;
@@ -246,43 +282,50 @@
                         console.log('come')
                         let currentArray = this.pagedArray[this.currentIndex];
                         let lastItem = this.pagedArray[this.currentIndex].pop();
-                        if(this.currentIndex === this.pagedArray.length-1){
+                        if (this.currentIndex === this.pagedArray.length - 1) {
                             var arr = [];
-                             arr.push(lastItem);
-                             this.pagedArray.push(arr);
-                             console.log('this.pagedArray');
-                             console.log(this.pagedArray);
-                        }else{
-                            for (let i = this.currentIndex + 1; i < this.pagedArray.length; i++) {
-                            if (this.pagedArray[i].length === everyPages) {
-                                let currentArr = this.pagedArray[i];
-                                let temp = this.pagedArray[i][this.pagedArray[i].length - 1]
-                                for (let j = currentArray.length - 2; j >= 0; j--) {
-                                    this.pagedArray[i][j + 1] = this.pagedArray[i][j];
+                            arr.push(lastItem);
+                            this.pagedArray.push(arr);
+                            console.log('this.pagedArray');
+                            console.log(this.pagedArray);
+                        } else {
+                            let length = this.pagedArray.length;
+                            for (let i = this.currentIndex + 1; i < length; i++) {
+                                console.log(i+ '   i')
+                                if (this.pagedArray[i].length === everyPages) {
+                                    let currentArr = this.pagedArray[i];
+                                    let temp = currentArr[currentArr.length - 1]
+                                    console.log(currentArr.toString());
+                                    console.log(temp)
+                                    for (let j = currentArr.length - 2; j >= 0; j--) {
+                                        let obj = currentArr[j];
+                                        console.log('obj');
+                                        console.log(obj);
+                                        this.pagedArray[i][j + 1] = this.pagedArray[i][j];
+                                    }
+                                    this.pagedArray[i][0] = lastItem;
+                                    lastItem = temp;
+                                    if (i === this.pagedArray.length - 1) {
+                                        console.log('go')
+                                        var arr = [];
+                                        console.log(lastItem)
+                                        arr.push(lastItem);
+                                        this.pagedArray.push(arr);
+                                        console.log(this.pagedArray);
+                                    }
+                                } else {
+                                    let currentArr = this.pagedArray[i];
+                                    let temp = currentArr[currentArr.length - 1];
+                                    for (let j = currentArr.length - 2; j >= 0; j--) {
+                                        this.pagedArray[i][j + 1] = this.pagedArray[i][j];
+                                    }
+                                    this.pagedArray[i][0] = lastItem;
+                                    this.pagedArray[i].push(temp);
+                                    break;
                                 }
-                                this.pagedArray[i][0] = lastItem;
-                                lastItem = temp;
-                                if (i === this.pagedArray.length - 1) {
-                                    console.log('go')
-                                    var arr = [];
-                                    console.log(lastItem)
-                                    arr.push(lastItem);
-                                    this.pagedArray.push(arr);
-                                    console.log(this.pagedArray);
-                                }
-                            } else {
-                                let currentArr = this.pagedArray[i];
-                                let temp = currentArr[currentArr.length - 1];
-                                for (let j = currentArray.length - 2; j >= 0; j--) {
-                                    this.pagedArray[i][j + 1] = this.pagedArray[i][j];
-                                }
-                                this.pagedArray[i][0] = lastItem;
-                                this.pagedArray[i].push(temp);
-                                break;
                             }
                         }
-                        }
-                        
+
                     }
                 }
                 console.log('gaga')
@@ -291,48 +334,20 @@
             onStart(evt) {
                 this.dragging = true;
                 this.startIndex = this.currentIndex;
-                //                let suggestion = document.getElementById('suggestions');
-                //                console.log(78787);
-                //                let rootEl = document.getElementById('suggestions');
-                //                let dragEl = evt.item;
-                //                console.log(evt.item);
-                //                let cloneEl = dragEl.cloneNode(true);
-                //                let rect = dragEl.getBoundingClientRect();
-                //                cloneEl.style.top = rect.top - parseInt(dragEl.style.marginTop,10);
-                //                cloneEl.style.left = rect.left - parseInt(dragEl.style.marginLeft,10);
-                //                cloneEl.style.width = rect.width;
-                //                cloneEl.style.height = rect.height;
-                //                cloneEl.style.position = 'absolute';
-                //                cloneEl.getElementsByClassName('item-img')[0].style.display = 'inline-block';
-                //                cloneEl.getElementsByClassName('item-img-del')[0].style.display = 'none';
-                //                cloneEl.getElementsByClassName('item-name')[0].style.opacity = 1;
-                //                console.log(cloneEl);
-                ////                console.log(evt.item);
-                ////                let element = evt.item;
-                ////                element.style.position = 'absolute';
-                ////                element.style.left = 0;
-                ////                element.style.top = 0;
-                //                let disX = evt.clientX - cloneEl.offsetLeft;
-                //                let disY = evt.clientY - cloneEl.offsetTop;
-                //                document.onmousemove = function (e) {
-                //                    let left = e.clientX - disX;
-                //                    let top = e.clientY - disY;
-                //                    cloneEl.style.left = left + 'px';
-                //                    cloneEl.style.top = top + 'px';
-                //                };
-                //                document.onmouseup = (e) => {
-                ////                console.log(this.currentIndex);
-                //                    document.onmousemove = null;
-                //                    document.onmouseup = null;
-                //                };
-                //                rootEl.appendChild(cloneEl);
-
-                //            this.movePage = true;
-                //            let element = evt.item;
-
             },
             onEnd() {
                 this.dragging = false;
+                if(this.pagedArray[this.startIndex].length === 0){
+                    this.pagedArray = this.pagedArray.filter(function (item) {
+                        return item.length > 0;
+                    })
+                    if(this.startIndex < this.currentIndex){
+                        this.currentIndex --;
+                        let swiper = this.$refs.mySwiper.swiper;
+                        swiper.slideTo(this.currentIndex);
+                    }
+                }
+                
                 //            this.movePage = false;
             },
             autoPlay() {
@@ -461,7 +476,8 @@
         background: white;
         display: inline-block;
         margin-right: 15px;
-        opacity: 0.5
+        opacity: 0.5;
+        cursor: pointer;
     }
 
     .bullet span:last-child {

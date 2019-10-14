@@ -2,8 +2,8 @@
     <div class="suggestion-item" :style="width">
         <div class="item-img-container">
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
-            <img :src="itemInfo.img" :style="itemImageStyle"
-                 class="item-img" @mouseover="clickItem" @mouseleave="leaveItem"/>
+            <img :src="itemInfo.img" :style="itemImageStyle" class="item-img" @mouseover="clickItem"
+                @mouseleave="leaveItem" />
         </div>
         <div class="item-name" @mouseover="clickItem" @mouseleave="leaveItem" :style="itemNameStyle">
             {{itemInfo.title+itemInfo.index}}
@@ -11,59 +11,85 @@
     </div>
 </template>
 <script>
-    import { mapState } from 'vuex'
+    import {
+        mapState
+    } from 'vuex'
     export default {
         name: 'suggestions',
-        props: ['itemInfo','dragging'],
-        computed:{
-            ...mapState('settings',['fontColorValue','fontSizeValue','iconSizeValue','iconRadiusValue','iconLayout']),
-            width:function () {
-                return{
-                    'width': 100.0/this.iconLayout.col+'%',
-//                    'height': 16+'vh',
-                    'margin-bottom': 20+'px'
+        props: ['itemInfo', 'dragging'],
+        computed: {
+            ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
+                'iconLayout']),
+            width: function () {
+                let widthStyle = {
+                    'width': 100.0 / this.iconLayout.col + '%',
+                    'height': '',
                 }
+                if(this.iconLayout.row === 2){
+                    if(this.iconLayout.col === 4){
+                        widthStyle.height = (16+7) + 'vh'
+                    }else{
+                        widthStyle.height = (13+7) + 'vh'
+                    }
+                }else{
+                    if(this.iconLayout.col===3|| this.iconLayout.col===4){
+                        widthStyle.height = (16+5) + 'vh'
+                    }else if(this.iconLayout.col === 5){
+                        widthStyle.height = (14+5) + 'vh'
+                    }else{
+                        widthStyle.height = (13+5) + 'vh'
+                    }
+                }
+                return widthStyle;
+
             },
-            itemNameStyle:function () {
-                return{
+            itemNameStyle: function () {
+                return {
                     'color': this.fontColorValue,
-                    'font-size': this.fontSizeValue+'px'
+                    'font-size': this.fontSizeValue + 'px'
                 }
             },
-            itemDelStyle:function () {
-                return{
-                    'width': 5.0*this.iconSizeValue/50 + 'vw',
-                    'height': 5.0*this.iconSizeValue/50 + 'vw',
+            itemDelStyle: function () {
+                return {
+                    'width': 5.0 * this.iconSizeValue / 50 + 'vw',
+                    'height': 5.0 * this.iconSizeValue / 50 + 'vw',
                     'border-radius': this.iconRadiusValue + '%'
                 }
             },
-            itemImageStyle:function () {
+            itemImageStyle: function () {
                 let imgStyle = {
                     'width': '',
                     'height': '',
                     'border-radius': this.iconRadiusValue + '%'
                 };
                 let col = this.iconLayout.col;
-                switch (this.iconLayout.row){
+                switch (this.iconLayout.row) {
                     case 2:
-                        if(col === 4){
-                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
-                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
-                        }else {
-                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 5 / (this.iconLayout.row + 3) + 'vw';
-                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 5 / (this.iconLayout.row + 3) + 'vw';
+                        if (col === 4) {
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 50.0) + 0.9 + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 50.0) + 0.9 + 'vw';
+                        }else if(col === 5){
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25)+'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25)+'vw';
+                        } else {
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 5 / (this.iconLayout.row +
+                                4) + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 5 / (this.iconLayout.row +
+                                4) + 'vw';
                         }
                         break;
                     case 3:
-                        if (col === 3 || col === 4){
-                            imgStyle.width = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
-                            imgStyle.height = (6.0+(this.iconSizeValue-50)/50.0)+0.5+'vw';
-                        }else if(col === 5){
-                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) + 'vw';
-                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) + 'vw';
-                        }else{
-                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 9 / (this.iconLayout.row + 7) + 'vw';
-                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 9 / (this.iconLayout.row + 7) + 'vw';
+                        if (col === 3 || col === 4) {
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 50.0) + 0.2 + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 50.0) + 0.2 + 'vw';
+                        } else if (col === 5) {
+                            imgStyle.width = (5.5 + (this.iconSizeValue - 50) / 25) + 'vw';
+                            imgStyle.height = (5.5 + (this.iconSizeValue - 50) / 25) + 'vw';
+                        } else {
+                            imgStyle.width = (6.0 + (this.iconSizeValue - 50) / 25) * 7 / (this.iconLayout.row +
+                                5) + 'vw';
+                            imgStyle.height = (6.0 + (this.iconSizeValue - 50) / 25) * 7 / (this.iconLayout.row +
+                                5) + 'vw';
                         }
                         break;
                     default:
@@ -72,17 +98,17 @@
             }
 
         },
-        data(){
-            return{
+        data() {
+            return {
 
             }
         },
-        methods:{
-            clickItem(){
+        methods: {
+            clickItem() {
                 this.$emit('change');
-//                console.log('sdfsd')
+                //                console.log('sdfsd')
             },
-            leaveItem(){
+            leaveItem() {
                 this.$emit('leave')
             }
         }
@@ -90,41 +116,45 @@
 </script>
 <style scoped>
     @import '../component/style/suggestion.css';
-    .suggestion-item{
+
+    .suggestion-item {
         position: relative;
         display: inline-block;
         /*margin-bottom: 20px;*/
         /*transition: all .5s;*/
         /*height:50%;*/
     }
+
     /*.item-img{*/
-        /*width:90px;*/
-        /*height: 90px;*/
-        /*border-radius: 50%;*/
-        /*cursor: pointer;*/
+    /*width:90px;*/
+    /*height: 90px;*/
+    /*border-radius: 50%;*/
+    /*cursor: pointer;*/
     /*}*/
     /*.item-img-del{*/
-        /*width:90px;*/
-        /*height: 90px;*/
-        /*border-radius: 50%;*/
-        /*background: #c8ebfb;*/
-        /*box-shadow: #ccc 0 0 2px;*/
+    /*width:90px;*/
+    /*height: 90px;*/
+    /*border-radius: 50%;*/
+    /*background: #c8ebfb;*/
+    /*box-shadow: #ccc 0 0 2px;*/
     /*}*/
     /*.displayNone{*/
-        /*display: none;*/
+    /*display: none;*/
     /*}*/
-    .item-name{
+    .item-name {
         text-align: center;
         /*font-size:15px;*/
-        padding-top: 15px;
+        padding-top: 10px;
         width: 100%;
         text-overflow: ellipsis;
         white-space: nowrap;
         /*color: #ffffff;*/
-        opacity:0.9;
+        opacity: 0.9;
+        font-size: 12px;
     }
-    .item-img-container{
-        width:100%;
+
+    .item-img-container {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
