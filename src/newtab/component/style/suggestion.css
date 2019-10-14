@@ -3,6 +3,8 @@
     /*height: 90px;*/
     /*border-radius: 50%;*/
     cursor: pointer;
+    background-color: white;
+    opacity: 0.9;
 }
 .item-img-del{
     /*width:90px;*/
@@ -16,12 +18,12 @@
     display: none;
 }
 .ghost .item-img{
-    display:none
+    display:none !important;
     /*background: rgb(129, 168, 187);*/
 }
 .ghost .item-img-del{
     display: inline-block;
 }
 .ghost .item-name{
-    opacity: 0;
+    opacity: 0 !important;
 }

@@ -2,11 +2,12 @@
     <div class="suggestion-item" :style="width">
         <div class="item-img-container">
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
-            <img :src="itemInfo.img" :style="itemImageStyle" class="item-img" @mouseover="clickItem"
-                @mouseleave="leaveItem" />
+            <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" @click='toNewSite'>
+                <img :src="itemInfo.img"/>
+            </div>
         </div>
         <div class="item-name" @mouseover="clickItem" @mouseleave="leaveItem" :style="itemNameStyle">
-            {{itemInfo.title+itemInfo.index}}
+            {{itemInfo.title}}
         </div>
     </div>
 </template>
@@ -19,7 +20,7 @@
         props: ['itemInfo', 'dragging'],
         computed: {
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
-                'iconLayout']),
+                'iconLayout','newSiteNewTabValue']),
             width: function () {
                 let widthStyle = {
                     'width': 100.0 / this.iconLayout.col + '%',
@@ -29,7 +30,7 @@
                     if(this.iconLayout.col === 4){
                         widthStyle.height = (16+7) + 'vh'
                     }else{
-                        widthStyle.height = (13+7) + 'vh'
+                        widthStyle.height = (13+9) + 'vh'
                     }
                 }else{
                     if(this.iconLayout.col===3|| this.iconLayout.col===4){
@@ -100,7 +101,7 @@
         },
         data() {
             return {
-
+                
             }
         },
         methods: {
@@ -110,6 +111,9 @@
             },
             leaveItem() {
                 this.$emit('leave')
+            },
+            toNewSite(){
+                window.open(this.itemInfo.url,!this.newSiteNewTabValue);
             }
         }
     }
@@ -158,5 +162,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+    .item-img{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .item-img img{
+        width: 60%;
+        height: 60%;
     }
 </style>

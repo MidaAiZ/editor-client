@@ -398,7 +398,7 @@
         /*height: 340px;*/
         /*width: 1100px;*/
         position: relative;
-        /*overflow: hidden;*/
+        overflow: hidden;
     }
 
     #suggestions .swiper-container {
