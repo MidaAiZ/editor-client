@@ -75,6 +75,7 @@ export default {
         -o-background-size: cover;
         background-size: cover;
         background-position: center;
+        transition: background-image ease .5s;
     }
     /* .background:after{
         content: "";
