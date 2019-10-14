@@ -7,7 +7,7 @@ import { SET_HOMEMENUS } from './mutations-type.js'
 import {defaultMenu} from '../../utils/defaultOpt.js'
 
 const state = {
-    homeWebList:defaultMenu,
+    homeWebList: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).menus : defaultMenu.menus,
 };
 
 function compare(property) {
@@ -48,11 +48,15 @@ const actions = {
     async getDefaultMenus ({ commit }) { // 从服务器获取默认主页添加网站
         const { data } = await req(homeMenus.default, {code: 'CN'})
         console.log(data.data.menus instanceof Array, '主页')
-        let menu = data.data.menus instanceof Array ? data.data.menus : defaultMenu
+        let menu = {
+            isDefault: data.data.isDefault,
+            menus: data.data.menus instanceof Array ? data.data.menus : defaultMenu.menus
+        }
+        let menuArr = menu.menus
         console.log(menu, 'menu')
         console.log(defaultMenu, 'defaultMenu')
         localSave('homeMenus', menu)
-        commit('SET_HOMEMENUS', menu)
+        commit('SET_HOMEMENUS', menuArr)
     },
     afterChanged ({commit}, newList) {
 

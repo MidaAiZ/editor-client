@@ -10,7 +10,6 @@ import wallPaper from './modules/wallPaper'
 import drawersVis from './modules/drawersVis'
 import engineList from './modules/engineList'
 import categories from './modules/categories'
-import homeMenus from './modules/homeMenus'
 
 Vue.use(Vuex)
 
@@ -25,6 +24,5 @@ export default new Vuex.Store({
     drawersVis,
     engineList,
     categories,
-    homeMenus
   },
 })
