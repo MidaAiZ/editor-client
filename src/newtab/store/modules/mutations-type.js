@@ -46,6 +46,7 @@ export const CLOSE_CUSTOM_ENGINE = 'CLOSE_CUSTOM_ENGINE'; // 关闭自定义搜�
 
 // 获取网站分类 相关的mutation
 export const SET_CATEGORIES = 'SET_CATEGORIES' // 设置网站分类
+export const SET_SITES_CATEGORY = 'SET_SITES_CATEGORY' // 设置当前分类的网站内容
 
 // 主页添加网站 相关的mutation
 

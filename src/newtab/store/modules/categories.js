@@ -10,6 +10,7 @@ import {defaultCategories} from '../../utils/defaultOpt.js'
 // initial state
 const state = {
     categories: localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : defaultCategories,
+    // currentCid: null
 }
 
 // getters
@@ -21,7 +22,7 @@ const getters = {
 const actions = {
     async getCategories ({ commit }) { // 从服务器获取网站分类列表
         const { data } = await req(sitesCategories.default)
-        console.log(data, '分类')
+        // console.log(data, '分类')
         localSave('categories', data.data)
         commit('SET_CATEGORIES', data.data)
     },
