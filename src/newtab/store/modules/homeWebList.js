@@ -50,7 +50,7 @@ const actions = {
         console.log(data.data.menus instanceof Array, '主页')
         let menu = {
             isDefault: data.data.isDefault,
-            menus: data.data.menus instanceof Array ? data.data.menus : defaultMenu.menus
+            menus: JSON.parse(data.data.menus).length > 1 ? JSON.parse(data.data.menus) : defaultMenu.menus
         }
         let menuArr = menu.menus
         console.log(menu, 'menu')

@@ -58,6 +58,10 @@
         success: '注册成功',
         fail: '注册失败'
     },
+    loginMessage: {
+        success: '退出登录成功',
+        fail: '登录失败'
+    },
     logoutMessage: {
         success: '退出登录成功',
         fail: '退出登录失败'

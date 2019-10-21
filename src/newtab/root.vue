@@ -64,27 +64,29 @@ export default {
         
     },
     created: function () {
-      // 初始化用户设置
-      if (!localStorage.getItem('settings')) {
-        // getDefault()
-        localSave('settings', defaultSettings)
-        this.getDefaultSettings()
-      } else {
-        this.judgeLogin()
+      // 判断是否登录
+      this.judgeLogin()
           .then((res) => {
             console.log('rootLogin', res)
             if(res) {
 
             } else {
-
+              // 初始化用户设置
+              if (!localStorage.getItem('settings')) {
+                // getDefault()
+                localSave('settings', defaultSettings)
+                this.getDefaultSettings()
+              } else {
+                // console.log('rootLogin', loginInfo)
+              }
+              if (!localStorage.getItem('homeMenus')) {
+                // 初始化主页网站列表
+                this.getDefaultMenus()
+              }
             }
           })
-        // console.log('rootLogin', loginInfo)
-      }
       // 初始化网站分类
       this.getCategories()
-      // 初始化主页网站列表
-      this.getDefaultMenus()
     },
 }
 </script>
