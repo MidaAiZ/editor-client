@@ -1,3 +1,7 @@
 .suggestion-swiper .swiper-container{
     height: 100% !important;
 }
+
+.edit-drawer .v-modal{
+    opacity: 0.2 !important;
+}

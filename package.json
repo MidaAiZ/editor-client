@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
+    "csshake": "^1.5.3",
     "element-ui": "^2.12.0",
     "unsplash-js": "^5.0.0",
     "vcolorpicker": "^0.1.8",

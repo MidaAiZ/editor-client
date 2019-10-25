@@ -44,6 +44,12 @@ export const DELETE_CUSTOME_ENGINE = 'DELETE_CUSTOME_ENGINE'; // 删除自定义
 export const OPEN_CUSTOM_ENGINE = 'OPEN_CUSTOM_ENGINE'; // 打开自定义搜索引擎
 export const CLOSE_CUSTOM_ENGINE = 'CLOSE_CUSTOM_ENGINE'; // 关闭自定义搜索引擎
 
+// 编辑网页信息 相关的mutation
+export const CHANGE_IS_EDIT = 'CHANGE_IS_EDIT'; // 修改编辑状态
+export const EDIT_DRAWER_VISIBLE = 'EDIT_DRAWER_VISIBLE';  //修改编辑弹出框的显示
+export const CHANGE_WEB_INFO = 'CHANGE_WEB_INFO'; //修改网站信息
+export const CHANGE_CURRENT_ITEM = 'CHANGE_CURRENT_ITEM'; //修改当前修改的item
+
 // 获取网站分类 相关的mutation
 export const SET_CATEGORIES = 'SET_CATEGORIES' // 设置网站分类
 

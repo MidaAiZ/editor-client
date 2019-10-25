@@ -78,6 +78,7 @@
                             <button class="add-custom-engine-button" @click="addCustomEngine">{{nameText.add}}</button>
                             <button class="cancel-custom-engine-button"
                                 @click="isAdd=false">{{nameText.cancel}}</button>
+                            <!-- <image-cropper v-on:finish='getCropperData' :img='imageUrl'></image-cropper> -->
                         </div>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
         </el-drawer>
         <el-dialog :visible.sync="dialogVisible" width="360px" :modal="false" :append-to-body="true"
             class="cropper-dialog">
-            <div class="cropper">
+            <!-- <div class="cropper">
                 <vue-cropper ref="cropper" :img="option.img" :outputSize="option.size" :outputType="option.outputType"
                     :info="true" :full="option.full" :canMove="option.canMove" :canMoveBox="option.canMoveBox"
                     :original="option.original" :autoCrop="option.autoCrop" :autoCropWidth="option.autoCropWidth"
@@ -107,12 +108,14 @@
                     </span>
                 </span>
             </div>
-            <div class="cropper-complete-button" @click="cropperFinish('blob')">{{nameText.complete}}</div>
+            <div class="cropper-complete-button" @click="cropperFinish('blob')">{{nameText.complete}}</div> -->
+            <image-cropper v-on:finish='getCropperData' :img='imageUrl'></image-cropper>
         </el-dialog>
     </div>
 </template>
 <script>
     import './style/upload.css';
+    import ImageCropper from './imageCropper.vue';
     import {
         mapState,
         mapGetters,
@@ -123,7 +126,8 @@
     } from 'vue-cropper'
     export default {
         components: {
-            VueCropper
+            VueCropper,
+            ImageCropper
         },
         computed: {
             ...mapGetters('engineList',['maxID']),
@@ -221,19 +225,27 @@
             },
             rotateRight(){
                 this.$refs.cropper.rotateRight();
+                let element = document.getElementsByClassName('vue-cropper')[0];
+                console.log(element)
+                element.style.backgroundImage = 'none'
+                element.style.backgroundColor = 'red'
+                // console.log(this.$refs.cropper)
+                
             },
             cropperRefresh(){
                 this.$refs.cropper.refresh();
             },
             handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
+                // this.imageUrl = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
                 // console.log(file)
                 // this.dialogVisible = true;
             },
             uploadChange(file, fileList) {
+                this.imageUrl = window.URL.createObjectURL(file.raw);
                 this.option.img = window.URL.createObjectURL(file.raw);
+
                 this.dialogVisible = true;
             },
             cropperFinish(type){
@@ -261,6 +273,10 @@
                 }else{
                     this.CLOSE_CUSTOM_ENGINE(index);                                        
                 }
+            },
+            getCropperData(data){
+                this.customEngine.img = data;
+                this.dialogVisible = false;
             }
         }
     }
@@ -464,6 +480,24 @@
         margin-bottom: 24px;
     }
 
+    
+    .engine-list-item-left{
+        display: flex;
+        align-items: center;
+    }
+    .engine-list-item-right{
+        display: flex;
+        align-items: center;
+    }
+    .delete-custom-engine-button{
+        margin-left: 12px;
+        font-size: 18px;
+        cursor: pointer; 
+    }
+
+    /* .image-cropper {
+        width: 100%;
+    }
     .cropper {
         width: 100%;
         height: 310px;
@@ -498,7 +532,7 @@
     }
 
     .cropper-complete-button {
-        background-color: #656565;
+        background-color: #656565;s
         color: white;
         cursor: pointer;
         margin-top: 15px;
@@ -511,18 +545,5 @@
 
     .cropper-complete-button:hover {
         opacity: 1;
-    }
-    .engine-list-item-left{
-        display: flex;
-        align-items: center;
-    }
-    .engine-list-item-right{
-        display: flex;
-        align-items: center;
-    }
-    .delete-custom-engine-button{
-        margin-left: 12px;
-        font-size: 18px;
-        cursor: pointer; 
-    }
+    } */
 </style>

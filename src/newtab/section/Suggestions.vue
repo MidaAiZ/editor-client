@@ -4,11 +4,11 @@
             <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}" style='height:100%'>
                 <swiper-slide v-for="(page,index) in pagedArray" :key="index" class='suggestion-swiper'>
                     <draggable v-model="pagedArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
-                        @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate'
+                        @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate' handle='.handle-img'
                         @remove='onRemove' @add='onAdd'>
                         <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
                             <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
-                                :item-info="item" :key="item.id" v-on:change="changeDrag" @mousedown="mouse_down"
+                                :item-info="item" :key="item.index" v-on:change="changeDrag" @mousedown="mouse_down"
                                 v-on:leave="leaveDrag" class="list-complete-item">
                             </suggestion-item>
                         </transition-group>
@@ -18,9 +18,19 @@
         </div>
         <div class="bullet">
             <span v-for="(item, index) in pagedArray" :class="{ 'active':index===currentIndex }"
-                @click="changeIndex(index)" :key="index">
+                @click="changeIndex($event,index)" :key="index">
             </span>
         </div>
+        <el-drawer :visible='editDrawerVisible' size='500px' :show-close="false" :modal="showModal"
+            :append-to-body='true' @close='editDrawerClose' custom-class='edit-drawer' :destroy-on-close='true'>
+            <div slot="title" class="edit-drawer-top">
+                <span class="edit-drawer-title">编辑</span>
+                <span class="edit-drawer-close" @click="editDrawerClose()">
+                    <i class="el-icon-close"></i>
+                </span>
+            </div>
+            <edit-drawer></edit-drawer>
+        </el-drawer>
     </div>
 
 </template>
@@ -28,14 +38,16 @@
     import '../component/style/suggestion-swiper.css'
     import SuggestionItem from '../component/SuggestionItem.vue'
     import draggable from 'vuedraggable'
+    import EditDrawer from '../component/EditDrawer.vue'
     import {
         swiper,
-        swiperSlide
+        swiperSlide,
     } from 'vue-awesome-swiper'
     import 'swiper/dist/css/swiper.css'
     import {
         mapState,
-        mapGetters
+        mapGetters,
+        mapMutations
     } from 'vuex'
     import homeWebList from "src/newtab/store/modules/homeWebList";
     import '../component/style/suggestion.css'
@@ -46,10 +58,11 @@
             SuggestionItem,
             swiper,
             swiperSlide,
-            draggable
+            draggable,
+            EditDrawer
         },
         computed: {
-            pagedArray:function(){
+            pagedArray: function () {
                 let result = []
                 let rowNumber = this.iconLayout.row; //一页多少行
                 let colNumber = this.iconLayout.col; //一行多少个
@@ -100,19 +113,19 @@
                 let heightStyle = {
                     'height': ''
                 }
-                if(this.iconLayout.row === 2){
-                    if(this.iconLayout.col === 4){
-                        heightStyle.height = (16+7) * this.iconLayout.row + 'vh'
-                    }else{
-                        heightStyle.height = (13+9) * this.iconLayout.row + 'vh'
+                if (this.iconLayout.row === 2) {
+                    if (this.iconLayout.col === 4) {
+                        heightStyle.height = (16 + 7) * this.iconLayout.row + 'vh'
+                    } else {
+                        heightStyle.height = (13 + 9) * this.iconLayout.row + 'vh'
                     }
-                }else{
-                    if(this.iconLayout.col===3|| this.iconLayout.col===4){
-                        heightStyle.height = (16+5) * this.iconLayout.row + 'vh'
-                    }else if(this.iconLayout.col === 5){
-                        heightStyle.height = (14+5) * this.iconLayout.row + 'vh'
-                    }else{
-                        heightStyle.height = (13+5) * this.iconLayout.row + 'vh'
+                } else {
+                    if (this.iconLayout.col === 3 || this.iconLayout.col === 4) {
+                        heightStyle.height = (16 + 5) * this.iconLayout.row + 'vh'
+                    } else if (this.iconLayout.col === 5) {
+                        heightStyle.height = (14 + 5) * this.iconLayout.row + 'vh'
+                    } else {
+                        heightStyle.height = (13 + 5) * this.iconLayout.row + 'vh'
                     }
                 }
                 return heightStyle;
@@ -130,9 +143,14 @@
                     //                'margin-right': 2.5*this.itemNumber+'vw',
                 }
             },
-            ...mapState('homeWebList', ['homeWebList']),
+            nameText: function () {
+                return {
+                    'edit': '编辑'
+                }
+            },
+            ...mapState('homeWebList', ['homeWebList', 'editDrawerVisible']),
             ...mapState('settings', ['iconLayout', 'iconSizeValue']),
-            ...mapGetters('homeWebList', ['totalSize', 'pagingArray', 'sortArray']),
+            ...mapGetters('homeWebList', ['totalSize', 'pagingArray', 'sortArray', 'isEdit']),
         },
         data() {
             const self = this;
@@ -151,24 +169,9 @@
                         }
                     }
                 },
-                myArray: [{
-                        id: 1,
-                        name: 1
-                    },
-                    {
-                        id: 2,
-                        name: 2
-                    },
-                    {
-                        id: 3,
-                        name: 3
-                    },
-                    {
-                        id: 4,
-                        name: 4
-                    }
-                ],
-                movePage: false
+                movePage: false,
+                showModal: false,
+                webInfo: {}
             }
         },
         watch: {
@@ -209,12 +212,14 @@
                 }
                 //                console.log(self.currentIndex);
             };
+            // document.onclick
             //            document.onmouseup = function () {
             //                document.onmousemove = null;
             //                document.onmouseup = null;
             //            }
         },
         methods: {
+            ...mapMutations('homeWebList', ['CHANGE_IS_EDIT', 'EDIT_DRAWER_VISIBLE']),
             paging: function () {
                 let rowNumber = this.iconLayout.row; //一页多少行
                 let colNumber = this.iconLayout.col; //一行多少个
@@ -268,8 +273,37 @@
                 console.log('onMove');
                 console.log(evt);
                 console.log(this.pagedArray);
+
                 console.log(this.startIndex + '  start');
                 console.log(this.currentIndex + '  current');
+                
+                for (let k = 0; k < this.pagedArray[1].length; k++) {
+                    console.log(this.pagedArray[1][k].title);
+                }
+                // console.log('gaga')
+                console.log(this.pagedArray);
+            },
+            onStart(evt) {
+                this.dragging = true;
+                this.startIndex = this.currentIndex;
+            },
+            onEnd() {
+                this.dragging = false;
+                if (this.pagedArray[this.startIndex].length === 0) {
+                    this.pagedArray = this.pagedArray.filter(function (item) {
+                        return item.length > 0;
+                    })
+                    if (this.startIndex < this.currentIndex) {
+                        this.currentIndex--;
+                        let swiper = this.$refs.mySwiper.swiper;
+                        swiper.slideTo(this.currentIndex);
+                    }
+                }
+                console.log('end   ')
+                for (let k = 0; k < this.pagedArray[1].length; k++) {
+                    console.log(this.pagedArray[1][k].title);
+                }
+
                 let everyPages = this.iconLayout.row * this.iconLayout.col; //一页有多少个item
                 if (this.startIndex === this.currentIndex) {
                     console.log('gg');
@@ -278,9 +312,9 @@
                     console.log('begin');
                     console.log(this.pagedArray[this.currentIndex].length);
                     console.log(this.iconLayout.row * this.iconLayout.col);
-                    if (this.pagedArray[this.currentIndex].length === this.iconLayout.row * this.iconLayout.col) {
+                    if (this.pagedArray[this.currentIndex].length === this.iconLayout.row * this.iconLayout.col+1) {
                         console.log('come')
-                        let currentArray = this.pagedArray[this.currentIndex];
+                        // let currentArray = this.pagedArray[this.currentIndex];
                         let lastItem = this.pagedArray[this.currentIndex].pop();
                         if (this.currentIndex === this.pagedArray.length - 1) {
                             var arr = [];
@@ -291,7 +325,7 @@
                         } else {
                             let length = this.pagedArray.length;
                             for (let i = this.currentIndex + 1; i < length; i++) {
-                                console.log(i+ '   i')
+                                console.log(i + '   i')
                                 if (this.pagedArray[i].length === everyPages) {
                                     let currentArr = this.pagedArray[i];
                                     let temp = currentArr[currentArr.length - 1]
@@ -314,79 +348,69 @@
                                         console.log(this.pagedArray);
                                     }
                                 } else {
-                                    let currentArr = this.pagedArray[i];
-                                    let temp = currentArr[currentArr.length - 1];
-                                    for (let j = currentArr.length - 2; j >= 0; j--) {
-                                        this.pagedArray[i][j + 1] = this.pagedArray[i][j];
-                                    }
-                                    this.pagedArray[i][0] = lastItem;
-                                    this.pagedArray[i].push(temp);
-                                    break;
+                                    console.log(lastItem)
+                                    for (let k = 0; k < this.pagedArray[i].length; k++) {
+                                            console.log(this.pagedArray[i][k].title);
+                                        }
+                                    this.pagedArray[i].unshift(lastItem);
+                                    // let currentArr = window.this.pagedArray[i];
+                                    // if (this.currentIndex < this.startIndex) {
+                                    //     let index = evt.draggedContext.index;
+                                    //     // for (let k = 0; k < currentArr.length; k++) {
+                                    //     //     console.log(currentArr[k].title)
+                                    //     // }
+
+                                    //     this.pagedArray[i].unshift(lastItem);
+                                        
+                                    // } else {
+                                    //     this.pagedArray[i].unshift(lastItem);
+                                    // }
+                                    // break;
                                 }
                             }
                         }
 
                     }
                 }
-                console.log('gaga')
-                console.log(this.pagedArray);
             },
-            onStart(evt) {
-                this.dragging = true;
-                this.startIndex = this.currentIndex;
+            editDrawerClose() {
+                this.EDIT_DRAWER_VISIBLE(false)
             },
-            onEnd() {
-                this.dragging = false;
-                if(this.pagedArray[this.startIndex].length === 0){
-                    this.pagedArray = this.pagedArray.filter(function (item) {
-                        return item.length > 0;
-                    })
-                    if(this.startIndex < this.currentIndex){
-                        this.currentIndex --;
-                        let swiper = this.$refs.mySwiper.swiper;
-                        swiper.slideTo(this.currentIndex);
-                    }
-                }
-                
-                //            this.movePage = false;
+            currentItem(itemInfo) {
+                this.webInfo = itemInfo;
             },
-            autoPlay() {
-                //            setTimeout(() => {
-                //                this.currentIndex++;
-                //                if (this.currentIndex > this.pagingArray.length - 1) {
-                //                    this.currentIndex = 0;
-                //                }
-                //            }, 2000);
-            },
-            changeIndex(index) {
+            changeIndex(e, index) {
+                e.preventDefault();
                 this.currentIndex = index;
+                this.CHANGE_IS_EDIT(true);
                 let swiper = this.$refs.mySwiper.swiper;
                 swiper.slideTo(this.currentIndex)
             },
-            mouse_down(e) {
-                console.log('dsfdsfsdfsd');
-                //            this.movePage = true
-                let odiv = e.target; //获取目标元素
-                //            //算出鼠标相对元素的位置
-                //            let self = this;
-                //            let beforeX = e.clientX;
-                let disX = e.clientX - odiv.offsetLeft;
-                let disY = e.clientY - odiv.offsetTop;
-                //            let left = 0;
-                //            let top = 0;
-                document.onmousemove = (e) => { //鼠标按下并移动的事件
-                    //                //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-                    let left = e.clientX - disX;
-                    let top = e.clientY - disY;
-                    odiv.style.left = left + 'px';
-                    odiv.style.top = top + 'px';
-                };
-                document.onmouseup = (e) => {
-                    //                console.log(this.currentIndex);
-                    document.onmousemove = null;
-                    document.onmouseup = null;
-                };
-            }
+        },
+
+        mouse_down(e) {
+            console.log('dsfdsfsdfsd');
+            //            this.movePage = true
+            let odiv = e.target; //获取目标元素
+            //            //算出鼠标相对元素的位置
+            //            let self = this;
+            //            let beforeX = e.clientX;
+            let disX = e.clientX - odiv.offsetLeft;
+            let disY = e.clientY - odiv.offsetTop;
+            //            let left = 0;
+            //            let top = 0;
+            document.onmousemove = (e) => { //鼠标按下并移动的事件
+                //                //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+                let left = e.clientX - disX;
+                let top = e.clientY - disY;
+                odiv.style.left = left + 'px';
+                odiv.style.top = top + 'px';
+            };
+            document.onmouseup = (e) => {
+                //                console.log(this.currentIndex);
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
         }
 
     }
@@ -404,59 +428,6 @@
     #suggestions .swiper-container {
         height: 100%;
     }
-
-    /*.list-complete-item {*/
-    /*transition: all 1s;*/
-    /*}*/
-
-    /*.flip-list-move {*/
-    /*transition: transform 1s;*/
-    /*}*/
-
-    /*.no-move {*/
-    /*transition: transform 0s;*/
-    /*}*/
-
-    /*.slide {*/
-    /*!*width: 100%;*!*/
-    /*position: absolute;*/
-    /*height: 100%;*/
-    /*overflow: hidden;*/
-    /*transition: left 0.5s;*/
-    /*!*position: relative;*!*/
-    /*}*/
-
-    /*ul {*/
-    /*list-style: none;*/
-    /*}*/
-
-    /*.slide-item {*/
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*text-align: left;*/
-    /*list-style: none;*/
-    /*height: 90%;*/
-    /*!*transition: left 0.5s;*!*/
-    /*display: inline-block;*/
-    /*}*/
-
-    /*.list-enter-to {*/
-    /*transition: all .5s ease;*/
-    /*transform: translateX(0);*/
-    /*}*/
-
-    /*.list-leave-active {*/
-    /*transition: all .5s ease;*/
-    /*transform: translateX(-100%)*/
-    /*}*/
-
-    /*.list-enter {*/
-    /*transform: translateX(100%)*/
-    /*}*/
-
-    /*.list-leave {*/
-    /*transform: translateX(0)*/
-    /*}*/
 
     .bullet {
         /*position: absolute;*/
@@ -498,7 +469,19 @@
         /*top:0;*/
     }
 
-    /*.sortable-drag{*/
-    /*position:absolute;*/
-    /*}*/
+    .edit-drawer-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .edit-drawer-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .edit-drawer-close {
+        font-size: 20px;
+        cursor: pointer;
+    }
 </style>

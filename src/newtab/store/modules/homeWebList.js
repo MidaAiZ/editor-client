@@ -1,4 +1,4 @@
-import {DELETE_CHOOSE_ENGINE, ADD_CHOOSE_ENGINE} from "./mutations-type.js";
+import {DELETE_CHOOSE_ENGINE, ADD_CHOOSE_ENGINE, CHANGE_IS_EDIT,EDIT_DRAWER_VISIBLE,CHANGE_WEB_INFO,CHANGE_CURRENT_ITEM} from "./mutations-type.js";
 import homeMenus from '../../services/apis/homeMenus.js'
 import req from '../../services/index.js'
 import { localSave } from '../../utils/localSave.js';
@@ -8,6 +8,9 @@ import {defaultMenu} from '../../utils/defaultOpt.js'
 
 const state = {
     homeWebList:defaultMenu,
+    isEdit:false,
+    editDrawerVisible:false,
+    currentItem: {}
 };
 
 function compare(property) {
@@ -78,6 +81,26 @@ const mutations = {
     [SET_HOMEMENUS] (state, homeMenus) { // 设置主页网站列表
         state.homeWebList = homeMenus
     },
+    [CHANGE_IS_EDIT] (state, isEdit){
+        state.isEdit = isEdit;
+    },
+    [EDIT_DRAWER_VISIBLE] (state,isVisible){
+        // console.log(isVisible);
+        state.editDrawerVisible = isVisible;
+    },
+    [CHANGE_WEB_INFO] (state,webInfo){
+        for(let i=0; i<state.homeWebList.length; i++){
+            if(state.homeWebList[i].id === webInfo.id){
+                state.homeWebList[i].title = webInfo.title;
+                state.homeWebList[i].url = webInfo.url;
+                state.homeWebList[i].img = webInfo.img;
+                break;
+            }
+        }
+    },
+    [CHANGE_CURRENT_ITEM] (state,item){
+        state.currentItem = window.Object.assign({},item);
+    }
     // setLogRegModalVis (state, vis) {
     //     console.log('modal visible: ',vis);
     //     state.logregModalVis = vis

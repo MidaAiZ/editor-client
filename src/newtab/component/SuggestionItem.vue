@@ -1,26 +1,39 @@
 <template>
-    <div class="suggestion-item" :style="width">
+    <div class="suggestion-item" :style="width" :class="{'my-shake': isEdit,'shake-constant':isEdit}">
         <div class="item-img-container">
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
-            <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" @click='toNewSite'>
-                <img :src="itemInfo.img"/>
+            <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" 
+                @click='toNewSite' @mouseup="itemEdit" 
+                 @contextmenu="contextMenu">
+                <img :src="itemInfo.img" class='handle-img'/>
+                <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
+                    <img :src='editImg'/>
+                </div>
+                <span class="item-img-close" @mouseover="closeHover" v-show='isEdit'>
+                    <i class='el-icon-close'></i>
+                </span>
             </div>
         </div>
-        <div class="item-name" @mouseover="clickItem" @mouseleave="leaveItem" :style="itemNameStyle">
+        <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
             {{itemInfo.title}}
         </div>
+        
     </div>
 </template>
 <script>
     import {
-        mapState
+        mapState,mapMutations
     } from 'vuex'
+    import 'csshake/dist/csshake.min.css'
+    import './style/shakeRotate.scss'
+    // const editIcon = require('../../../static/img/edit.svg')
     export default {
         name: 'suggestions',
         props: ['itemInfo', 'dragging'],
         computed: {
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
                 'iconLayout','newSiteNewTabValue']),
+            ...mapState('homeWebList',['isEdit','editDrawerVisible']),
             width: function () {
                 let widthStyle = {
                     'width': 100.0 / this.iconLayout.col + '%',
@@ -96,24 +109,77 @@
                     default:
                 }
                 return imgStyle
+            },
+            hakeClass:function(){
+                return{
+                    'shake-rotate': this.isEdit,
+                    'shake-constant':this.isEdit
+                }
+            },
+            nameText:function(){
+                return{
+                    'edit': '编辑'
+                }
             }
-
         },
         data() {
             return {
-                
+                isHover: false,
+                editImg: require('../../../static/img/edit.svg')
+                // isEdit: false
             }
         },
         methods: {
+            ...mapMutations('homeWebList',['CHANGE_IS_EDIT','EDIT_DRAWER_VISIBLE','CHANGE_CURRENT_ITEM']),
             clickItem() {
+                this.isHover = true;
                 this.$emit('change');
-                //                console.log('sdfsd')
             },
             leaveItem() {
+                this.isHover = false;
+                this.$emit('leave')
+            },
+            clickItem1() {
+                this.$emit('change');
+            },
+            leaveItem1() {
                 this.$emit('leave')
             },
             toNewSite(){
+                // this.CHANGE_IS_EDIT(false)
+                
                 window.open(this.itemInfo.url,!this.newSiteNewTabValue);
+                
+                
+            },
+            itemEdit(e){
+                // e.preventDefault();
+                if (e.button === 2) {
+                    this.CHANGE_IS_EDIT(true);
+                    // this.isEdit = true;
+                }
+            },
+            contextMenu(e){
+                e.preventDefault();
+            },
+            closeHover:function(e){
+                // e.preventDefault();
+                e.stopPropagation();
+                this.isHover = false;
+            },
+            editDrawerShow(e){
+                e.stopPropagation();
+                // this.$emit("current",this.itemInfo);
+                this.CHANGE_CURRENT_ITEM(this.itemInfo);
+                this.CHANGE_IS_EDIT(false);
+                this.EDIT_DRAWER_VISIBLE(true)
+            },
+            
+        },
+        mounted(){
+            let self = this
+            document.onclick=function(){
+                self.CHANGE_IS_EDIT(false);
             }
         }
     }
@@ -124,6 +190,7 @@
     .suggestion-item {
         position: relative;
         display: inline-block;
+        padding-top: 8px;
         /*margin-bottom: 20px;*/
         /*transition: all .5s;*/
         /*height:50%;*/
@@ -164,6 +231,7 @@
         align-items: center;
     }
     .item-img{
+        position:relative;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -173,4 +241,63 @@
         width: 60%;
         height: 60%;
     }
+    .item-img-mask{
+        position: absolute;
+        top:0;
+        left: 0;
+        bottom:0;
+        right: 0;
+        border-radius: 50%;
+        background-color:rgba(255, 255, 255,0.6);
+        cursor: pointer;
+        transition: all ease .3s;
+        transform: translate3d(0,0,0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .item-img-mask img{
+        width: 40%;
+        height: 40%
+    }
+    .item-img-close{
+        position:absolute;
+        right: -3%;
+        top: -3%;
+        background-color: rgba(255, 255, 255,0.7);
+        font-size: 130%;
+        font-weight: 400;
+        width: 30%;
+        height: 30%;
+        border-radius: 50%; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        /* opacity: 0.8; */
+        box-shadow: #ccc 0 0 2px;
+    }
+    .item-img-close:hover{
+        background-color: rgba(255, 255, 255,1);;
+        /* transform: scale(1.1) */
+    }
+    .edit-drawer-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .edit-drawer-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .edit-drawer-close {
+        font-size: 20px;
+        cursor: pointer;
+    }
+    /* .shake-rotate{
+        @include do-shake('shake-rotate')
+    } */
 </style>
