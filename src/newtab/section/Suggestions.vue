@@ -5,12 +5,14 @@
                 <swiper-slide v-for="(page,index) in pagedArray" :key="index" class='suggestion-swiper'>
                     <draggable v-model="pagedArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
                         @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate' handle='.handle-img'
-                        @remove='onRemove' @add='onAdd'>
+                        @remove='onRemove' @add='onAdd' @drag="onDrag" group="home">
                         <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
+                            <!-- <draggable group="home"> -->
                             <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
                                 :item-info="item" :key="item.index" v-on:change="changeDrag" @mousedown="mouse_down"
                                 v-on:leave="leaveDrag" class="list-complete-item">
                             </suggestion-item>
+                            <!-- </draggable> -->
                         </transition-group>
                     </draggable>
                 </swiper-slide>
@@ -175,11 +177,6 @@
             }
         },
         watch: {
-            //        movePage:function (newPage,oldPage) {
-            //            if (newPage){
-            //                this.clickMove();
-            //            }
-            //        }
         },
         created() {
             console.log(this.pagingArray)
@@ -210,13 +207,7 @@
                         judge = false
                     }
                 }
-                //                console.log(self.currentIndex);
             };
-            // document.onclick
-            //            document.onmouseup = function () {
-            //                document.onmousemove = null;
-            //                document.onmouseup = null;
-            //            }
         },
         methods: {
             ...mapMutations('homeWebList', ['CHANGE_IS_EDIT', 'EDIT_DRAWER_VISIBLE']),
@@ -233,14 +224,9 @@
                 }
             },
             changeItem: function (num) {
-                //            console.log(this.itemNumber);
-                //            this.itemNumber = num;
-                //            console.log(this.itemNumber+'  hhh')
             },
             changeDrag() {
-                //            console.log(this.isDrag);
                 this.isDrag = true;
-                //            console.log(this.isDrag);
             },
             leaveDrag() {
                 this.isDrag = false;
@@ -255,33 +241,30 @@
 
             },
             onChange() {
-                // console.log('change');
+                console.log('changing')
             },
             onSort() {
-                // console.log('sort');
             },
             onUpdate() {
-                // console.log('update');
             },
             onRemove() {
-                // console.log('remove');
             },
             onAdd() {
-                // console.log('add');
             },
-            onMove(evt) {
+            onMove(evt, originalEvt) {
                 console.log('onMove');
-                console.log(evt);
-                console.log(this.pagedArray);
+                console.log(evt, 'evt');
+                console.log(originalEvt, 'originalEvt');
+                // console.log(this.pagedArray);
 
-                console.log(this.startIndex + '  start');
-                console.log(this.currentIndex + '  current');
+                // console.log(this.startIndex + '  start');
+                // console.log(this.currentIndex + '  current');
                 
                 for (let k = 0; k < this.pagedArray[1].length; k++) {
-                    console.log(this.pagedArray[1][k].title);
+                    // console.log(this.pagedArray[1][k].title);
                 }
                 // console.log('gaga')
-                console.log(this.pagedArray);
+                // console.log(this.pagedArray);
             },
             onStart(evt) {
                 this.dragging = true;
@@ -299,14 +282,14 @@
                         swiper.slideTo(this.currentIndex);
                     }
                 }
-                console.log('end   ')
+                // console.log('end   ')
                 for (let k = 0; k < this.pagedArray[1].length; k++) {
                     console.log(this.pagedArray[1][k].title);
                 }
 
                 let everyPages = this.iconLayout.row * this.iconLayout.col; //一页有多少个item
                 if (this.startIndex === this.currentIndex) {
-                    console.log('gg');
+                    // console.log('gg');
                     // this.pagedArray[this.currentIndex][evt.]
                 } else {
                     console.log('begin');
@@ -416,11 +399,7 @@
     }
 </script>
 <style scoped>
-    /*@import '../component/style/suggestion.css';*/
     #suggestions {
-        /* margin-top: 4vh; */
-        /*height: 340px;*/
-        /*width: 1100px;*/
         position: relative;
         overflow: hidden;
     }
@@ -430,11 +409,6 @@
     }
 
     .bullet {
-        /*position: absolute;*/
-        /*width: 100%;*/
-        /*bottom: -6vh;*/
-        /*margin: 0 auto;*/
-        /* margin-top: 3vh; */
         z-index: 10;
         text-align: center;
     }

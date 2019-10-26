@@ -4,7 +4,7 @@
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
             <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" 
                 @click='toNewSite' @mouseup="itemEdit" 
-                 @contextmenu="contextMenu">
+                @contextmenu="contextMenu">
                 <img :src="itemInfo.img" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>
@@ -13,11 +13,15 @@
                     <i class='el-icon-close'></i>
                 </span>
             </div>
+            <draggable class="folder" v-model="itemInfo.children" @end="wtf" group="home">
+                <div v-for="item in itemInfo.children">
+                    fff
+                </div>
+            </draggable>
         </div>
         <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
             {{itemInfo.title}}
         </div>
-        
     </div>
 </template>
 <script>
@@ -26,9 +30,13 @@
     } from 'vuex'
     import 'csshake/dist/csshake.min.css'
     import './style/shakeRotate.scss'
+    import draggable from 'vuedraggable'
     // const editIcon = require('../../../static/img/edit.svg')
     export default {
         name: 'suggestions',
+        components: {
+            draggable,
+        },
         props: ['itemInfo', 'dragging'],
         computed: {
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
@@ -151,6 +159,9 @@
                 window.open(this.itemInfo.url,!this.newSiteNewTabValue);
                 
                 
+            },
+            folderDragEnd() {
+                console.log('fuck')
             },
             itemEdit(e){
                 // e.preventDefault();
@@ -297,7 +308,16 @@
         font-size: 20px;
         cursor: pointer;
     }
-    /* .shake-rotate{
-        @include do-shake('shake-rotate')
-    } */
+    .folder {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top:0;
+        left: 0;
+        /* bottom:0;
+        right: 0; */
+        border-radius: 50%;
+        background-color:rgba(255, 255, 255,0.6);
+        z-index: -1;
+    }
 </style>

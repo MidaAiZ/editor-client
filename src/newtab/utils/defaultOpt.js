@@ -121,6 +121,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: chrome,
         url: 'https://chrome.google.com/webstore/category/extensions',
         index: 0,
+        isFolder: false,
+        children: []
       },
       {
         id: 3,
@@ -128,6 +130,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: bookmark,
         url: '',
         index: 1,
+        isFolder: false,
+        children: []
       },
       {
         id: 4,
@@ -135,6 +139,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: history,
         url: '',
         index: 2,
+        isFolder: false,
+        children: []
       },
       {
         id: 5,
@@ -142,6 +148,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: amazon,
         url: 'https://www.amazon.com/',
         index: 3,
+        isFolder: false,
+        children: []
       },
       {
         id: 6,
@@ -149,6 +157,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: tianmao,
         url: 'https://www.tmall.com/',
         index: 4,
+        isFolder: false,
+        children: []
       },
       {
         id: 7,
@@ -156,6 +166,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: instagram,
         url: 'https://www.instagram.com/',
         index: 5,
+        isFolder: false,
+        children: []
       },
       {
         id: 8,
@@ -163,6 +175,7 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: twitter,
         url: 'https://twitter.com/',
         index: 6,
+        children: []
       },
       {
         id: 9,
@@ -170,6 +183,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: jingdong,
         url: 'https://www.jd.com/',
         index: 7,
+        isFolder: false,
+        children: []
       },
       {
         id: 10,
@@ -177,6 +192,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: youtube,
         url: 'https://www.youtube.com/',
         index: 8,
+        isFolder: false,
+        children: []
       },
       {
         id: 11,
@@ -184,6 +201,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: bilibili,
         url: 'https://www.bilibili.com/',
         index: 9,
+        isFolder: false,
+        children: []
       },
       {
         id: 12,
@@ -191,6 +210,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: steam,
         url: 'https://store.steampowered.com/',
         index: 10,
+        isFolder: false,
+        children: []
       },
       {
         id: 13,
@@ -198,6 +219,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: zhihu,
         url: 'https://www.zhihu.com/',
         index: 11,
+        isFolder: false,
+        children: []
       },
       {
         id: 14,
@@ -205,6 +228,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: weibo,
         url: 'https://www.weibo.com/',
         index: 12,
+        isFolder: false,
+        children: []
       },
       {
         id: 15,
@@ -212,6 +237,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: facebook,
         url: 'https://www.facebook.com/',
         index: 13,
+        isFolder: false,
+        children: []
       },
       {
         id: 16,
@@ -219,6 +246,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: ebay,
         url: 'https://www.ebay.com/',
         index: 14,
+        isFolder: false,
+        children: []
       },
       {
         id: 17,
@@ -226,5 +255,16 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         img: gmail,
         url: 'https://mail.google.com/mail/',
         index: 15,
+        isFolder: false,
+        children: []
+      },
+      {
+        id: 18,
+        title: '文件夹',
+        img: gmail,
+        url: 'https://mail.google.com/mail/',
+        index: 16,
+        isFolder: true,
+        children: []
       },
   ]}
