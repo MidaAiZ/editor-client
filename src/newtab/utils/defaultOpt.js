@@ -105,7 +105,9 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     fontColorValue: '#fff',
   }
 
-  export const defaultMenu = [
+  export const defaultMenu = {
+    isDefault: true,
+    menus: [
     //   {
     //       id: 1,
     //       title: '天气',
@@ -225,4 +227,4 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
         url: 'https://mail.google.com/mail/',
         index: 15,
       },
-  ]
+  ]}

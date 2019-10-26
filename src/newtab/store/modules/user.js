@@ -46,7 +46,7 @@ const actions = {
             Message.success({message: localeText[rootState.locale.location].registerMessage.success})
         }
     },
-    async login ({ commit }) {
+    async login ({ commit, rootState }) {
         let loginData = new FormData();
         loginData.append('email', state.loginEmail)
         loginData.append('password', state.loginPassword)
@@ -64,6 +64,8 @@ const actions = {
             commit('setUserName', userData.name)
             commit('setLogRegModalVis', false)
             commit('loginSuccess', true)
+        } else {
+            Message.error({message: localeText[rootState.locale.location].loginMessage.fail})
         }
     },
     async judgeLogin ({ commit }) { // 判断是否登录

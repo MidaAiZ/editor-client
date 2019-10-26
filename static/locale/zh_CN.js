@@ -58,6 +58,10 @@
         success: '注册成功',
         fail: '注册失败'
     },
+    loginMessage: {
+        success: '退出登录成功',
+        fail: '登录失败'
+    },
     logoutMessage: {
         success: '退出登录成功',
         fail: '退出登录失败'
@@ -120,6 +124,7 @@
     historyName: '历史记录',
     newFolder: '新建文件夹',
     openFolder: '打开文件夹',
-    closeFolder: '关闭文件夹'
+    closeFolder: '关闭文件夹',
+    cloudSaveFail: '云端同步失败，稍后将为您重新同步'
 }
 export default zh_CN

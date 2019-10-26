@@ -52,6 +52,7 @@ export const CHANGE_CURRENT_ITEM = 'CHANGE_CURRENT_ITEM'; //修改当前修改�
 
 // 获取网站分类 相关的mutation
 export const SET_CATEGORIES = 'SET_CATEGORIES' // 设置网站分类
+export const SET_SITES_CATEGORY = 'SET_SITES_CATEGORY' // 设置当前分类的网站内容
 
 // 主页添加网站 相关的mutation
 

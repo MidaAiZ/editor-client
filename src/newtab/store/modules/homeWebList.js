@@ -1,16 +1,18 @@
 import {DELETE_CHOOSE_ENGINE, ADD_CHOOSE_ENGINE, CHANGE_IS_EDIT,EDIT_DRAWER_VISIBLE,CHANGE_WEB_INFO,CHANGE_CURRENT_ITEM} from "./mutations-type.js";
 import homeMenus from '../../services/apis/homeMenus.js'
 import req from '../../services/index.js'
-import { localSave } from '../../utils/localSave.js';
+import { localSave } from '../../utils/localSave.js'
 import localeText from '../../../../static/locale/index.js'
 import { SET_HOMEMENUS } from './mutations-type.js'
 import {defaultMenu} from '../../utils/defaultOpt.js'
+import { Message } from 'element-ui'
 
 const state = {
-    homeWebList:defaultMenu,
+    // homeWebList:defaultMenu,
     isEdit:false,
     editDrawerVisible:false,
-    currentItem: {}
+    currentItem: {},
+    homeWebList: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).menus : defaultMenu.menus,
 };
 
 function compare(property) {
@@ -50,15 +52,24 @@ const getters = {
 const actions = {
     async getDefaultMenus ({ commit }) { // 从服务器获取默认主页添加网站
         const { data } = await req(homeMenus.default, {code: 'CN'})
-        console.log(data.data.menus instanceof Array, '主页')
-        let menu = data.data.menus instanceof Array ? data.data.menus : defaultMenu
+        let menu = {
+            isDefault: data.data.isDefault,
+            menus: JSON.parse(data.data.menus).length > 1 ? JSON.parse(data.data.menus) : defaultMenu.menus
+        }
+        let menuArr = menu.menus
         console.log(menu, 'menu')
         console.log(defaultMenu, 'defaultMenu')
         localSave('homeMenus', menu)
-        commit('SET_HOMEMENUS', menu)
+        commit('SET_HOMEMENUS', menuArr)
     },
-    afterChanged ({commit}, newList) {
-
+    async afterChanged ({ commit, rootState }, newList) {
+        const { data } = await req(homeMenus.changeAll, {}, JSON.stringify(newList))
+        if (data.code === 'Success') {
+            // commit('SET_HOMEMENUS', data.data)
+            console.log('同步网站列表成功')
+        } else {
+            Message.error({message: localeText[rootState.locale.location].cloudSaveFail})
+        }
     },
     addOne () {
         

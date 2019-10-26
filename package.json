@@ -23,13 +23,15 @@
     "sass": "^1.22.12",
     "sass-loader": "^8.0.0",
     "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^1.1.2",
     "vue-loader": "^15.7.0",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.10",
     "vue-waterfall-easy": "^2.4.4",
     "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.2"
+    "webpack-cli": "^3.3.2",
+    "webpack-parallel-uglify-plugin": "^1.1.2"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
