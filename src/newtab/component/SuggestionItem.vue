@@ -13,11 +13,11 @@
                     <i class='el-icon-close'></i>
                 </span>
             </div>
-            <draggable class="folder" v-model="itemInfo.children" @end="wtf" group="home">
+            <!-- <draggable @move="moveFolder" class="folder" v-model="itemInfo.children" @end="wtf" group="home">
                 <div v-for="item in itemInfo.children">
                     fff
                 </div>
-            </draggable>
+            </draggable> -->
         </div>
         <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
             {{itemInfo.title}}
@@ -184,6 +184,9 @@
                 this.CHANGE_CURRENT_ITEM(this.itemInfo);
                 this.CHANGE_IS_EDIT(false);
                 this.EDIT_DRAWER_VISIBLE(true)
+            },
+            moveFolder() {
+                console.log('fffuck')
             },
             
         },

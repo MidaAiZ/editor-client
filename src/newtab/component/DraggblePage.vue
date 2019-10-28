@@ -1,41 +1,19 @@
 <template>
-    <div style="z-index:1">
-        <div id="suggestions" :style="[suggestionsWidth,suggestionsHeight]">
-            <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}" style='height:100%'>
-                <swiper-slide v-for="(page,index) in pagedArray" :key="index" class='suggestion-swiper'>
-                    <draggable v-model="pagedArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
-                        @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate' handle='.handle-img'
-                        @remove='onRemove' @add='onAdd' @drag="onDrag" group="home">
-                        <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
-                            <!-- <draggable group="home"> -->
-                            <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
-                                :item-info="item" :key="item.index" v-on:change="changeDrag" @mousedown="mouse_down"
-                                v-on:leave="leaveDrag" class="list-complete-item">
-                                <!-- <suggestions /> -->
-                            </suggestion-item>
-                            <!-- </draggable> -->
-                        </transition-group>
-                    </draggable>
-                </swiper-slide>
-            </swiper>
-        </div>
-        <div class="bullet">
-            <span v-for="(item, index) in pagedArray" :class="{ 'active':index===currentIndex }"
-                @click="changeIndex($event,index)" :key="index">
-            </span>
-        </div>
-        <el-drawer :visible='editDrawerVisible' size='500px' :show-close="false" :modal="showModal"
-            :append-to-body='true' @close='editDrawerClose' custom-class='edit-drawer' :destroy-on-close='true'>
-            <div slot="title" class="edit-drawer-top">
-                <span class="edit-drawer-title">编辑</span>
-                <span class="edit-drawer-close" @click="editDrawerClose()">
-                    <i class="el-icon-close"></i>
-                </span>
-            </div>
-            <edit-drawer></edit-drawer>
-        </el-drawer>
+    <div>
+        <draggable v-model="pagedArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
+            @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate' handle='.handle-img'
+            @remove='onRemove' @add='onAdd' @drag="onDrag" group="home">
+            <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
+                <!-- <draggable group="home"> -->
+                <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
+                    :item-info="item" :key="item.index" v-on:change="changeDrag" @mousedown="mouse_down"
+                    v-on:leave="leaveDrag" class="list-complete-item">
+                    <!-- <suggestions /> -->
+                </suggestion-item>
+                <!-- </draggable> -->
+            </transition-group>
+        </draggable>
     </div>
-
 </template>
 <script>
     import '../component/style/suggestion-swiper.css'
