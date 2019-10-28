@@ -108,7 +108,7 @@
                     return {
                         'width': 11 * this.iconLayout.col + (this.iconSizeValue - 50.0) / 10.0 + 'vw',
                         'margin-top': 15 / this.iconLayout.row + 'vh',
-                        'margin-bottom': 8 / this.iconLayout.row + 'vh'
+                        'margin-bottom': 6 / this.iconLayout.row + 'vh'
                     }
                 }
             },

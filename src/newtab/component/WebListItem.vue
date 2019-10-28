@@ -8,13 +8,14 @@
                 <p class="web-desc">{{item.desc ? item.desc : '网站无简介'}}</p>
             </div>
             <div class="web-action">
-                <el-button size="mini" type="primary" plain class="site-action-btn">{{ openSite }}</el-button>
+                <el-button @click="openNewSite" size="mini" type="primary" plain class="site-action-btn">{{ openSite }}</el-button>
                 <el-button size="mini" type="primary" class="site-action-btn">{{ addSite }}</el-button>
             </div>
     </div>
 </template>
 <script>
-import localeText from '../../../static/locale/index.js'
+import localeText from '../../../static/locale/index.js';
+import {openSite} from '../services/openSite.js';
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
@@ -38,14 +39,14 @@ export default {
             return localeText[this.location].addSite
         },
     },
-    watch: {
-        cid: function(newId, oldId) {
-            if(this.newId !== oldId) {
-                console.log('createdCid', this.cid)
-                this.getCategorySite(newId)
-            }
-        }
-    },
+    // watch: {
+    //     cid: function(newId, oldId) {
+    //         if(this.newId !== oldId) {
+    //             console.log('createdCid', this.cid)
+    //             this.getCategorySite(newId)
+    //         }
+    //     }
+    // },
     created: function() {
         // this.menuListName = localeText[this.location].appTypeList
         // console.log('createdCid', this.cid)
@@ -56,6 +57,14 @@ export default {
         ]),
         getCategorySite(id) {
             this.getSitesInCategory(id)
+        },
+        openNewSite() {
+            let siteObj = {
+                siteId: this.item.sid,
+                siteUrl: this.item.url,
+                siteTitle: this.item.title
+            };
+            openSite(siteObj, 'newtab')
         }
     }
 }
