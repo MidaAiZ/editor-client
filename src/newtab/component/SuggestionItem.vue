@@ -31,6 +31,7 @@
     import 'csshake/dist/csshake.min.css'
     import './style/shakeRotate.scss'
     import draggable from 'vuedraggable'
+    import { openSite } from '../services/openSite.js';
     // const editIcon = require('../../../static/img/edit.svg')
     export default {
         name: 'suggestions',
@@ -155,7 +156,7 @@
             },
             toNewSite(){
                 // this.CHANGE_IS_EDIT(false)
-                
+                // openSite(
                 window.open(this.itemInfo.url,!this.newSiteNewTabValue);
                 
                 

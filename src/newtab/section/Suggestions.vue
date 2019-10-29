@@ -170,7 +170,8 @@
                             self.currentIndex = this.activeIndex;
                             // console.log(this.activeIndex)
                         }
-                    }
+                    },
+                    mousewheel: true,
                 },
                 movePage: false,
                 showModal: false,
@@ -224,6 +225,14 @@
                     this.pagedArray.push(tempArray)
                 }
             },
+            // handleScroll(e) {
+            //     console.log('x', e.deltaX)
+            //     console.log('y', e.deltaY)
+            //     if (e.deltaX < -20 || e.deltaY > 20) {
+            //         this.currentIndex++
+            //     }
+            //     // if(e.de)
+            // },
             changeItem: function (num) {
             },
             changeDrag() {
@@ -243,14 +252,6 @@
             },
             onChange() {
                 console.log('changing')
-            },
-            onSort() {
-            },
-            onUpdate() {
-            },
-            onRemove() {
-            },
-            onAdd() {
             },
             onMove(evt, originalEvt) {
                 console.log('onMove');
@@ -373,7 +374,6 @@
         },
 
         mouse_down(e) {
-            console.log('dsfdsfsdfsd');
             //            this.movePage = true
             let odiv = e.target; //获取目标元素
             //            //算出鼠标相对元素的位置
