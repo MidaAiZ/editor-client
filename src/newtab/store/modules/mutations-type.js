@@ -44,6 +44,13 @@ export const DELETE_CUSTOME_ENGINE = 'DELETE_CUSTOME_ENGINE'; // 删除自定义
 export const OPEN_CUSTOM_ENGINE = 'OPEN_CUSTOM_ENGINE'; // 打开自定义搜索引擎
 export const CLOSE_CUSTOM_ENGINE = 'CLOSE_CUSTOM_ENGINE'; // 关闭自定义搜索引擎
 
+// 在主页添加站点相关的mutation
+export const ADD_ONE_SITE = 'ADD_ONE_SITE'; // 在主页添加一个站点
+export const DELETE_ONE_SITE = 'DELETE_ONE_SITE'; // 在主页删除一个站点
+export const AFTER_CHANGE = 'AFTER_CHANGE'; // 当主页添加网站内容更新时
+export const DIS_AUTO_LOAD = 'DIS_AUTO_LOAD'; // 控制是否禁用自动获取更多网站
+export const SET_LOADING = 'SET_LOADING'; // 设置加载动画
+
 // 编辑网页信息 相关的mutation
 export const CHANGE_IS_EDIT = 'CHANGE_IS_EDIT'; // 修改编辑状态
 export const EDIT_DRAWER_VISIBLE = 'EDIT_DRAWER_VISIBLE';  //修改编辑弹出框的显示
@@ -53,6 +60,10 @@ export const CHANGE_CURRENT_ITEM = 'CHANGE_CURRENT_ITEM'; //修改当前修改�
 // 获取网站分类 相关的mutation
 export const SET_CATEGORIES = 'SET_CATEGORIES' // 设置网站分类
 export const SET_SITES_CATEGORY = 'SET_SITES_CATEGORY' // 设置当前分类的网站内容
+export const SET_SITES_PAGE = 'SET_SITES_PAGE' // 设置获取网站分页页码
+export const SET_SEARCH_SITES_VALUE = 'SET_SEARCH_SITES_VALUE' // 设置获取网站搜索结果
+export const ADD_SEARCH_CATE = 'ADD_SEARCH_CATE' // 添加搜索分类
+export const DELETE_SEARCH_CATE = 'DELETE_SEARCH_CATE' // 删除搜索分类
 
 // 主页添加网站 相关的mutation
 

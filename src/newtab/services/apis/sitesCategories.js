@@ -8,6 +8,10 @@ const sitesCategories = {
     getSitesInCategory: {
         p: `${host}sites`, // 获取某一分类内的网站
         m: 'GET'
+    },
+    search: {
+        p: `${host}sites`, // 搜索某一网站 接收参数{keyword}
+        m: 'GET'
     }
 }
 

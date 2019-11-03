@@ -5,19 +5,14 @@
             <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" 
                 @click='toNewSite' @mouseup="itemEdit" 
                 @contextmenu="contextMenu">
-                <img :src="itemInfo.img" class='handle-img'/>
+                <img :src="itemInfo.icon" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>
                 </div>
-                <span class="item-img-close" @mouseover="closeHover" v-show='isEdit'>
+                <span class="item-img-close" @mouseover="closeHover" @click.prevent.stop="deleteOneSite" v-show='isEdit'>
                     <i class='el-icon-close'></i>
                 </span>
             </div>
-            <!-- <draggable @move="moveFolder" class="folder" v-model="itemInfo.children" @end="wtf" group="home">
-                <div v-for="item in itemInfo.children">
-                    fff
-                </div>
-            </draggable> -->
         </div>
         <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
             {{itemInfo.title}}
@@ -38,7 +33,7 @@
         components: {
             draggable,
         },
-        props: ['itemInfo', 'dragging'],
+        props: ['itemInfo', 'itemIndex', 'dragging'],
         computed: {
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
                 'iconLayout','newSiteNewTabValue']),
@@ -139,7 +134,12 @@
             }
         },
         methods: {
-            ...mapMutations('homeWebList',['CHANGE_IS_EDIT','EDIT_DRAWER_VISIBLE','CHANGE_CURRENT_ITEM']),
+            ...mapMutations('homeWebList',[
+                'CHANGE_IS_EDIT',
+                'EDIT_DRAWER_VISIBLE',
+                'CHANGE_CURRENT_ITEM',
+                'DELETE_ONE_SITE'
+                ]),
             clickItem() {
                 this.isHover = true;
                 this.$emit('change');
@@ -156,8 +156,14 @@
             },
             toNewSite(){
                 // this.CHANGE_IS_EDIT(false)
-                // openSite(
-                window.open(this.itemInfo.url,!this.newSiteNewTabValue);
+                let itemInfo = this.itemInfo;
+                let siteObj = {
+                    siteId: itemInfo.sid,
+                    siteUrl: itemInfo.url,
+                    siteTitle: itemInfo.title
+                };
+                openSite(siteObj, this.newSiteNewTabValue ? 'newtab' : '');
+                // window.open(this.itemInfo.url,!this.newSiteNewTabValue);
                 
                 
             },
@@ -186,10 +192,12 @@
                 this.CHANGE_IS_EDIT(false);
                 this.EDIT_DRAWER_VISIBLE(true)
             },
-            moveFolder() {
-                console.log('fffuck')
-            },
-            
+            // moveFolder() {
+            //     console.log('fffuck')
+            // },
+            deleteOneSite() {
+                this.DELETE_ONE_SITE(this.itemInfo)
+            }
         },
         mounted(){
             let self = this
@@ -211,22 +219,6 @@
         /*height:50%;*/
     }
 
-    /*.item-img{*/
-    /*width:90px;*/
-    /*height: 90px;*/
-    /*border-radius: 50%;*/
-    /*cursor: pointer;*/
-    /*}*/
-    /*.item-img-del{*/
-    /*width:90px;*/
-    /*height: 90px;*/
-    /*border-radius: 50%;*/
-    /*background: #c8ebfb;*/
-    /*box-shadow: #ccc 0 0 2px;*/
-    /*}*/
-    /*.displayNone{*/
-    /*display: none;*/
-    /*}*/
     .item-name {
         text-align: center;
         /*font-size:15px;*/

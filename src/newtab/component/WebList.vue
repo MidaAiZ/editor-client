@@ -8,12 +8,12 @@
             </el-menu-item>
         </el-menu>
         <div class="web-list-cnt">
-            <web-list-cnt :cid="cid"/>
+            <web-list-cnt ref="addContent" :cid="cid"/>
         </div>
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState,mapMutations } from 'vuex'
 import localeText from '../../../static/locale/index.js'
 import webListCnt from './WebListCnt.vue'
 
@@ -25,7 +25,8 @@ export default {
     data() {
         return {
             menuListName: {},
-            cid: 0
+            cid: 0,
+            defaultActive: 0,
         }
     },
     computed: {
@@ -36,8 +37,18 @@ export default {
             'categories'
         ]),
     },
+    watch: {
+        categories: function() {
+            if(this.categories[0].cid === 'search') {
+                this.defaultActive = 'search'
+            } else {
+                this.changeCategory(this.categories[0].cid)
+                this.$refs.addContent.getCategorySite(this.categories[0].cid)
+            }
+        }
+    },
     mounted: function(){
-        this.cid = this.categories[0].cid
+        this.cid = this.categories[0].cid;
     },
     created: function() {
         // this.menuListName = localeText[this.location].appTypeList
@@ -46,6 +57,7 @@ export default {
         changeCategory(cid) {
             // console.log('cid', cid)
             this.cid = cid
+
         }
     }
 }

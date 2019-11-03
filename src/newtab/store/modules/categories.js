@@ -3,7 +3,9 @@ import req from '../../services/index.js'
 import { localSave } from '../../utils/localSave.js'
 import localeText from '../../../../static/locale/index.js'
 import {
-    SET_CATEGORIES
+    SET_CATEGORIES,
+    ADD_SEARCH_CATE,
+    DELETE_SEARCH_CATE
 } from './mutations-type.js'
 import {defaultCategories} from '../../utils/defaultOpt.js'
 // import { Message } from 'element-ui';
@@ -34,6 +36,18 @@ const mutations = {
     [SET_CATEGORIES] (state, categories) { // 设置网站分类
         state.categories = categories
     },
+    [ADD_SEARCH_CATE] (state) {
+        
+        state.categories = [{
+            cid: 'search',
+            index: 'search',
+            title: "搜索"
+        }];
+    },
+    [DELETE_SEARCH_CATE] (state) {
+        let arr = localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : defaultCategories;
+        state.categories = arr;
+    }
 }
 
 export default {

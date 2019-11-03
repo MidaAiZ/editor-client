@@ -1,13 +1,11 @@
 <template>
     <div>
-        <el-button
+        <div
             class="open-system-bar-btn"
             @click="SET_SYSBARVIS(true)"
-            icon="el-icon-menu"
-            size="medium"
-            :style="{top: (showBookMarkBar ? '55px' : '25px')}"
-            circle>
-        </el-button>
+            :style="{top: (showBookMarkBar ? '55px' : '25px')}">
+            <i class="el-icon-menu"></i>
+        </div>
         <el-drawer
             :visible.sync="systemBarVis"
             :direction="direction"
@@ -76,15 +74,15 @@ export default {
         position: fixed;
         right: 25px;
         border: 0px;
-        background-color: #555;
-        opacity: 0.5;
+        opacity: 0.9;
         color: #fff;
         transition: all 0.3s;
+        font-size: 18px;
         z-index: 11;
+        cursor: pointer;
     }
     .open-system-bar-btn:hover {
         transform: scale(1.1);
-        background-color: #555;
         opacity: 0.5;
         color: #fff;
     }

@@ -8,9 +8,20 @@ import siteHistory from './apis/siteHistory.js'
  */
 export const openSite = (siteObj, openWay) => {
     req(siteHistory.record, {}, siteObj)
+    let trackData;
+    let trackUrl = new URL(siteObj.siteUrl)
+    let trackSearch = trackUrl.search
+    let params = new URLSearchParams(trackSearch);
+    if(localStorage.getItem('track')) {
+        trackData = JSON.parse(localStorage.getItem('track')).data
+        trackData.forEach((item) => {
+            params.set(item.key, item.value)
+        });
+        trackUrl.search = params.toString();
+    }
     if(openWay === 'newtab') {
-        window.open(siteObj.siteUrl)
+        window.open(trackUrl.href)
     } else {
-        window.location = siteObj.siteUrl
+        window.location = trackUrl.href
     }
 }

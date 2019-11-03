@@ -8,8 +8,23 @@
                 <p class="web-desc">{{item.desc ? item.desc : '网站无简介'}}</p>
             </div>
             <div class="web-action">
-                <el-button @click="openNewSite" size="mini" type="primary" plain class="site-action-btn">{{ openSite }}</el-button>
-                <el-button size="mini" type="primary" class="site-action-btn">{{ addSite }}</el-button>
+                <el-button 
+                    @click="openNewSite" 
+                    size="mini" 
+                    type="primary" 
+                    plain 
+                    class="site-action-btn"
+                >
+                    {{ openSite }}
+                </el-button>
+                <el-button 
+                    @click="addNewSite"
+                    size="mini" 
+                    type="primary" 
+                    class="site-action-btn"
+                >
+                    {{ addSite }}
+                </el-button>
             </div>
     </div>
 </template>
@@ -55,6 +70,9 @@ export default {
         ...mapActions('addWebList', [
             'getSitesInCategory'
         ]),
+        ...mapMutations('homeWebList', [
+            'ADD_ONE_SITE'
+        ]),
         getCategorySite(id) {
             this.getSitesInCategory(id)
         },
@@ -65,6 +83,9 @@ export default {
                 siteTitle: this.item.title
             };
             openSite(siteObj, 'newtab')
+        },
+        addNewSite() {
+            this.ADD_ONE_SITE(this.item)
         }
     }
 }

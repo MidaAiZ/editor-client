@@ -2,8 +2,8 @@
     <div style="z-index:1">
         <div id="suggestions" :style="[suggestionsWidth,suggestionsHeight]">
             <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}" style='height:100%'>
-                <swiper-slide v-for="(page,index) in pagedArray" :key="index" class='suggestion-swiper'>
-                    <draggable v-model="pagedArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
+                <swiper-slide v-for="(page,index) in homeWebList" :key="index" class='suggestion-swiper'>
+                    <draggable v-model="homeWebList[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
                         @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate' handle='.handle-img'
                         @remove='onRemove' @add='onAdd' @drag="onDrag" group="home">
                         <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
@@ -20,7 +20,7 @@
             </swiper>
         </div>
         <div class="bullet">
-            <span v-for="(item, index) in pagedArray" :class="{ 'active':index===currentIndex }"
+            <span v-for="(item, index) in homeWebList" :class="{ 'active':index===currentIndex }"
                 @click="changeIndex($event,index)" :key="index">
             </span>
         </div>
@@ -65,20 +65,6 @@
             EditDrawer
         },
         computed: {
-            pagedArray: function () {
-                let result = []
-                let rowNumber = this.iconLayout.row; //一页多少行
-                let colNumber = this.iconLayout.col; //一行多少个
-                let pages = Math.ceil(this.totalSize / (rowNumber * colNumber));
-                let everyPageNumber = rowNumber * colNumber;
-                for (let i = 0; i < pages; i++) {
-                    let tempArray = (i === (pages - 1) ? this.sortArray.slice(i * everyPageNumber) : this.sortArray
-                        .slice(i *
-                            everyPageNumber, (i + 1) * everyPageNumber));
-                    result.push(tempArray)
-                }
-                return result;
-            },
             dragOptions() {
                 return {
                     animation: 200,
@@ -135,7 +121,7 @@
             },
             slideWidth: function () {
                 return {
-                    'width': (this.pagingArray.length * 15 * this.itemNumber) + 'vw',
+                    'width': (this.homeWebList.length * 15 * this.itemNumber) + 'vw',
                     'left': -(2.5 * this.itemNumber + 15 * this.currentIndex * this.itemNumber) + 'vw'
                 }
             },
@@ -153,7 +139,7 @@
             },
             ...mapState('homeWebList', ['homeWebList', 'editDrawerVisible']),
             ...mapState('settings', ['iconLayout', 'iconSizeValue']),
-            ...mapGetters('homeWebList', ['totalSize', 'pagingArray', 'sortArray', 'isEdit']),
+            ...mapGetters('homeWebList', ['totalSize', 'sortArray', 'isEdit']),
         },
         data() {
             const self = this;
@@ -162,13 +148,12 @@
                 itemNumber: 6,
                 isDrag: false,
                 dragging: false,
-                // pagedArray: [],
+                // homeWebList: [],
                 startIndex: 0,
                 swiperOption: {
                     on: {
                         slideChangeTransitionEnd: function () {
                             self.currentIndex = this.activeIndex;
-                            // console.log(this.activeIndex)
                         }
                     },
                     mousewheel: true,
@@ -181,38 +166,38 @@
         watch: {
         },
         created() {
-            console.log(this.pagingArray)
         },
         mounted() {
-            let screenWidth = document.body.clientWidth;
-            let swiper = this.$refs.mySwiper.swiper;
-            console.log(this.currentIndex);
-            let self = this;
-            let judge = false;
-            // this.paging();
-            document.onmousemove = function (e) {
-                let pages = self.pagedArray.length;
-                if (self.dragging) {
-                    if (e.clientX < 200 && !judge) {
-                        judge = true;
-                        if (self.currentIndex !== 0) {
-                            self.currentIndex--;
-                            swiper.slideTo(self.currentIndex)
-                        }
-                    } else if (e.clientX > screenWidth - 200 && !judge) {
-                        judge = true;
-                        if (self.currentIndex !== pages - 1) {
-                            self.currentIndex++;
-                            swiper.slideTo(self.currentIndex)
-                        }
-                    } else if (e.clientX > 200 && e.clientX < screenWidth - 200) {
-                        judge = false
-                    }
-                }
-            };
+            this.judgeItemPositionToSlide();
         },
         methods: {
-            ...mapMutations('homeWebList', ['CHANGE_IS_EDIT', 'EDIT_DRAWER_VISIBLE']),
+            ...mapMutations('homeWebList', ['CHANGE_IS_EDIT', 'EDIT_DRAWER_VISIBLE', 'AFTER_CHANGE']),
+            judgeItemPositionToSlide() {
+                let screenWidth = document.body.clientWidth;
+                let swiper = this.$refs.mySwiper.swiper;
+                let self = this;
+                let judge = false;
+                document.onmousemove = function (e) {
+                    let pages = self.homeWebList.length;
+                    if (self.dragging) {
+                        if (e.clientX < 200 && !judge) {
+                            judge = true;
+                            if (self.currentIndex !== 0) {
+                                self.currentIndex--;
+                                swiper.slideTo(self.currentIndex)
+                            }
+                        } else if (e.clientX > screenWidth - 200 && !judge) {
+                            judge = true;
+                            if (self.currentIndex !== pages - 1) {
+                                self.currentIndex++;
+                                swiper.slideTo(self.currentIndex)
+                            }
+                        } else if (e.clientX > 200 && e.clientX < screenWidth - 200) {
+                            judge = false
+                        }
+                    }
+                };
+            },
             paging: function () {
                 let rowNumber = this.iconLayout.row; //一页多少行
                 let colNumber = this.iconLayout.col; //一行多少个
@@ -222,17 +207,9 @@
                     let tempArray = (i === (pages - 1) ? this.sortArray.slice(i * everyPageNumber) : this.sortArray
                         .slice(i *
                             everyPageNumber, (i + 1) * everyPageNumber));
-                    this.pagedArray.push(tempArray)
+                    this.homeWebList.push(tempArray)
                 }
             },
-            // handleScroll(e) {
-            //     console.log('x', e.deltaX)
-            //     console.log('y', e.deltaY)
-            //     if (e.deltaX < -20 || e.deltaY > 20) {
-            //         this.currentIndex++
-            //     }
-            //     // if(e.de)
-            // },
             changeItem: function (num) {
             },
             changeDrag() {
@@ -242,40 +219,27 @@
                 this.isDrag = false;
             },
             dragStart(e) {
-                console.log('start')
             },
             onDrag() {
-                console.log('dragging')
             },
             onChoose() {
 
             },
             onChange() {
-                console.log('changing')
             },
             onMove(evt, originalEvt) {
-                console.log('onMove');
-                console.log(evt, 'evt');
-                console.log(originalEvt, 'originalEvt');
-                // console.log(this.pagedArray);
-
-                // console.log(this.startIndex + '  start');
-                // console.log(this.currentIndex + '  current');
                 
-                for (let k = 0; k < this.pagedArray[1].length; k++) {
-                    // console.log(this.pagedArray[1][k].title);
-                }
-                // console.log('gaga')
-                // console.log(this.pagedArray);
             },
             onStart(evt) {
                 this.dragging = true;
                 this.startIndex = this.currentIndex;
             },
             onEnd() {
+
+                // 重新排序
                 this.dragging = false;
-                if (this.pagedArray[this.startIndex].length === 0) {
-                    this.pagedArray = this.pagedArray.filter(function (item) {
+                if (this.homeWebList[this.startIndex].length === 0) {
+                    this.homeWebList = this.homeWebList.filter(function (item) {
                         return item.length > 0;
                     })
                     if (this.startIndex < this.currentIndex) {
@@ -284,79 +248,66 @@
                         swiper.slideTo(this.currentIndex);
                     }
                 }
-                // console.log('end   ')
-                for (let k = 0; k < this.pagedArray[1].length; k++) {
-                    console.log(this.pagedArray[1][k].title);
+                for (let k = 0; k < this.homeWebList[1].length; k++) {
                 }
 
                 let everyPages = this.iconLayout.row * this.iconLayout.col; //一页有多少个item
                 if (this.startIndex === this.currentIndex) {
-                    // console.log('gg');
-                    // this.pagedArray[this.currentIndex][evt.]
+                    
+                    // this.homeWebList[this.currentIndex][evt.]
                 } else {
-                    console.log('begin');
-                    console.log(this.pagedArray[this.currentIndex].length);
-                    console.log(this.iconLayout.row * this.iconLayout.col);
-                    if (this.pagedArray[this.currentIndex].length === this.iconLayout.row * this.iconLayout.col+1) {
-                        console.log('come')
-                        // let currentArray = this.pagedArray[this.currentIndex];
-                        let lastItem = this.pagedArray[this.currentIndex].pop();
-                        if (this.currentIndex === this.pagedArray.length - 1) {
+                    
+                    if (this.homeWebList[this.currentIndex].length === this.iconLayout.row * this.iconLayout.col+1) {
+                        // let currentArray = this.homeWebList[this.currentIndex];
+                        let lastItem = this.homeWebList[this.currentIndex].pop();
+                        if (this.currentIndex === this.homeWebList.length - 1) {
                             var arr = [];
                             arr.push(lastItem);
-                            this.pagedArray.push(arr);
-                            console.log('this.pagedArray');
-                            console.log(this.pagedArray);
+                            this.homeWebList.push(arr);
+                            
                         } else {
-                            let length = this.pagedArray.length;
+                            let length = this.homeWebList.length;
                             for (let i = this.currentIndex + 1; i < length; i++) {
-                                console.log(i + '   i')
-                                if (this.pagedArray[i].length === everyPages) {
-                                    let currentArr = this.pagedArray[i];
+                                
+                                if (this.homeWebList[i].length === everyPages) {
+                                    let currentArr = this.homeWebList[i];
                                     let temp = currentArr[currentArr.length - 1]
-                                    console.log(currentArr.toString());
-                                    console.log(temp)
+                                    
                                     for (let j = currentArr.length - 2; j >= 0; j--) {
                                         let obj = currentArr[j];
-                                        console.log('obj');
-                                        console.log(obj);
-                                        this.pagedArray[i][j + 1] = this.pagedArray[i][j];
+                                        
+                                        this.homeWebList[i][j + 1] = this.homeWebList[i][j];
                                     }
-                                    this.pagedArray[i][0] = lastItem;
+                                    this.homeWebList[i][0] = lastItem;
                                     lastItem = temp;
-                                    if (i === this.pagedArray.length - 1) {
-                                        console.log('go')
+                                    if (i === this.homeWebList.length - 1) {
+                                        
                                         var arr = [];
-                                        console.log(lastItem)
+                                        
                                         arr.push(lastItem);
-                                        this.pagedArray.push(arr);
-                                        console.log(this.pagedArray);
+                                        this.homeWebList.push(arr);
                                     }
                                 } else {
-                                    console.log(lastItem)
-                                    for (let k = 0; k < this.pagedArray[i].length; k++) {
-                                            console.log(this.pagedArray[i][k].title);
-                                        }
-                                    this.pagedArray[i].unshift(lastItem);
-                                    // let currentArr = window.this.pagedArray[i];
-                                    // if (this.currentIndex < this.startIndex) {
-                                    //     let index = evt.draggedContext.index;
-                                    //     // for (let k = 0; k < currentArr.length; k++) {
-                                    //     //     console.log(currentArr[k].title)
-                                    //     // }
-
-                                    //     this.pagedArray[i].unshift(lastItem);
-                                        
-                                    // } else {
-                                    //     this.pagedArray[i].unshift(lastItem);
-                                    // }
-                                    // break;
+                                    // for (let k = 0; k < this.homeWebList[i].length; k++) {
+                                            
+                                    //     }
+                                    this.homeWebList[i].unshift(lastItem);
+                                    
                                 }
                             }
                         }
 
                     }
                 }
+                // 更新后存入本地或云端服务器
+                // let newList = [];
+                // for (let w=0; w<this.homeWebList.length; w++) {
+                //     newList = newList.concat(this.homeWebList[w])
+                // }
+                // newList.forEach((item, index) => {
+                //     item.index = index
+                // })
+                this.AFTER_CHANGE(this.homeWebList)
             },
             editDrawerClose() {
                 this.EDIT_DRAWER_VISIBLE(false)
@@ -391,7 +342,6 @@
                 odiv.style.top = top + 'px';
             };
             document.onmouseup = (e) => {
-                //                console.log(this.currentIndex);
                 document.onmousemove = null;
                 document.onmouseup = null;
             };

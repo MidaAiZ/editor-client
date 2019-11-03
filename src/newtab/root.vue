@@ -20,16 +20,18 @@
   </v-app>
 </template>
 <script>
-import { mapState,mapMutations, mapActions } from 'vuex'
-import background from './section/Background.vue'
-import systemBar from './section/SystemBar.vue'
-import suggestions from './section/Suggestions.vue'
-import customSearch from './section/CustomSearch.vue'
-import settingDialog from './section/SettingDialog.vue'
-import bookmarks from './section/Bookmarks.vue'
-import manage from './section/Manage.vue'
-import { localSave } from './utils/localSave.js'
-import defaultSettings from './utils/defaultOpt.js'
+import { mapState,mapMutations, mapActions } from 'vuex';
+import background from './section/Background.vue';
+import systemBar from './section/SystemBar.vue';
+import suggestions from './section/Suggestions.vue';
+import customSearch from './section/CustomSearch.vue';
+import settingDialog from './section/SettingDialog.vue';
+import bookmarks from './section/Bookmarks.vue';
+import manage from './section/Manage.vue';
+import { localSave } from './utils/localSave.js';
+import defaultSettings from './utils/defaultOpt.js';
+import req from './services/index.js';
+import track from './services/apis/track.js';
 
 export default {
     name: 'root',
@@ -60,7 +62,17 @@ export default {
         ...mapActions('user', ['judgeLogin']),
         ...mapActions('settings', ['getDefaultSettings']),
         ...mapActions('categories', ['getCategories']),
-        ...mapActions('homeWebList', ['getDefaultMenus']),
+        ...mapActions('homeWebList', ['getDefaultMenus', 'getUserMenus']),
+        async setTrack() {
+          const { data } = await req(track.get)
+          if(data.code === 'Success') {
+            // console.log(data.data)
+            let trackData = {
+              data: data.data
+            }
+            localSave('track', trackData)
+          }
+        },
         
     },
     created: function () {
@@ -69,8 +81,12 @@ export default {
           .then((res) => {
             console.log('rootLogin', res)
             if(res) {
-
+              this.getUserMenus()
             } else {
+              if (!localStorage.getItem('homeMenus')) {
+                // 初始化主页网站列表
+                this.getDefaultMenus()
+              }
               // 初始化用户设置
               if (!localStorage.getItem('settings')) {
                 // getDefault()
@@ -79,14 +95,11 @@ export default {
               } else {
                 // console.log('rootLogin', loginInfo)
               }
-              if (!localStorage.getItem('homeMenus')) {
-                // 初始化主页网站列表
-                this.getDefaultMenus()
-              }
             }
           })
-      // 初始化网站分类
+      // 初始化
       this.getCategories()
+      this.setTrack()
     },
 }
 </script>

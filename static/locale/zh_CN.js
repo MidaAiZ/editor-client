@@ -128,5 +128,6 @@
     cloudSaveFail: '云端同步失败，稍后将为您重新同步',
     openSite: '打开',
     addSite: '添加',
+    nullContent: '没有相关内容',
 }
 export default zh_CN

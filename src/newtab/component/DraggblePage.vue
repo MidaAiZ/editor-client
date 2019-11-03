@@ -1,6 +1,6 @@
 <template>
     <div>
-        <draggable v-model="pagedArray[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
+        <draggable v-model="homeWebList[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
             @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate' handle='.handle-img'
             @remove='onRemove' @add='onAdd' @drag="onDrag" group="home">
             <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
@@ -34,7 +34,7 @@
     import '../component/style/suggestion.css'
 
     export default {
-        name: 'suggestions',
+        name: 'draggablePage',
         components: {
             SuggestionItem,
             swiper,
@@ -43,20 +43,6 @@
             EditDrawer
         },
         computed: {
-            pagedArray: function () {
-                let result = []
-                let rowNumber = this.iconLayout.row; //一页多少行
-                let colNumber = this.iconLayout.col; //一行多少个
-                let pages = Math.ceil(this.totalSize / (rowNumber * colNumber));
-                let everyPageNumber = rowNumber * colNumber;
-                for (let i = 0; i < pages; i++) {
-                    let tempArray = (i === (pages - 1) ? this.sortArray.slice(i * everyPageNumber) : this.sortArray
-                        .slice(i *
-                            everyPageNumber, (i + 1) * everyPageNumber));
-                    result.push(tempArray)
-                }
-                return result;
-            },
             dragOptions() {
                 return {
                     animation: 200,
@@ -140,7 +126,7 @@
                 itemNumber: 6,
                 isDrag: false,
                 dragging: false,
-                // pagedArray: [],
+                // homeWebList: [],
                 startIndex: 0,
                 swiperOption: {
                     on: {
@@ -168,7 +154,7 @@
             let judge = false;
             // this.paging();
             document.onmousemove = function (e) {
-                let pages = self.pagedArray.length;
+                let pages = self.homeWebList.length;
                 if (self.dragging) {
                     if (e.clientX < 200 && !judge) {
                         judge = true;
@@ -199,7 +185,7 @@
                     let tempArray = (i === (pages - 1) ? this.sortArray.slice(i * everyPageNumber) : this.sortArray
                         .slice(i *
                             everyPageNumber, (i + 1) * everyPageNumber));
-                    this.pagedArray.push(tempArray)
+                    this.homeWebList.push(tempArray)
                 }
             },
             changeItem: function (num) {
@@ -234,16 +220,16 @@
                 console.log('onMove');
                 console.log(evt, 'evt');
                 console.log(originalEvt, 'originalEvt');
-                // console.log(this.pagedArray);
+                // console.log(this.homeWebList);
 
                 // console.log(this.startIndex + '  start');
                 // console.log(this.currentIndex + '  current');
                 
-                for (let k = 0; k < this.pagedArray[1].length; k++) {
-                    // console.log(this.pagedArray[1][k].title);
+                for (let k = 0; k < this.homeWebList[1].length; k++) {
+                    // console.log(this.homeWebList[1][k].title);
                 }
                 // console.log('gaga')
-                // console.log(this.pagedArray);
+                // console.log(this.homeWebList);
             },
             onStart(evt) {
                 this.dragging = true;
@@ -251,8 +237,8 @@
             },
             onEnd() {
                 this.dragging = false;
-                if (this.pagedArray[this.startIndex].length === 0) {
-                    this.pagedArray = this.pagedArray.filter(function (item) {
+                if (this.homeWebList[this.startIndex].length === 0) {
+                    this.homeWebList = this.homeWebList.filter(function (item) {
                         return item.length > 0;
                     })
                     if (this.startIndex < this.currentIndex) {
@@ -262,34 +248,34 @@
                     }
                 }
                 // console.log('end   ')
-                for (let k = 0; k < this.pagedArray[1].length; k++) {
-                    console.log(this.pagedArray[1][k].title);
+                for (let k = 0; k < this.homeWebList[1].length; k++) {
+                    console.log(this.homeWebList[1][k].title);
                 }
 
                 let everyPages = this.iconLayout.row * this.iconLayout.col; //一页有多少个item
                 if (this.startIndex === this.currentIndex) {
                     // console.log('gg');
-                    // this.pagedArray[this.currentIndex][evt.]
+                    // this.homeWebList[this.currentIndex][evt.]
                 } else {
                     console.log('begin');
-                    console.log(this.pagedArray[this.currentIndex].length);
+                    console.log(this.homeWebList[this.currentIndex].length);
                     console.log(this.iconLayout.row * this.iconLayout.col);
-                    if (this.pagedArray[this.currentIndex].length === this.iconLayout.row * this.iconLayout.col+1) {
+                    if (this.homeWebList[this.currentIndex].length === this.iconLayout.row * this.iconLayout.col+1) {
                         console.log('come')
-                        // let currentArray = this.pagedArray[this.currentIndex];
-                        let lastItem = this.pagedArray[this.currentIndex].pop();
-                        if (this.currentIndex === this.pagedArray.length - 1) {
+                        // let currentArray = this.homeWebList[this.currentIndex];
+                        let lastItem = this.homeWebList[this.currentIndex].pop();
+                        if (this.currentIndex === this.homeWebList.length - 1) {
                             var arr = [];
                             arr.push(lastItem);
-                            this.pagedArray.push(arr);
-                            console.log('this.pagedArray');
-                            console.log(this.pagedArray);
+                            this.homeWebList.push(arr);
+                            console.log('this.homeWebList');
+                            console.log(this.homeWebList);
                         } else {
-                            let length = this.pagedArray.length;
+                            let length = this.homeWebList.length;
                             for (let i = this.currentIndex + 1; i < length; i++) {
                                 console.log(i + '   i')
-                                if (this.pagedArray[i].length === everyPages) {
-                                    let currentArr = this.pagedArray[i];
+                                if (this.homeWebList[i].length === everyPages) {
+                                    let currentArr = this.homeWebList[i];
                                     let temp = currentArr[currentArr.length - 1]
                                     console.log(currentArr.toString());
                                     console.log(temp)
@@ -297,35 +283,35 @@
                                         let obj = currentArr[j];
                                         console.log('obj');
                                         console.log(obj);
-                                        this.pagedArray[i][j + 1] = this.pagedArray[i][j];
+                                        this.homeWebList[i][j + 1] = this.homeWebList[i][j];
                                     }
-                                    this.pagedArray[i][0] = lastItem;
+                                    this.homeWebList[i][0] = lastItem;
                                     lastItem = temp;
-                                    if (i === this.pagedArray.length - 1) {
+                                    if (i === this.homeWebList.length - 1) {
                                         console.log('go')
                                         var arr = [];
                                         console.log(lastItem)
                                         arr.push(lastItem);
-                                        this.pagedArray.push(arr);
-                                        console.log(this.pagedArray);
+                                        this.homeWebList.push(arr);
+                                        console.log(this.homeWebList);
                                     }
                                 } else {
                                     console.log(lastItem)
-                                    for (let k = 0; k < this.pagedArray[i].length; k++) {
-                                            console.log(this.pagedArray[i][k].title);
+                                    for (let k = 0; k < this.homeWebList[i].length; k++) {
+                                            console.log(this.homeWebList[i][k].title);
                                         }
-                                    this.pagedArray[i].unshift(lastItem);
-                                    // let currentArr = window.this.pagedArray[i];
+                                    this.homeWebList[i].unshift(lastItem);
+                                    // let currentArr = window.this.homeWebList[i];
                                     // if (this.currentIndex < this.startIndex) {
                                     //     let index = evt.draggedContext.index;
                                     //     // for (let k = 0; k < currentArr.length; k++) {
                                     //     //     console.log(currentArr[k].title)
                                     //     // }
 
-                                    //     this.pagedArray[i].unshift(lastItem);
+                                    //     this.homeWebList[i].unshift(lastItem);
                                         
                                     // } else {
-                                    //     this.pagedArray[i].unshift(lastItem);
+                                    //     this.homeWebList[i].unshift(lastItem);
                                     // }
                                     // break;
                                 }

@@ -12,6 +12,10 @@ const homeMenus = {
     changeAll: {
         p: `${host}default_menus/default/list`, // 替换首页网站
         m: 'POST'
+    },
+    user_menu: {
+        p: `${host}user_menus`, // 获取云端用户菜单
+        m: 'GET'
     }
 }
 

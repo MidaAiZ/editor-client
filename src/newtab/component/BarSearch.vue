@@ -1,11 +1,11 @@
 <template>
     <div class="bar-web-search-wrap">
-        <input class="bar-web-search" :placeholder="placeholder" />
+        <input class="bar-web-search" @input="handleSearchSite($event.target.value)" v-model="searchSiteIptValue" :placeholder="placeholder" />
         <el-button class="add-web-btn" icon="el-icon-plus" size="medium" circle></el-button>
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import localeText from '../../../static/locale/index.js'
 
 export default {
@@ -18,11 +18,37 @@ export default {
     computed: {
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        ...mapState('addWebList', [
+            'searchSiteIptValue',
+        ]),
     },
     created: function() {
         this.placeholder = localeText[this.location].addAppPlaceholder
     },
+    methods: {
+        ...mapMutations('addWebList', [
+            'SET_SEARCH_SITES_VALUE'
+        ]),
+        ...mapMutations('categories', [
+            'ADD_SEARCH_CATE',
+            'DELETE_SEARCH_CATE'
+        ]),
+        ...mapActions('addWebList', [
+            'searchSite'
+        ]),
+        setValue(value) {
+            this.SET_SEARCH_SITES_VALUE(value)
+        },
+        handleSearchSite(value) {
+            if(value) {
+                this.ADD_SEARCH_CATE()
+                this.searchSite({keyword: value, pageNum: 1, pageSize: 100})
+            } else {
+                this.DELETE_SEARCH_CATE()
+            }
+        }
+    }
 }
 </script>
 <style scoped>

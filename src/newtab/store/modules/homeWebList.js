@@ -1,4 +1,13 @@
-import {DELETE_CHOOSE_ENGINE, ADD_CHOOSE_ENGINE, CHANGE_IS_EDIT,EDIT_DRAWER_VISIBLE,CHANGE_WEB_INFO,CHANGE_CURRENT_ITEM} from "./mutations-type.js";
+import {DELETE_CHOOSE_ENGINE, 
+    ADD_CHOOSE_ENGINE, 
+    CHANGE_IS_EDIT,
+    EDIT_DRAWER_VISIBLE,
+    CHANGE_WEB_INFO,
+    CHANGE_CURRENT_ITEM,
+    ADD_ONE_SITE,
+    DELETE_ONE_SITE,
+    AFTER_CHANGE,
+} from "./mutations-type.js";
 import homeMenus from '../../services/apis/homeMenus.js'
 import req from '../../services/index.js'
 import { localSave } from '../../utils/localSave.js'
@@ -26,25 +35,25 @@ function compare(property) {
 // getters
 const getters = {
     totalSize: state => {
-        return state.homeWebList.length
+        let sum = 0;
+        state.homeWebList.forEach((data) => {
+            sum = sum + data.length
+        })
+        return sum
     },
     //将数组按index属性排序
     sortArray: (state,getters) => {
-        return state.homeWebList.sort(compare('index'))
-    },
-    pagingArray:(state,getters,store) => {
-        let rowNumber = store.settings.iconLayout.row;    //一页多少行
-        let colNumber = store.settings.iconLayout.col;    //一行多少个
-        let sortedWebList = getters.sortArray;
-        let pages = Math.ceil(getters.totalSize/(rowNumber*colNumber));
-        let everyPageNumber = rowNumber*colNumber;
-        let pageArray = [];
-        for(let i=0; i<pages; i++){
-            let tempArray = (i===(pages-1)?sortedWebList.slice(i*everyPageNumber):sortedWebList.slice(i*everyPageNumber,(i+1)*everyPageNumber));
-            pageArray.push(tempArray)
+        if (state.homeWebList[0].index) {
+            return state.homeWebList.sort(compare('index'))
+        } else {
+            let arr = state.homeWebList;
+            arr.forEach((item, index) => {
+                item.index = index
+            })
+            return arr
         }
-        return pageArray
-    }
+        // return state.homeWebList.sort(compare('index'))
+    },
 
 }
 
@@ -52,20 +61,45 @@ const getters = {
 const actions = {
     async getDefaultMenus ({ commit }) { // 从服务器获取默认主页添加网站
         const { data } = await req(homeMenus.default, {code: 'CN'})
-        let menu = {
-            isDefault: data.data.isDefault,
-            menus: JSON.parse(data.data.menus).length > 1 ? JSON.parse(data.data.menus) : defaultMenu.menus
+        let menu;
+        if (data.code === 'Success') {
+            menu = {
+                isDefault: false,
+                menus: data.data
+            }
+        } else {
+            menu = {
+                isDefault: true,
+                menus: defaultMenu.menus
+            }
         }
-        let menuArr = menu.menus
-        console.log(menu, 'menu')
-        console.log(defaultMenu, 'defaultMenu')
+        // let menuArr = menu.menus
         localSave('homeMenus', menu)
-        commit('SET_HOMEMENUS', menuArr)
+        commit('SET_HOMEMENUS', menu.menus)
+    },
+    async getUserMenus ({ state, commit }) { // 从服务器获取默认主页添加网站
+        const { data } = await req(homeMenus.user_menu)
+        let menu;
+        if (data.data && data.data.length && data.data.length !== 0) {
+            menu = {
+                isDefault: false,
+                menus: data.data
+            }
+        } else {
+            menu = {
+                isDefault: true,
+                menus: state.homeWebList
+            }
+        }
+        // let menuArr = menu.menus
+        localSave('homeMenus', menu)
+        commit('SET_HOMEMENUS', menu.menus)
     },
     async afterChanged ({ commit, rootState }, newList) {
-        const { data } = await req(homeMenus.changeAll, {}, JSON.stringify(newList))
+        localSave('homeMenus', newList)
+        const { data } = await req(homeMenus.changeAll, {}, newList)
         if (data.code === 'Success') {
-            // commit('SET_HOMEMENUS', data.data)
+            commit('SET_HOMEMENUS', data.data)
             console.log('同步网站列表成功')
         } else {
             Message.error({message: localeText[rootState.locale.location].cloudSaveFail})
@@ -78,28 +112,28 @@ const actions = {
 
 // mutations
 const mutations = {
-    [DELETE_CHOOSE_ENGINE] (state,index){
+    [DELETE_CHOOSE_ENGINE] (state,index) {
         let result = state.searchEngineList.filter(engine => {
             return engine.id !== state.allEngineList[index].id
         });
         state.searchEngineList = result;
         state.allEngineList[index].isChoose = false;
     },
-    [ADD_CHOOSE_ENGINE] (state,index){
+    [ADD_CHOOSE_ENGINE] (state,index) {
         state.allEngineList[index].isChoose = true;
         state.searchEngineList.push(state.allEngineList[index]);
     },
     [SET_HOMEMENUS] (state, homeMenus) { // 设置主页网站列表
         state.homeWebList = homeMenus
     },
-    [CHANGE_IS_EDIT] (state, isEdit){
+    [CHANGE_IS_EDIT] (state, isEdit) {
         state.isEdit = isEdit;
     },
-    [EDIT_DRAWER_VISIBLE] (state,isVisible){
+    [EDIT_DRAWER_VISIBLE] (state,isVisible) {
         // console.log(isVisible);
         state.editDrawerVisible = isVisible;
     },
-    [CHANGE_WEB_INFO] (state,webInfo){
+    [CHANGE_WEB_INFO] (state,webInfo) {
         for(let i=0; i<state.homeWebList.length; i++){
             if(state.homeWebList[i].id === webInfo.id){
                 state.homeWebList[i].title = webInfo.title;
@@ -109,19 +143,45 @@ const mutations = {
             }
         }
     },
-    [CHANGE_CURRENT_ITEM] (state,item){
+    [CHANGE_CURRENT_ITEM] (state,item) {
         state.currentItem = window.Object.assign({},item);
+    },
+    [ADD_ONE_SITE] (state, item) {
+        let newItem = {
+            sid: item.sid,
+            url: item.url,
+            title: item.title,
+            icon: item.icon,
+            index: state.homeWebList.length
+        };
+        let arr = state.homeWebList;
+        arr.push(newItem);
+        let menus = {
+            isDefault: false,
+            menus: arr
+        };
+        localSave('homeMenus', menus);
+        state.homeWebList = arr;
+    },
+    [DELETE_ONE_SITE] (state, itemInfo) {
+
+        let arr = state.homeWebList;
+        arr = arr.filter(item => item.index !== itemInfo.index);
+        let menus = {
+            isDefault: false,
+            menus: arr
+        };
+        localSave('homeMenus', menus);
+        state.homeWebList = arr;
+    },
+    [AFTER_CHANGE] (state, newList) {
+        let newMenus = {
+            isDefault: false,
+            menus: newList
+        }
+        localSave('homeMenus', newMenus);
+        state.homeWebList = newList;
     }
-    // setLogRegModalVis (state, vis) {
-    //     console.log('modal visible: ',vis);
-    //     state.logregModalVis = vis
-    // },
-    // setLoginInfo (state, payload) { // 填写登录信息
-    //     state[payload.type] = payload.value
-    // },
-    // setLoginLoading (state, loading) { // 登录时等候的加载图标显示
-    //     state.loginLoading = loading
-    // }
 }
 
 export default {

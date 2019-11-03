@@ -111,160 +111,151 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     //   {
     //       id: 1,
     //       title: '天气',
-    //       img: '',
+    //       icon: '',
     //       url: '',
     //       index: '',
     //   },
-      {
-        id: 2,
+      [{
+        sid: 2,
         title: 'chrome商店',
-        img: chrome,
+        icon: chrome,
         url: 'https://chrome.google.com/webstore/category/extensions',
         index: 0,
         isFolder: false,
         children: []
       },
       {
-        id: 3,
+        sid: 3,
         title: '书签',
-        img: bookmark,
+        icon: bookmark,
         url: '',
         index: 1,
         isFolder: false,
         children: []
       },
       {
-        id: 4,
+        sid: 4,
         title: '历史',
-        img: history,
+        icon: history,
         url: '',
         index: 2,
         isFolder: false,
         children: []
       },
       {
-        id: 5,
+        sid: 5,
         title: '亚马逊',
-        img: amazon,
+        icon: amazon,
         url: 'https://www.amazon.com/',
         index: 3,
         isFolder: false,
         children: []
       },
       {
-        id: 6,
+        sid: 6,
         title: '天猫',
-        img: tianmao,
+        icon: tianmao,
         url: 'https://www.tmall.com/',
         index: 4,
         isFolder: false,
         children: []
       },
       {
-        id: 7,
+        sid: 7,
         title: 'instagram',
-        img: instagram,
+        icon: instagram,
         url: 'https://www.instagram.com/',
         index: 5,
         isFolder: false,
         children: []
       },
       {
-        id: 8,
+        sid: 8,
         title: 'twitter',
-        img: twitter,
+        icon: twitter,
         url: 'https://twitter.com/',
         index: 6,
         children: []
       },
       {
-        id: 9,
+        sid: 9,
         title: '京东',
-        img: jingdong,
+        icon: jingdong,
         url: 'https://www.jd.com/',
         index: 7,
         isFolder: false,
         children: []
       },
       {
-        id: 10,
+        sid: 10,
         title: 'Youtube',
-        img: youtube,
+        icon: youtube,
         url: 'https://www.youtube.com/',
         index: 8,
         isFolder: false,
         children: []
       },
       {
-        id: 11,
+        sid: 11,
         title: '哔哩哔哩',
-        img: bilibili,
+        icon: bilibili,
         url: 'https://www.bilibili.com/',
         index: 9,
         isFolder: false,
         children: []
-      },
-      {
-        id: 12,
+      },],
+[      {
+        sid: 12,
         title: 'steam',
-        img: steam,
+        icon: steam,
         url: 'https://store.steampowered.com/',
         index: 10,
         isFolder: false,
         children: []
       },
       {
-        id: 13,
+        sid: 13,
         title: '知乎',
-        img: zhihu,
+        icon: zhihu,
         url: 'https://www.zhihu.com/',
         index: 11,
         isFolder: false,
         children: []
       },
       {
-        id: 14,
+        sid: 14,
         title: '微博',
-        img: weibo,
+        icon: weibo,
         url: 'https://www.weibo.com/',
         index: 12,
         isFolder: false,
         children: []
       },
       {
-        id: 15,
+        sid: 15,
         title: 'Facebook',
-        img: facebook,
+        icon: facebook,
         url: 'https://www.facebook.com/',
         index: 13,
         isFolder: false,
         children: []
       },
       {
-        id: 16,
+        sid: 16,
         title: 'eBay',
-        img: ebay,
+        icon: ebay,
         url: 'https://www.ebay.com/',
         index: 14,
         isFolder: false,
         children: []
       },
       {
-        id: 17,
+        sid: 17,
         title: 'gmail',
-        img: gmail,
+        icon: gmail,
         url: 'https://mail.google.com/mail/',
         index: 15,
         isFolder: false,
         children: []
-      },
-      {
-        id: 18,
-        title: '文件夹',
-        img: gmail,
-        url: 'https://mail.google.com/mail/',
-        index: 16,
-        isFolder: true,
-        children: []
-      },
+      },]
   ]}

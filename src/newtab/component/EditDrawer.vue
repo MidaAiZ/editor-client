@@ -4,7 +4,7 @@
         <div class="edit-drawer-input"><el-input v-model="currentItem.title"></el-input></div>
         <div class='edit-drawer-img'>
             <!-- <canvas ref='editCanvas' class="edit-drawer-canvas" width="100" height="100"></canvas> -->
-            <img :src='currentItem.img'/>
+            <img :src='currentItem.icon'/>
             <span>
                 <div class="edit-drawer-img-edit img-edit" @click="showEditDialog">{{nameText.editPicture}}</div>
                 <div class="img-edit">{{nameText.removePicture}}</div>
@@ -16,7 +16,7 @@
         <button class='edit-brawer-button' @click='editComplete'>{{nameText.complete}}</button>
         <el-dialog :visible.sync="editDialogVisible" width='360px' :modal="false" :append-to-body="true"
             :destory-on-close='true' class="cropper-dialog">
-            <image-cropper v-on:finish='getCropperData' :img='currentItem.img'></image-cropper>
+            <image-cropper v-on:finish='getCropperData' :img='currentItem.icon'></image-cropper>
         </el-dialog>
         <!-- <img ref='editImg' src='https://picsum.photos/201/300'/> -->
     </div>
