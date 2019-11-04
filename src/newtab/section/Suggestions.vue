@@ -137,7 +137,7 @@
                     'edit': '编辑'
                 }
             },
-            ...mapState('homeWebList', ['homeWebList', 'editDrawerVisible']),
+            ...mapState('homeWebList', ['homeWebList', 'isEdit', 'editDrawerVisible']),
             ...mapState('settings', ['iconLayout', 'iconSizeValue']),
             ...mapGetters('homeWebList', ['totalSize', 'sortArray', 'isEdit']),
         },
@@ -318,7 +318,9 @@
             changeIndex(e, index) {
                 e.preventDefault();
                 this.currentIndex = index;
-                this.CHANGE_IS_EDIT(true);
+                if(this.isEdit) {
+                    this.CHANGE_IS_EDIT(true);
+                }
                 let swiper = this.$refs.mySwiper.swiper;
                 swiper.slideTo(this.currentIndex)
             },

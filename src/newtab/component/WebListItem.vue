@@ -44,6 +44,9 @@ export default {
         ...mapState('addWebList', [
             'currentSiteList'
         ]),
+        ...mapState('settings', [
+            'iconLayout'
+        ]),
         ...mapState('locale', [
             'location',
         ]),
@@ -85,7 +88,11 @@ export default {
             openSite(siteObj, 'newtab')
         },
         addNewSite() {
-            this.ADD_ONE_SITE(this.item)
+            let payload = {
+                item: this.item,
+                size: this.iconLayout.row * this.iconLayout.col
+            }
+            this.ADD_ONE_SITE(payload)
         }
     }
 }

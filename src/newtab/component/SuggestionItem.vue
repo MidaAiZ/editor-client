@@ -4,7 +4,7 @@
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
             <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" 
                 @click='toNewSite' @mouseup="itemEdit" 
-                @contextmenu="contextMenu">
+                @contextmenu.stop.prevent="contextMenu">
                 <img :src="itemInfo.icon" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>

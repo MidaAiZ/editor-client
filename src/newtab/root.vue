@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div>
+    <div @click="unedit">
       <background />
       <div class="bookmarks-wrap" v-if="showBookMarkBar">
         <bookmarks />
@@ -56,6 +56,7 @@ export default {
     },
     methods:{
         ...mapMutations('engineList',['CLOSE_ENGINE_POPOVER']),
+        ...mapMutations('homeWebList',['CHANGE_IS_EDIT']),
         closeEnginePopover(){
             this.CLOSE_ENGINE_POPOVER();
         },
@@ -63,6 +64,9 @@ export default {
         ...mapActions('settings', ['getDefaultSettings']),
         ...mapActions('categories', ['getCategories']),
         ...mapActions('homeWebList', ['getDefaultMenus', 'getUserMenus']),
+        unedit() {
+          this.CHANGE_IS_EDIT(false);
+        },
         async setTrack() {
           const { data } = await req(track.get)
           if(data.code === 'Success') {

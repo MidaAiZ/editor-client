@@ -146,7 +146,10 @@ const mutations = {
     [CHANGE_CURRENT_ITEM] (state,item) {
         state.currentItem = window.Object.assign({},item);
     },
-    [ADD_ONE_SITE] (state, item) {
+    [ADD_ONE_SITE] (state, payload) {
+        let item = payload.item
+        console.log(payload)
+        // console.log('store', store)
         let newItem = {
             sid: item.sid,
             url: item.url,
@@ -155,7 +158,10 @@ const mutations = {
             index: state.homeWebList.length
         };
         let arr = state.homeWebList;
-        arr.push(newItem);
+        if(arr[arr.length-1].length >= payload.size) {
+            arr.push([])
+        }
+        arr[arr.length-1].push(newItem);
         let menus = {
             isDefault: false,
             menus: arr
