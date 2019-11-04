@@ -10,7 +10,7 @@ const homeMenus = {
         m: 'POST'
     },
     changeAll: {
-        p: `${host}default_menus/default/list`, // 替换首页网站
+        p: `${host}user_menus`, // 替换首页网站
         m: 'POST'
     },
     user_menu: {

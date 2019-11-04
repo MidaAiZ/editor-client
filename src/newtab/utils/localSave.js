@@ -7,6 +7,25 @@ const localSave = (settingKey, settingValue) => {
     // req
 }
 
+const imgToBase64 = async (srcUrl, callBack) => {
+    let imgDom = new Image();
+    imgDom.src = srcUrl;
+    imgDom.onload = await function () {
+        var imgCanvas = document.createElement("canvas"),
+        imgContext = imgCanvas.getContext("2d");
+        // 确保canvas尺寸和图片一致
+        imgCanvas.width = imgDom.width;
+        imgCanvas.height = imgDom.height;
+        // 在canvas中绘制图片
+        imgContext.drawImage(imgDom, 0, 0, imgDom.width, imgDom.height);
+        // 将图片保存为Data URI
+        let base64Src = imgCanvas.toDataURL("image/png");
+        // console.log(base64Src)
+        callBack(base64Src)
+       
+    };
+}
+
 const saveImg = (key, srcUrl, callBack) => {
     let imgDom = new Image(),
         date = new Date(),
@@ -37,5 +56,6 @@ const saveImg = (key, srcUrl, callBack) => {
 
 export {
     localSave,
+    imgToBase64,
     saveImg,
 }

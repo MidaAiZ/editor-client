@@ -5,7 +5,7 @@
             <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" 
                 @click='toNewSite' @mouseup="itemEdit" 
                 @contextmenu.stop.prevent="contextMenu">
-                <img :src="itemInfo.icon" class='handle-img'/>
+                <img :src="itemInfo.iconBase64 || itemInfo.iconSrc" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>
                 </div>
@@ -27,13 +27,14 @@
     import './style/shakeRotate.scss'
     import draggable from 'vuedraggable'
     import { openSite } from '../services/openSite.js';
+    import { imgToBase64 } from '../utils/localSave.js';
     // const editIcon = require('../../../static/img/edit.svg')
     export default {
         name: 'suggestions',
         components: {
             draggable,
         },
-        props: ['itemInfo', 'itemIndex', 'dragging'],
+        props: ['itemInfo', 'pageIndex', 'itemIndex', 'dragging'],
         computed: {
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
                 'iconLayout','newSiteNewTabValue']),
@@ -196,7 +197,12 @@
             //     console.log('fffuck')
             // },
             deleteOneSite() {
-                this.DELETE_ONE_SITE(this.itemInfo)
+                let payload = {
+                    pageIndex: this.pageIndex,
+                    itemInfo: this.itemInfo,
+                    index: this.itemIndex
+                }
+                this.DELETE_ONE_SITE(payload)
             }
         },
         mounted(){

@@ -8,8 +8,8 @@
                         @remove='onRemove' @add='onAdd' @drag="onDrag" group="home">
                         <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
                             <!-- <draggable group="home"> -->
-                            <suggestion-item :dragging="dragging" v-for="item in page" draggable="true"
-                                :item-info="item" :key="item.index" v-on:change="changeDrag" @mousedown="mouse_down"
+                            <suggestion-item :dragging="dragging" v-for="(item, idx) in page" draggable="true"
+                                :item-info="item" :page-index="index" :item-index="idx" :key="item.index" v-on:change="changeDrag" @mousedown="mouse_down"
                                 v-on:leave="leaveDrag" class="list-complete-item">
                                 <!-- <suggestions /> -->
                             </suggestion-item>
@@ -50,10 +50,12 @@
     import {
         mapState,
         mapGetters,
-        mapMutations
+        mapMutations,
+        mapActions
     } from 'vuex'
     import homeWebList from "src/newtab/store/modules/homeWebList";
     import '../component/style/suggestion.css'
+    import { imgToBase64 } from "../utils/localSave.js";
 
     export default {
         name: 'suggestions',
@@ -167,11 +169,54 @@
         },
         created() {
         },
-        mounted() {
+        async mounted() {
             this.judgeItemPositionToSlide();
+            let listArr = this.homeWebList;
+            // const itemPromise = (item) => {
+            //     return new Promise(item => {
+            //             imgToBase64(item.iconSrc, src => {item.iconBase64 = src; console.log('ade'); resolve()})
+            //         })
+            // }
+            // // Promise.all(listArr.map(function(page, index){
+            // //     return Promise.all(page.map(function(item, idx){
+            // //         return (item) => {
+            // //             return new Promise(async item => {
+            // //                 let itm = item
+            // //                 itm.iconBase64 = await imgToBase64(item.iconSrc)
+            // //                 listArr[index][idx] = itm;
+            // //                 resolve('ax')
+            // //         })
+            // //         }
+            // //     }));
+            // // })).then(function(data) {
+            // //     console.log('data', data)
+            // //     console.log('promise', listArr);
+            // // });
+            // for (let page = 0; page < listArr.length; page++) {
+            //     await async function() {
+            //         for(let i = 0; i < listArr[page].length; i++) {
+            //             let itm = listArr[page][i]
+            //             await imgToBase64(listArr[page][i].iconSrc, (src) => {itm.iconBase64 = src})
+            //             listArr[page][i] = itm;
+            //         }
+            //     }()
+            // }
+            // // await listArr.forEach(page => {
+            //     page.forEach(async item => {
+            //         if(!item.iconBase64){
+            //             await imgToBase64(item.iconSrc, src => {item.iconBase64 = src;})
+                        
+            //             // console.log('meiyou')
+            //         }
+            //     })
+            // })
+            console.log('alistArr', listArr)
+            this.afterChanged(listArr)
+            // this.afterChanged(this.homeWebList)
         },
         methods: {
             ...mapMutations('homeWebList', ['CHANGE_IS_EDIT', 'EDIT_DRAWER_VISIBLE', 'AFTER_CHANGE']),
+            ...mapActions('homeWebList', ['afterChanged']),
             judgeItemPositionToSlide() {
                 let screenWidth = document.body.clientWidth;
                 let swiper = this.$refs.mySwiper.swiper;
@@ -248,8 +293,7 @@
                         swiper.slideTo(this.currentIndex);
                     }
                 }
-                for (let k = 0; k < this.homeWebList[1].length; k++) {
-                }
+                
 
                 let everyPages = this.iconLayout.row * this.iconLayout.col; //一页有多少个item
                 if (this.startIndex === this.currentIndex) {
@@ -307,7 +351,9 @@
                 // newList.forEach((item, index) => {
                 //     item.index = index
                 // })
-                this.AFTER_CHANGE(this.homeWebList)
+                // this.AFTER_CHANGE(this.homeWebList)
+                console.log('this.homeWebList', this.homeWebList)
+                this.afterChanged(this.homeWebList)
             },
             editDrawerClose() {
                 this.EDIT_DRAWER_VISIBLE(false)

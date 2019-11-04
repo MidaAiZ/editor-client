@@ -1,9 +1,10 @@
 import req from "./index.js";
 import upload from "./apis/uploadToken.js";
+// import { fail } from "assert";
 // import * as OSS from "ali-oss";
 // var STS = OSS.STS;
 
-const Upload = (f, notImageCb, successCb, failCb) => {
+export const Upload = (f, notImageCb, successCb, failCb) => {
   // notImageCb不是图片的回调函数 successCb上传成功的回调函数
   if (!f.type.match("image.*")) {
     // continue;
@@ -14,13 +15,20 @@ const Upload = (f, notImageCb, successCb, failCb) => {
 
     reader.onload = (function(theFile) {
       return function(e) {
-        const newImg = dataURItoBlob(e.target.result);
-        const imgList = new UploadImgServer();
-        imgList.UploadImg(newImg, successCb, failCb);
+        upBase64(e.target.result, successCb, failCb);
+        // const newImg = dataURItoBlob(e.target.result);
+        // const imgList = new UploadImgServer();
+        // imgList.UploadImg(newImg, successCb, failCb);
       };
     })(f);
     reader.readAsDataURL(f);
   }
+};
+
+export const upBase64 = (file64, successCb, failCb) => {
+  const newImg = dataURItoBlob(file64);
+  const imgList = new UploadImgServer();
+  imgList.UploadImg(newImg, successCb, failCb);
 };
 
 const dataURItoBlob = base64Data => {
@@ -42,7 +50,7 @@ const dataURItoBlob = base64Data => {
 };
 
 // const UploadImageApi = _APIS.images.upload;
-class UploadImgServer {
+export class UploadImgServer {
   UploadImg = async (f, successCb, failCb) => {
     const imgD = new FormData();
     const { data } = await req(upload.getToken);
@@ -50,7 +58,7 @@ class UploadImgServer {
     console.log("所选图片", f);
     let tokenData = data;
     if (data.code === "Success") {
-    //   imgD.append("file", f);
+      //   imgD.append("file", f);
       imgD.append("OSSAccessKeyId", tokenData.data.OSSAccessKeyId);
       // imgD.append('host', data.data.host);
       imgD.append("key", tokenData.data.key);
@@ -64,16 +72,17 @@ class UploadImgServer {
       let headers = {
         // 'Host': `${tokenData.data.host}`,
         // 'Key': `${tokenData.data.key}`,
-        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary8ALqnqJh9LxrumzC',
-        // 'Key': 
-      }
+        "Content-Type":
+          "multipart/form-data; boundary=----WebKitFormBoundary8ALqnqJh9LxrumzC"
+        // 'Key':
+      };
       let { data } = await req(upImgServerObj, {}, imgD, headers, false);
       console.log(data, "上传成功");
-      successCb(tokenData.data.key)
+      successCb(tokenData.data.key);
     } else {
       failCb();
     }
   };
 }
 
-export default Upload;
+// export default Upload;

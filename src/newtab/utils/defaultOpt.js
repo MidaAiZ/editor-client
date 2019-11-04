@@ -105,7 +105,33 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     fontColorValue: '#fff',
   }
 
-  export const defaultMenu = {
+// Object.defineProperties(menu, {
+//   title: {
+//     value: '',
+//   },
+//   iconBase64: {},
+//   iconBase64: {
+//     value: '',
+//     enumerable: false,
+//   }
+// })
+
+
+// function optimizeMenu(menus) {
+//   menus.forEach(page => {
+//     page.forEach(item => {
+//       const obj = {};
+//       Object.defineProperty(obj, 'iconBase64', {
+//         value: item.iconBase64,
+//         enumerable: false,
+//       });
+//       delete item.iconBase64;
+//       Object.assign(item, obj);
+//     })
+//   });
+// }
+
+export const defaultMenu = {
     isDefault: true,
     menus: [
     //   {
@@ -116,9 +142,10 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     //       index: '',
     //   },
       [{
-        sid: 2,
+
         title: 'chrome商店',
-        icon: chrome,
+        iconSrc: '',
+        iconBase64: chrome,
         url: 'https://chrome.google.com/webstore/category/extensions',
         index: 0,
         isFolder: false,
@@ -127,7 +154,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 3,
         title: '书签',
-        icon: bookmark,
+        iconSrc: '',
+        iconBase64: bookmark,
         url: '',
         index: 1,
         isFolder: false,
@@ -136,7 +164,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 4,
         title: '历史',
-        icon: history,
+        iconSrc: '',
+        iconBase64: history,
         url: '',
         index: 2,
         isFolder: false,
@@ -145,7 +174,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 5,
         title: '亚马逊',
-        icon: amazon,
+        iconSrc: '',
+        iconBase64: amazon,
         url: 'https://www.amazon.com/',
         index: 3,
         isFolder: false,
@@ -154,7 +184,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 6,
         title: '天猫',
-        icon: tianmao,
+        iconSrc: '',
+        iconBase64: tianmao,
         url: 'https://www.tmall.com/',
         index: 4,
         isFolder: false,
@@ -163,7 +194,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 7,
         title: 'instagram',
-        icon: instagram,
+        iconSrc: '',
+        iconBase64: instagram,
         url: 'https://www.instagram.com/',
         index: 5,
         isFolder: false,
@@ -172,7 +204,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 8,
         title: 'twitter',
-        icon: twitter,
+        iconSrc: '',
+        iconBase64: twitter,
         url: 'https://twitter.com/',
         index: 6,
         children: []
@@ -180,7 +213,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 9,
         title: '京东',
-        icon: jingdong,
+        iconSrc: '',
+        iconBase64: jingdong,
         url: 'https://www.jd.com/',
         index: 7,
         isFolder: false,
@@ -189,7 +223,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 10,
         title: 'Youtube',
-        icon: youtube,
+        iconSrc: '',
+        iconBase64: youtube,
         url: 'https://www.youtube.com/',
         index: 8,
         isFolder: false,
@@ -198,7 +233,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 11,
         title: '哔哩哔哩',
-        icon: bilibili,
+        iconSrc: '',
+        iconBase64: bilibili,
         url: 'https://www.bilibili.com/',
         index: 9,
         isFolder: false,
@@ -207,7 +243,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
 [      {
         sid: 12,
         title: 'steam',
-        icon: steam,
+        iconSrc: '',
+        iconBase64: steam,
         url: 'https://store.steampowered.com/',
         index: 10,
         isFolder: false,
@@ -216,7 +253,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 13,
         title: '知乎',
-        icon: zhihu,
+        iconSrc: '',
+        iconBase64: zhihu,
         url: 'https://www.zhihu.com/',
         index: 11,
         isFolder: false,
@@ -225,7 +263,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 14,
         title: '微博',
-        icon: weibo,
+        iconSrc: '',
+        iconBase64: weibo,
         url: 'https://www.weibo.com/',
         index: 12,
         isFolder: false,
@@ -234,7 +273,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 15,
         title: 'Facebook',
-        icon: facebook,
+        iconSrc: '',
+        iconBase64: facebook,
         url: 'https://www.facebook.com/',
         index: 13,
         isFolder: false,
@@ -243,7 +283,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 16,
         title: 'eBay',
-        icon: ebay,
+        iconSrc: '',
+        iconBase64: ebay,
         url: 'https://www.ebay.com/',
         index: 14,
         isFolder: false,
@@ -252,10 +293,15 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
       {
         sid: 17,
         title: 'gmail',
-        icon: gmail,
+        iconSrc: '',
+        iconBase64: gmail,
         url: 'https://mail.google.com/mail/',
         index: 15,
         isFolder: false,
         children: []
       },]
-  ]}
+  ]};
+
+// export const defaultMenu = localMenu;
+
+// console.log('忽略base64', JSON.stringify(defaultMenu))

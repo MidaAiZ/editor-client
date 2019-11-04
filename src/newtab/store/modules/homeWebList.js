@@ -10,7 +10,7 @@ import {DELETE_CHOOSE_ENGINE,
 } from "./mutations-type.js";
 import homeMenus from '../../services/apis/homeMenus.js'
 import req from '../../services/index.js'
-import { localSave } from '../../utils/localSave.js'
+import { localSave, imgToBase64 } from '../../utils/localSave.js'
 import localeText from '../../../../static/locale/index.js'
 import { SET_HOMEMENUS } from './mutations-type.js'
 import {defaultMenu} from '../../utils/defaultOpt.js'
@@ -32,6 +32,20 @@ function compare(property) {
     }
 }
 
+function optimizeMenu(menus) {
+    menus.forEach(page => {
+      page.forEach(item => {
+        const obj = {};
+        Object.defineProperty(obj, 'iconBase64', {
+          value: item.iconBase64,
+          enumerable: false,
+        });
+        delete item.iconBase64;
+        Object.assign(item, obj);
+      })
+    });
+  }
+
 // getters
 const getters = {
     totalSize: state => {
@@ -43,15 +57,14 @@ const getters = {
     },
     //将数组按index属性排序
     sortArray: (state,getters) => {
-        if (state.homeWebList[0].index) {
-            return state.homeWebList.sort(compare('index'))
-        } else {
+
             let arr = state.homeWebList;
             arr.forEach((item, index) => {
-                item.index = index
+                item.forEach((i, idx) => {
+                    i.index = idx
+                })
             })
             return arr
-        }
         // return state.homeWebList.sort(compare('index'))
     },
 
@@ -73,6 +86,11 @@ const actions = {
                 menus: defaultMenu.menus
             }
         }
+        menu.menus.forEach((item, index) => {
+            item.forEach((i, idx) => {
+                i.index = idx
+            })
+        })
         // let menuArr = menu.menus
         localSave('homeMenus', menu)
         commit('SET_HOMEMENUS', menu.menus)
@@ -80,10 +98,10 @@ const actions = {
     async getUserMenus ({ state, commit }) { // 从服务器获取默认主页添加网站
         const { data } = await req(homeMenus.user_menu)
         let menu;
-        if (data.data && data.data.length && data.data.length !== 0) {
+        if (data.data && data.data.menu && data.data.menu.length !== 0) {
             menu = {
                 isDefault: false,
-                menus: data.data
+                menus: data.data.menu
             }
         } else {
             menu = {
@@ -91,16 +109,30 @@ const actions = {
                 menus: state.homeWebList
             }
         }
+        menu.menus.forEach((item, index) => {
+            item.forEach((i, idx) => {
+                i.index = idx
+            })
+        })
         // let menuArr = menu.menus
         localSave('homeMenus', menu)
         commit('SET_HOMEMENUS', menu.menus)
     },
     async afterChanged ({ commit, rootState }, newList) {
-        localSave('homeMenus', newList)
+        // let localList = JSON.stringify(newList);
+        // let listArr = newList
+        // for (page of listArr) {
+        //         for(item of page) {
+        //             let itm = item
+        //             await iconPromise(itm).then((data) => {
+        //                 item = data;
+        //             })
+        //         }
+        // }
+        commit('AFTER_CHANGE', newList);
         const { data } = await req(homeMenus.changeAll, {}, newList)
         if (data.code === 'Success') {
-            commit('SET_HOMEMENUS', data.data)
-            console.log('同步网站列表成功')
+            // commit('SET_HOMEMENUS', data.data)
         } else {
             Message.error({message: localeText[rootState.locale.location].cloudSaveFail})
         }
@@ -108,6 +140,12 @@ const actions = {
     addOne () {
         
     }
+}
+
+async function iconPromise(item) {
+    return new Promise((resolve, reject) => {
+        imgToBase64(item.iconSrc, (src) => {item.iconBase64 = src; resolve(item)})
+    })
 }
 
 // mutations
@@ -150,14 +188,14 @@ const mutations = {
         let item = payload.item
         console.log(payload)
         // console.log('store', store)
+        let arr = state.homeWebList;
         let newItem = {
             sid: item.sid,
             url: item.url,
             title: item.title,
-            icon: item.icon,
-            index: state.homeWebList.length
+            iconSrc: item.icon,
+            index: arr[arr.length-1].length
         };
-        let arr = state.homeWebList;
         if(arr[arr.length-1].length >= payload.size) {
             arr.push([])
         }
@@ -169,10 +207,15 @@ const mutations = {
         localSave('homeMenus', menus);
         state.homeWebList = arr;
     },
-    [DELETE_ONE_SITE] (state, itemInfo) {
-
+    [DELETE_ONE_SITE] (state, payload) {
+        let itemInfo = payload.itemInfo;
+        let pageIndex = payload.pageIndex;
+        let index = payload.index;
         let arr = state.homeWebList;
-        arr = arr.filter(item => item.index !== itemInfo.index);
+        arr[pageIndex].splice(index, 1);
+        if(arr[pageIndex].length === 0 && arr.length !== 1) {
+            arr.splice(pageIndex, 1)
+        }
         let menus = {
             isDefault: false,
             menus: arr
@@ -180,13 +223,14 @@ const mutations = {
         localSave('homeMenus', menus);
         state.homeWebList = arr;
     },
-    [AFTER_CHANGE] (state, newList) {
+    [AFTER_CHANGE] (state, menus) {
+        console.log('after', menus)
         let newMenus = {
             isDefault: false,
-            menus: newList
+            menus,
         }
         localSave('homeMenus', newMenus);
-        state.homeWebList = newList;
+        state.homeWebList = menus;
     }
 }
 

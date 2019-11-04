@@ -32,7 +32,6 @@ const state = {
         state.wallPaperLoading = loading
       },
       [SET_WALLPAPER] (state, src) {
-        console.log('mutation')
         state.wallPaperSrc = src
       }
   }
