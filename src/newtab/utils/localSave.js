@@ -58,19 +58,21 @@ const saveImg = (key, srcUrl, callBack) => {
     };
 }
 
-const NoIconFunc = (title) => {
+const NoIconFunc = (title, width, height) => {
     // let imgDom = new Image();
     let imgCanvas = document.createElement("canvas");
     let imgContext = imgCanvas.getContext("2d");
         // 确保canvas尺寸和图片一致
-    imgCanvas.width = 240;
-    imgCanvas.height = 240;
-    imgContext.fillStyle="#FF0000";
+    imgCanvas.width = width;
+    imgCanvas.height = height;
+    imgContext.fillStyle='rgba('+ Math.floor(Math.random()*255) +','+ Math.floor(Math.random()*255) +','+ Math.floor(Math.random()*255) +',0.8)';;
+    imgContext.fillRect(0,0,width, height);
     let imgText = title.slice(0, 1);
-    imgContext.fillText(imgText, 100, 100, 40);
-    imgContext.font = "20px";
+    imgContext.fillStyle="#fff";
+    imgContext.font = "90px YaHei";
     imgContext.textAlign = 'center';
     imgContext.textBaseline = "middle";
+    imgContext.fillText(imgText, width / 2, height / 2);
     let src = imgCanvas.toDataURL("image/png");
     return src;
 }

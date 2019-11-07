@@ -1,16 +1,17 @@
 <template>
     <div class="suggestion-item" :style="width" :class="{'my-shake': isEdit,'shake-constant':isEdit}">
         <div class="item-img-container">
+            <span class="item-img-close" @mouseover="closeHover" @click.prevent.stop="deleteOneSite" v-show='isEdit'>
+                <i class='el-icon-close'></i>
+            </span>
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
-            <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img handle-img" 
+            <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" id="item-img"
                 @click='toNewSite' @mouseup="itemEdit" 
                 @contextmenu.stop.prevent="contextMenu">
+                <img :src="src" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>
                 </div>
-                <span class="item-img-close" @mouseover="closeHover" @click.prevent.stop="deleteOneSite" v-show='isEdit'>
-                    <i class='el-icon-close'></i>
-                </span>
             </div>
         </div>
         <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
@@ -38,16 +39,17 @@
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
                 'iconLayout','newSiteNewTabValue']),
             ...mapState('homeWebList',['isEdit','editDrawerVisible']),
-            src: function() {
-                let itemInfo = this.itemInfo;
-                if(itemInfo.iconBase64) {
-                    return itemInfo.iconBase64
-                } else if (!itemInfo.iconBase64 && itemInfo.iconSrc==="") {
-                    let tempSrc = NoIconFunc(itemInfo.title);
-                    console.log(tempSrc, 'tempsrc')
-                    return tempSrc
-                } else {
-                    return itemInfo.iconSrc
+            src: {
+                get() {
+                    let itemInfo = this.itemInfo;
+                    if(itemInfo.iconBase64) {
+                        return itemInfo.iconBase64
+                    } else if (!itemInfo.iconBase64 && itemInfo.iconSrc==="") {
+                        let tempSrc = NoIconFunc(itemInfo.title, 240, 240);
+                        return tempSrc
+                    } else {
+                        return itemInfo.iconSrc
+                    }
                 }
             },
             width: function () {
@@ -88,7 +90,6 @@
             },
             itemImageStyle: function () {
                 let imgStyle = {
-                    'background-image': `url(${this.src})`,
                     'width': '',
                     'height': '',
                     'border-radius': this.iconRadiusValue + '%'
@@ -261,8 +262,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-size: cover;
-        background-position: center;
+        overflow: hidden;
     }
     .item-img img{
         width: 100%;
@@ -290,18 +290,19 @@
     }
     .item-img-close{
         position:absolute;
-        right: -3%;
-        top: -3%;
+        right: 20%;
+        top: 8%;
         background-color: rgba(255, 255, 255,0.7);
         font-size: 130%;
         font-weight: 400;
-        width: 30%;
-        height: 30%;
-        border-radius: 50%; 
+        width: 20px;
+        height: 20px;
+        border-radius: 20px; 
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        z-index: 11;
         /* opacity: 0.8; */
         box-shadow: #ccc 0 0 2px;
     }
