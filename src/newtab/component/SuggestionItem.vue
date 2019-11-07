@@ -2,10 +2,9 @@
     <div class="suggestion-item" :style="width" :class="{'my-shake': isEdit,'shake-constant':isEdit}">
         <div class="item-img-container">
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
-            <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" 
+            <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img handle-img" 
                 @click='toNewSite' @mouseup="itemEdit" 
                 @contextmenu.stop.prevent="contextMenu">
-                <img :src="itemInfo.iconBase64 || itemInfo.iconSrc" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>
                 </div>
@@ -27,7 +26,7 @@
     import './style/shakeRotate.scss'
     import draggable from 'vuedraggable'
     import { openSite } from '../services/openSite.js';
-    import { imgToBase64 } from '../utils/localSave.js';
+    import { imgToBase64, NoIconFunc } from '../utils/localSave.js';
     // const editIcon = require('../../../static/img/edit.svg')
     export default {
         name: 'suggestions',
@@ -39,6 +38,18 @@
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
                 'iconLayout','newSiteNewTabValue']),
             ...mapState('homeWebList',['isEdit','editDrawerVisible']),
+            src: function() {
+                let itemInfo = this.itemInfo;
+                if(itemInfo.iconBase64) {
+                    return itemInfo.iconBase64
+                } else if (!itemInfo.iconBase64 && itemInfo.iconSrc==="") {
+                    let tempSrc = NoIconFunc(itemInfo.title);
+                    console.log(tempSrc, 'tempsrc')
+                    return tempSrc
+                } else {
+                    return itemInfo.iconSrc
+                }
+            },
             width: function () {
                 let widthStyle = {
                     'width': 100.0 / this.iconLayout.col + '%',
@@ -77,6 +88,7 @@
             },
             itemImageStyle: function () {
                 let imgStyle = {
+                    'background-image': `url(${this.src})`,
                     'width': '',
                     'height': '',
                     'border-radius': this.iconRadiusValue + '%'
@@ -249,10 +261,12 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        background-size: cover;
+        background-position: center;
     }
     .item-img img{
-        width: 60%;
-        height: 60%;
+        width: 100%;
+        height: 100%;
     }
     .item-img-mask{
         position: absolute;

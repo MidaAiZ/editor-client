@@ -83,7 +83,6 @@ export default {
       // 判断是否登录
       this.judgeLogin()
           .then((res) => {
-            console.log('rootLogin', res)
             if(res) {
               this.getUserMenus()
             } else {

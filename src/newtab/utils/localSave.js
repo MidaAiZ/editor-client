@@ -7,23 +7,27 @@ const localSave = (settingKey, settingValue) => {
     // req
 }
 
-const imgToBase64 = async (srcUrl, callBack) => {
+const imgToBase64 = (srcUrl, callBack) => {
     let imgDom = new Image();
-    imgDom.src = srcUrl;
-    imgDom.onload = await function () {
-        var imgCanvas = document.createElement("canvas"),
-        imgContext = imgCanvas.getContext("2d");
-        // 确保canvas尺寸和图片一致
-        imgCanvas.width = imgDom.width;
-        imgCanvas.height = imgDom.height;
-        // 在canvas中绘制图片
-        imgContext.drawImage(imgDom, 0, 0, imgDom.width, imgDom.height);
-        // 将图片保存为Data URI
-        let base64Src = imgCanvas.toDataURL("image/png");
-        // console.log(base64Src)
-        callBack(base64Src)
-       
-    };
+    return new Promise(resolve => {
+        imgDom.onload = function () {
+            var imgCanvas = document.createElement("canvas"),
+            imgContext = imgCanvas.getContext("2d");
+            // 确保canvas尺寸和图片一致
+            imgCanvas.width = imgDom.width;
+            imgCanvas.height = imgDom.height;
+            // 在canvas中绘制图片
+            imgContext.drawImage(imgDom, 0, 0, imgDom.width, imgDom.height);
+            // 将图片保存为Data URI
+            let base64Src = imgCanvas.toDataURL("image/png");
+            // console.log(base64Src)
+            resolve(base64Src);
+        };
+        imgDom.onerror = function() {
+            resolve('');
+        }
+        imgDom.src = srcUrl;
+    });
 }
 
 const saveImg = (key, srcUrl, callBack) => {
@@ -54,8 +58,26 @@ const saveImg = (key, srcUrl, callBack) => {
     };
 }
 
+const NoIconFunc = (title) => {
+    // let imgDom = new Image();
+    let imgCanvas = document.createElement("canvas");
+    let imgContext = imgCanvas.getContext("2d");
+        // 确保canvas尺寸和图片一致
+    imgCanvas.width = 240;
+    imgCanvas.height = 240;
+    imgContext.fillStyle="#FF0000";
+    let imgText = title.slice(0, 1);
+    imgContext.fillText(imgText, 100, 100, 40);
+    imgContext.font = "20px";
+    imgContext.textAlign = 'center';
+    imgContext.textBaseline = "middle";
+    let src = imgCanvas.toDataURL("image/png");
+    return src;
+}
+
 export {
     localSave,
     imgToBase64,
     saveImg,
+    NoIconFunc
 }

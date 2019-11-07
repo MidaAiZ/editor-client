@@ -132,7 +132,7 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
 // }
 
 export const defaultMenu = {
-    isDefault: true,
+    version: 'default',
     menus: [
     //   {
     //       id: 1,

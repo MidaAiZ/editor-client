@@ -59,7 +59,7 @@
         fail: '注册失败'
     },
     loginMessage: {
-        success: '退出登录成功',
+        success: '登录成功',
         fail: '登录失败'
     },
     logoutMessage: {

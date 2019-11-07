@@ -77,12 +77,12 @@ const actions = {
         let menu;
         if (data.code === 'Success') {
             menu = {
-                isDefault: false,
+                version: false,
                 menus: data.data
             }
         } else {
             menu = {
-                isDefault: true,
+                version: true,
                 menus: defaultMenu.menus
             }
         }
@@ -100,12 +100,12 @@ const actions = {
         let menu;
         if (data.data && data.data.menu && data.data.menu.length !== 0) {
             menu = {
-                isDefault: false,
+                version: data.data.version,
                 menus: data.data.menu
             }
         } else {
             menu = {
-                isDefault: true,
+                version: true,
                 menus: state.homeWebList
             }
         }
@@ -114,23 +114,39 @@ const actions = {
                 i.index = idx
             })
         })
+
+        let listArr = menu.menus;
+
+        const promises = [];
+            listArr.forEach(function(page, index){
+                page.forEach(function(item, idx){
+                    promises.push(new Promise(async (resolve) => {
+                        // let itm = item
+                        if(!item.iconBase64) {
+                            const base64 = await imgToBase64(item.iconSrc)
+                        // listArr[index][idx] = item;
+                            item.iconBase64 = base64;
+                            listArr[index][idx] = item;
+                        }
+                        resolve();
+                }));
+            });
+        })
+        Promise.all(promises).then((args) => {
+            menu.menus = listArr;
+            localSave('homeMenus', menu)
+            commit('SET_HOMEMENUS', menu.menus)
+        })
         // let menuArr = menu.menus
-        localSave('homeMenus', menu)
-        commit('SET_HOMEMENUS', menu.menus)
+        // localSave('homeMenus', menu)
+        // commit('SET_HOMEMENUS', menu.menus)
     },
     async afterChanged ({ commit, rootState }, newList) {
         // let localList = JSON.stringify(newList);
-        // let listArr = newList
-        // for (page of listArr) {
-        //         for(item of page) {
-        //             let itm = item
-        //             await iconPromise(itm).then((data) => {
-        //                 item = data;
-        //             })
-        //         }
-        // }
         commit('AFTER_CHANGE', newList);
-        const { data } = await req(homeMenus.changeAll, {}, newList)
+        const menuClone = JSON.parse(JSON.stringify(newList));
+        optimizeMenu(menuClone);
+        const { data } = await req(homeMenus.changeAll, {}, menuClone)
         if (data.code === 'Success') {
             // commit('SET_HOMEMENUS', data.data)
         } else {
@@ -140,12 +156,6 @@ const actions = {
     addOne () {
         
     }
-}
-
-async function iconPromise(item) {
-    return new Promise((resolve, reject) => {
-        imgToBase64(item.iconSrc, (src) => {item.iconBase64 = src; resolve(item)})
-    })
 }
 
 // mutations
@@ -201,7 +211,7 @@ const mutations = {
         }
         arr[arr.length-1].push(newItem);
         let menus = {
-            isDefault: false,
+            version: false,
             menus: arr
         };
         localSave('homeMenus', menus);
@@ -217,16 +227,16 @@ const mutations = {
             arr.splice(pageIndex, 1)
         }
         let menus = {
-            isDefault: false,
+            version: false,
             menus: arr
         };
         localSave('homeMenus', menus);
         state.homeWebList = arr;
     },
     [AFTER_CHANGE] (state, menus) {
-        console.log('after', menus)
+        console.log('after', JSON.stringify(menus))
         let newMenus = {
-            isDefault: false,
+            version: false,
             menus,
         }
         localSave('homeMenus', newMenus);

@@ -5,8 +5,9 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
-import localeText from '../../../static/locale/index.js'
+import { mapState, mapActions, mapMutations } from 'vuex';
+import localeText from '../../../static/locale/index.js';
+import debounce from '../utils/debounce.js';
 
 export default {
     name: 'barSearch',
@@ -43,7 +44,9 @@ export default {
         handleSearchSite(value) {
             if(value) {
                 this.ADD_SEARCH_CATE()
-                this.searchSite({keyword: value, pageNum: 1, pageSize: 100})
+                let debounceReq = debounce(this.searchSite, 200)
+                // this.searchSite({keyword: value, pageNum: 1, pageSize: 100})
+                debounceReq({keyword: value, pageNum: 1, pageSize: 100})
             } else {
                 this.DELETE_SEARCH_CATE()
             }
