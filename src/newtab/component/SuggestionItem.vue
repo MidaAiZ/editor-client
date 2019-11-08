@@ -44,9 +44,6 @@
                     let itemInfo = this.itemInfo;
                     if(itemInfo.iconBase64) {
                         return itemInfo.iconBase64
-                    } else if (!itemInfo.iconBase64 && itemInfo.iconSrc==="") {
-                        let tempSrc = NoIconFunc(itemInfo.title, 240, 240);
-                        return tempSrc
                     } else {
                         return itemInfo.iconSrc
                     }

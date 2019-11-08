@@ -1,4 +1,6 @@
 import req from '../services/index.js';
+import { upBase64 } from '../services/uploadImg.js';
+import imgHost from '../services/apis/imgHost.js';
 
 const localSave = (settingKey, settingValue) => {
     let oldSetting = localStorage.getItem(settingKey) || "{}";
@@ -58,7 +60,7 @@ const saveImg = (key, srcUrl, callBack) => {
     };
 }
 
-const NoIconFunc = (title, width, height) => {
+const NoIconFunc = async (title, width, height) => {
     // let imgDom = new Image();
     let imgCanvas = document.createElement("canvas");
     let imgContext = imgCanvas.getContext("2d");
@@ -73,8 +75,14 @@ const NoIconFunc = (title, width, height) => {
     imgContext.textAlign = 'center';
     imgContext.textBaseline = "middle";
     imgContext.fillText(imgText, width / 2, height / 2);
-    let src = imgCanvas.toDataURL("image/png");
-    return src;
+    const base64Src = imgCanvas.toDataURL("image/png");
+    let src;
+    await upBase64(base64Src, (key) => {src = imgHost + key}, () => {console.log('上传失败')})
+    let imgObj = {
+        iconBase64: base64Src,
+        iconSrc: src
+    }
+    return imgObj;
 }
 
 export {

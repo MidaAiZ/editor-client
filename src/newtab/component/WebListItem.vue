@@ -73,6 +73,9 @@ export default {
         ...mapActions('addWebList', [
             'getSitesInCategory'
         ]),
+        ...mapActions('homeWebList', [
+            'addOne'
+        ]),
         ...mapMutations('homeWebList', [
             'ADD_ONE_SITE'
         ]),
@@ -92,7 +95,7 @@ export default {
                 item: this.item,
                 size: this.iconLayout.row * this.iconLayout.col
             }
-            this.ADD_ONE_SITE(payload)
+            this.addOne(payload)
         }
     }
 }

@@ -10,7 +10,7 @@ import {DELETE_CHOOSE_ENGINE,
 } from "./mutations-type.js";
 import homeMenus from '../../services/apis/homeMenus.js'
 import req from '../../services/index.js'
-import { localSave, imgToBase64 } from '../../utils/localSave.js'
+import { localSave, imgToBase64, NoIconFunc } from '../../utils/localSave.js'
 import localeText from '../../../../static/locale/index.js'
 import { SET_HOMEMENUS } from './mutations-type.js'
 import {defaultMenu} from '../../utils/defaultOpt.js'
@@ -143,6 +143,7 @@ const actions = {
     },
     async afterChanged ({ commit, rootState }, newList) {
         // let localList = JSON.stringify(newList);
+        console.log('a')
         commit('AFTER_CHANGE', newList);
         const menuClone = JSON.parse(JSON.stringify(newList));
         optimizeMenu(menuClone);
@@ -153,8 +154,37 @@ const actions = {
             Message.error({message: localeText[rootState.locale.location].cloudSaveFail})
         }
     },
-    addOne () {
-        
+    async addOne ({dispatch, commit}, payload) {
+        let item = payload.item;
+        let iconSrc;
+        let iconBase64;
+        if (!item.icon) {
+            let itemIcon = await NoIconFunc(item.title, 240, 240);
+            iconSrc = itemIcon.iconSrc;
+            iconBase64 = itemIcon.iconBase64;
+        } else {
+            iconSrc = item.icon
+        }
+        // console.log('store', store)
+        let arr = state.homeWebList;
+        let newItem = {
+            sid: item.sid,
+            url: item.url,
+            title: item.title,
+            iconSrc: iconSrc,
+            iconBase64: iconBase64,
+            index: arr[arr.length-1].length
+        };
+        if(arr[arr.length-1].length >= payload.size) {
+            arr.push([])
+        }
+        arr[arr.length-1].push(newItem);
+        let menus = {
+            version: false,
+            menus: arr
+        };
+        commit('AFTER_CHANGE', arr);
+        await dispatch('afterChanged', arr);
     }
 }
 
@@ -234,7 +264,6 @@ const mutations = {
         state.homeWebList = arr;
     },
     [AFTER_CHANGE] (state, menus) {
-        console.log('after', JSON.stringify(menus))
         let newMenus = {
             version: false,
             menus,

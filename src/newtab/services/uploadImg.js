@@ -25,10 +25,10 @@ export const Upload = (f, notImageCb, successCb, failCb) => {
   }
 };
 
-export const upBase64 = (file64, successCb, failCb) => {
+export const upBase64 = async (file64, successCb, failCb) => {
   const newImg = dataURItoBlob(file64);
   const imgList = new UploadImgServer();
-  imgList.UploadImg(newImg, successCb, failCb);
+  await imgList.UploadImg(newImg, successCb, failCb);
 };
 
 const dataURItoBlob = base64Data => {
