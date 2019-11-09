@@ -22,7 +22,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
@@ -61,9 +61,13 @@ export default {
     methods: {
         changeBgSrc(src) {
             this.SET_BGSRC(src)
+            this.uploadSettings({bgSrc: src});
         },
         ...mapMutations('settings', [
             'SET_BGSRC',
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     }
 }

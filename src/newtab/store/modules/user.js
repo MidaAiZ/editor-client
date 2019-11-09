@@ -80,11 +80,11 @@ const actions = {
             localSave('userData', userData)
             commit('setUserName', userData.name)
             commit('loginSuccess', true)
-            return true
+            return 'hasLogined'
         } else {
             commit('setUserName', '')
             commit('loginSuccess', false)
-            return false
+            return 'notLogined'
         }
     },
     async logoutFunc ({ commit, rootState }) {

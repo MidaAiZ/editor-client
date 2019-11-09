@@ -63,7 +63,7 @@ const state = localStorage.getItem('settings') ? {
   
   // actions
   const actions = {
-    async getDefaultSettings ({ commit }) { // 获取默认设置
+    async getDefaultSettings ({ commit, dispatch }) { // 获取默认设置
         const { data } = await req(settings.default)
         // console.log(data)
         if (data.code === 'Success') {
@@ -73,11 +73,15 @@ const state = localStorage.getItem('settings') ? {
     async judgeCloudSettings ({ commit }) { // 判断本地内容给是否和云端冲突
         
     },
-    async getUserSettings ({ commit }) { // 获取用户存储设置
+    async getUserSettings ({ commit, dispatch }) { // 获取用户存储设置
         const { data } = await req(settings.profile)
         // console.log(data)
         if (data.code === 'Success') {
-            commit('SET_ALL', data.data)
+            if(data.data.cloudSave) {
+                console.log('开启了')
+                commit('SET_ALL', data.data)
+                dispatch('homeWebList/getUserMenus', {},{root:true})
+            }
         }
     },
     async uploadSettings({ commit, state }, newSettings) {
@@ -194,8 +198,11 @@ const state = localStorage.getItem('settings') ? {
     },
     [SET_ALL](state, newSetting) {
         // let newState = {...newSetting};
-        state = newSetting
-        localSave('settings', {...state})
+        Object.keys(state).forEach((k)=>{
+            state[k] = newSetting[k]
+        })
+        // state = {...newSetting}
+        localSave('settings', newSetting)
     }
   }
   

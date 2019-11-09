@@ -12,7 +12,7 @@
             >
             </el-switch>
         </div>
-        <div class="setting-open-item">
+        <!-- <div class="setting-open-item">
             <span class="setting-open-title">{{ showOftenUsedWeb }}</span>
             <el-switch
                 @change="toggleHomeBtnSetting($event, 'showOftenUsedBar')"
@@ -38,11 +38,11 @@
                 v-model="showBookMarkBar"
             >
             </el-switch>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 export default {
@@ -79,10 +79,14 @@ export default {
             this.SET_HOMEBTN({
                 type,
                 value,
-            })
+            });
+            this.uploadSettings({[type]: value})
         },
         ...mapMutations('settings', [
             'SET_HOMEBTN',
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     }
 }

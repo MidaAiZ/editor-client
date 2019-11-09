@@ -42,9 +42,10 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import localeText from '../../../../static/locale/index.js'
 import './setting.css'
+import debounce from '../../utils/debounce.js';
 
 export default {
     name: 'searchBarSetting',
@@ -83,19 +84,27 @@ export default {
             return val + '%';
         },
         toggleHideSearchBar(value) {
-            this.HIDE_SEARCHBAR(value)
+            this.HIDE_SEARCHBAR(value);
+            this.uploadSettings({hideSearchBarValue: value});
         },
         toggleHideSearchType(value) {
             this.HIDE_SEARCHTYPE(value)
+            this.uploadSettings({hideSearchTypeValue: value});
         },
         setSearchBarRadius(value) {
             this.SET_SEARCHBARRADIUS(value)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({searchBarRadiusValue: value})
         },
         setSearchBarSize(value) {
             this.SET_SEARCHBARSIZE(value)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({searchBarSizeValue: value})
         },
         setSearchBarOpacity(value) {
             this.SET_SEARCHBAROPACITY(value)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({searchBarOpacityValue: value})
         },
         ...mapMutations('settings', [
             'HIDE_SEARCHBAR',
@@ -103,6 +112,9 @@ export default {
             'SET_SEARCHBARRADIUS',
             'SET_SEARCHBARSIZE',
             'SET_SEARCHBAROPACITY',
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     }
 }

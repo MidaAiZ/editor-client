@@ -9,9 +9,10 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
-import localeText from '../../../../static/locale/index.js'
-import './setting.css'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
+import localeText from '../../../../static/locale/index.js';
+import { defaultSettings } from '../../utils/defaultOpt.js'
+import './setting.css';
 
 export default {
     name: 'resetAll',
@@ -23,14 +24,18 @@ export default {
     computed: {
         ...mapState('locale', [
             'location',
-        ])
+        ]),
     },
     methods: {
         handleReset() {
             this.RESET_ALL()
+            this.uploadSettings(defaultSettings)
         },
         ...mapMutations('settings', [
             'RESET_ALL',
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     },
     created: function() {

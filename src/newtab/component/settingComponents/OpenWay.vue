@@ -24,7 +24,7 @@
                     >
                     </el-switch>
                 </div>
-                <div class="setting-open-item">
+                <!-- <div class="setting-open-item">
                     <span class="setting-open-title">{{ openMarkNewTab }}</span>
                     <el-switch
                         @change="toggleNewType($event, 'openMarkNewTabValue')"
@@ -32,8 +32,8 @@
                         v-model="openMarkNewTabValue"
                     >
                     </el-switch>
-                </div>
-                <div class="setting-open-item">
+                </div> -->
+                <!-- <div class="setting-open-item">
                     <span class="setting-open-title">{{ historyNewTab }}</span>
                     <el-switch
                         @change="toggleNewType($event, 'historyNewTabValue')"
@@ -41,11 +41,11 @@
                         v-model="historyNewTabValue"
                     >
                     </el-switch>
-                </div>
+                </div> -->
             </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import localeText from '../../../../static/locale/index.js'
 import './setting.css'
 
@@ -90,9 +90,13 @@ export default {
                 type,
                 value,
             })
+            this.uploadSettings({[type]: value})
         },
         ...mapMutations('settings', [
             'SET_NEWTYPE',
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     }
 }

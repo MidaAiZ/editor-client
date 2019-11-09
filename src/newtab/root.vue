@@ -80,15 +80,12 @@ export default {
         },
         
     },
-    created: function () {
+    created: async function () {
       // 判断是否登录
-      this.judgeLogin()
-          .then((res) => {
-            if(res) {
-              if(this.cloudSave) { // 开启云存储后每次打开同步云端
-                this.getUserMenus()
-                this.getUserSettings()
-              }
+      const loginInfo = await this.judgeLogin()
+      if(loginInfo === 'hasLogined') {
+        console.log('dengluxinxi', loginInfo)
+              this.getUserSettings()
             } else {
               if (!localStorage.getItem('homeMenus')) {
                 // 初始化主页网站列表
@@ -103,7 +100,6 @@ export default {
                 // console.log('rootLogin', loginInfo)
               }
             }
-          })
       // 初始化
       this.getCategories()
       this.setTrack()

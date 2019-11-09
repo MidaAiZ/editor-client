@@ -27,9 +27,10 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
-import localeText from '../../../../static/locale/index.js'
-import './setting.css'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
+import localeText from '../../../../static/locale/index.js';
+import './setting.css';
+import debounce from '../../utils/debounce.js';
 
 export default {
     name: 'iconSetting',
@@ -64,17 +65,25 @@ export default {
         },
         toggleIconSetting(value) {
             this.HIDE_ALLICONS(value)
+            this.uploadSettings({hideAllIcons: value})
         },
         setIconRadius(value) {
             this.SET_ICONRADIUS(value)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({iconRadiusValue: value})
         },
         setIconSize(value) {
             this.SET_ICONSIZE(value)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({iconSizeValue: value})
         },
         ...mapMutations('settings', [
             'HIDE_ALLICONS',
             'SET_ICONRADIUS',
             'SET_ICONSIZE',
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     }
 }

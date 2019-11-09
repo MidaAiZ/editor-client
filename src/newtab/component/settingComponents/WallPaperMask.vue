@@ -15,9 +15,10 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
-import localeText from '../../../../static/locale/index.js'
-import './setting.css'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
+import localeText from '../../../../static/locale/index.js';
+import './setting.css';
+import debounce from '../../utils/debounce.js';
 
 export default {
     name: 'wallPaperMask',
@@ -43,13 +44,20 @@ export default {
     methods: {
         changeOpacity(value) {
             this.SET_BGMASKOPACITY(value)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({maskOpacityValue: value})
         },
         changeBlur(blur) {
             this.SET_BGBLUR(blur)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({bgBlurValue: blur})
         },
         ...mapMutations('settings', [
             'SET_BGMASKOPACITY',
             'SET_BGBLUR',
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     }
 }
