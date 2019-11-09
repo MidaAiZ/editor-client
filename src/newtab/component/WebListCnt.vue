@@ -93,7 +93,7 @@ export default {
             let id = this.cid;
             let payload = {
                 categoryIds: id,
-                pageNum: this.pageNum,
+                pageNum: this.pageNum + 1,
                 pageSize: this.pageSize,
             }
             this.loadMore(payload)

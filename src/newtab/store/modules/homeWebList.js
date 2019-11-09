@@ -143,18 +143,23 @@ const actions = {
     },
     async afterChanged ({ commit, rootState }, newList) {
         // let localList = JSON.stringify(newList);
-        console.log('a')
-        commit('AFTER_CHANGE', newList);
-        const menuClone = JSON.parse(JSON.stringify(newList));
-        optimizeMenu(menuClone);
-        const { data } = await req(homeMenus.changeAll, {}, menuClone)
-        if (data.code === 'Success') {
-            // commit('SET_HOMEMENUS', data.data)
+
+        if(rootState.settings.cloudSave) {
+            const menuClone = JSON.parse(JSON.stringify(newList));
+            optimizeMenu(menuClone);
+            const { data } = await req(homeMenus.changeAll, {}, menuClone)
+            if (data.code === 'Success') {
+                commit('AFTER_CHANGE', newList);
+                // commit('SET_HOMEMENUS', data.data)
+            } else {
+                commit('AFTER_CHANGE', newList);
+                Message.error({message: localeText[rootState.locale.location].cloudSaveFail})
+            }
         } else {
-            Message.error({message: localeText[rootState.locale.location].cloudSaveFail})
+            commit('AFTER_CHANGE', newList);
         }
     },
-    async addOne ({dispatch, commit}, payload) {
+    async addOne ({dispatch, commit, rootState}, payload) {
         let item = payload.item;
         let iconSrc;
         let iconBase64;
@@ -165,7 +170,6 @@ const actions = {
         } else {
             iconSrc = item.icon
         }
-        // console.log('store', store)
         let arr = state.homeWebList;
         let newItem = {
             sid: item.sid,
@@ -184,7 +188,29 @@ const actions = {
             menus: arr
         };
         commit('AFTER_CHANGE', arr);
-        await dispatch('afterChanged', arr);
+        if(rootState.settings.cloudSave) {
+            await dispatch('afterChanged', arr);
+        }
+
+    },
+    async deleteOne({dispatch, commit, rootState}, payload) {
+        let itemInfo = payload.itemInfo;
+        let pageIndex = payload.pageIndex;
+        let index = payload.index;
+        let arr = state.homeWebList;
+        arr[pageIndex].splice(index, 1);
+        if(arr[pageIndex].length === 0 && arr.length !== 1) {
+            arr.splice(pageIndex, 1)
+        }
+        let menus = {
+            version: false,
+            menus: arr
+        };
+        localSave('homeMenus', menus);
+        commit('AFTER_CHANGE', arr);
+        if(rootState.settings.cloudSave) {
+            await dispatch('afterChanged', arr);
+        }
     }
 }
 
@@ -240,22 +266,6 @@ const mutations = {
             arr.push([])
         }
         arr[arr.length-1].push(newItem);
-        let menus = {
-            version: false,
-            menus: arr
-        };
-        localSave('homeMenus', menus);
-        state.homeWebList = arr;
-    },
-    [DELETE_ONE_SITE] (state, payload) {
-        let itemInfo = payload.itemInfo;
-        let pageIndex = payload.pageIndex;
-        let index = payload.index;
-        let arr = state.homeWebList;
-        arr[pageIndex].splice(index, 1);
-        if(arr[pageIndex].length === 0 && arr.length !== 1) {
-            arr.splice(pageIndex, 1)
-        }
         let menus = {
             version: false,
             menus: arr

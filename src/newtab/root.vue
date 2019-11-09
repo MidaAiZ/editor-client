@@ -50,7 +50,8 @@ export default {
     },
     computed: {
         ...mapState('settings', [
-          'showBookMarkBar'
+          'showBookMarkBar',
+          'cloudSave'
         ]),
         ...mapState('engineList',['searchPopoverVisible'])
     },
@@ -61,7 +62,7 @@ export default {
             this.CLOSE_ENGINE_POPOVER();
         },
         ...mapActions('user', ['judgeLogin']),
-        ...mapActions('settings', ['getDefaultSettings']),
+        ...mapActions('settings', ['getDefaultSettings', 'getUserSettings', 'uploadSettings']),
         ...mapActions('categories', ['getCategories']),
         ...mapActions('homeWebList', ['getDefaultMenus', 'getUserMenus']),
         unedit() {
@@ -84,7 +85,10 @@ export default {
       this.judgeLogin()
           .then((res) => {
             if(res) {
-              this.getUserMenus()
+              if(this.cloudSave) { // 开启云存储后每次打开同步云端
+                this.getUserMenus()
+                this.getUserSettings()
+              }
             } else {
               if (!localStorage.getItem('homeMenus')) {
                 // 初始化主页网站列表

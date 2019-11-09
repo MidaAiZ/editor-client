@@ -171,32 +171,6 @@
         },
         mounted() {
             this.judgeItemPositionToSlide();
-            // const itemPromise = (item) => {
-            //     return new Promise(item => {
-            //             imgToBase64(item.iconSrc, src => {item.iconBase64 = src; console.log('ade'); resolve()})
-            //         })
-            // }
-            
-            // for (let page = 0; page < listArr.length; page++) {
-            //     await async function() {
-            //         for(let i = 0; i < listArr[page].length; i++) {
-            //             let itm = listArr[page][i]
-            //             await imgToBase64(listArr[page][i].iconSrc, (src) => {itm.iconBase64 = src})
-            //             listArr[page][i] = itm;
-            //         }
-            //     }()
-            // }
-            // // await listArr.forEach(page => {
-            //     page.forEach(async item => {
-            //         if(!item.iconBase64){
-            //             await imgToBase64(item.iconSrc, src => {item.iconBase64 = src;})
-                        
-            //             // console.log('meiyou')
-            //         }
-            //     })
-            // })
-            // console.log('alistArr', listArr)
-            // this.afterChanged(this.homeWebList)
         },
         methods: {
             ...mapMutations('homeWebList', ['CHANGE_IS_EDIT', 'EDIT_DRAWER_VISIBLE', 'AFTER_CHANGE']),

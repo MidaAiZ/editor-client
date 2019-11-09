@@ -9,7 +9,7 @@ const settings = {
             p: `${host}user_settings/profile`,  // 用户的私有化配置，没有配置的情况下返回默认配置
             m: 'GET'
         },
-        profile: {
+        update: {
             p: `${host}user_settings/profile`,  // 更新用户的私有化配置，没有配置的情况下返回默认配置
             m: 'POST'
         },

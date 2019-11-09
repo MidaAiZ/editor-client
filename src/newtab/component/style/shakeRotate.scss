@@ -1,5 +1,5 @@
 @import '~csshake/scss/csshake-rotate.scss';
 
 .my-shake{
-    @include do-shake('shake-rotate',0,0,7,5s)
+    @include do-shake('shake-rotate',0,0,10,6s)
 }

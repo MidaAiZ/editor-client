@@ -20,10 +20,11 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex'
-import { Chrome } from 'vue-color'
-import localeText from '../../../../static/locale/index.js'
-import './setting.css'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
+import { Chrome } from 'vue-color';
+import localeText from '../../../../static/locale/index.js';
+import debounce from '../../utils/debounce.js';
+import './setting.css';
 
 export default {
     name: 'searchBarSetting',
@@ -62,9 +63,13 @@ export default {
         },
         setFontSize(value) {
             this.SET_FONTSIZE(value)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({fontSizeValue: value})
         },
         setFontColor(value) {
             this.SET_FONTCOLOR(value.hex)
+            let debounceReq = debounce(this.uploadSettings, 500)
+            debounceReq({fontColorValue: value.hex})
         },
         openColorPicker() {
             this.colorPickerVis = true
@@ -75,6 +80,9 @@ export default {
         ...mapMutations('settings', [
             'SET_FONTSIZE',
             'SET_FONTCOLOR'
+        ]),
+        ...mapActions('settings', [
+            'uploadSettings',
         ]),
     }
 }

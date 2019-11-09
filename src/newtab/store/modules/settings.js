@@ -17,6 +17,7 @@ import {
     SET_FONTSIZE,
     SET_FONTCOLOR,
     RESET_ALL,
+    SET_ALL
 } from './mutations-type.js'
 import settings from '../../services/apis/settings.js'
 import req from '../../services/index.js'
@@ -63,12 +64,32 @@ const state = localStorage.getItem('settings') ? {
   // actions
   const actions = {
     async getDefaultSettings ({ commit }) { // 获取默认设置
-        const { data } = await req(settings.default, {})
-        console.log(data)
-        localSave('settings', data.data)
+        const { data } = await req(settings.default)
+        // console.log(data)
+        if (data.code === 'Success') {
+            commit('SET_ALL', data.data)
+        }
     },
     async judgeCloudSettings ({ commit }) { // 判断本地内容给是否和云端冲突
         
+    },
+    async getUserSettings ({ commit }) { // 获取用户存储设置
+        const { data } = await req(settings.profile)
+        // console.log(data)
+        if (data.code === 'Success') {
+            commit('SET_ALL', data.data)
+        }
+    },
+    async uploadSettings({ commit, state }, newSettings) {
+        if (state.cloudSave) {
+            const { data } = await req(settings.update, {}, newSettings)
+            if (data.code === 'Success') {
+                console.log('同步设置成功')
+                commit('SET_ALL', data.data)
+            } else {
+                commit('SET_ALL', newSettings)
+            }
+        }
     }
   }
   
@@ -170,7 +191,12 @@ const state = localStorage.getItem('settings') ? {
         state.fontSizeValue = 15
         state.fontColorValue = '#fff'
         localSave('settings', {...state})
-        }
+    },
+    [SET_ALL](state, newSetting) {
+        // let newState = {...newSetting};
+        state = newSetting
+        localSave('settings', {...state})
+    }
   }
   
   export default {

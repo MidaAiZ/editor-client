@@ -21,7 +21,7 @@
 </template>
 <script>
     import {
-        mapState,mapMutations
+        mapState,mapMutations,mapActions
     } from 'vuex'
     import 'csshake/dist/csshake.min.css'
     import './style/shakeRotate.scss'
@@ -149,8 +149,10 @@
                 'CHANGE_IS_EDIT',
                 'EDIT_DRAWER_VISIBLE',
                 'CHANGE_CURRENT_ITEM',
-                'DELETE_ONE_SITE'
-                ]),
+            ]),
+            ...mapActions('homeWebList',[
+                'deleteOne'
+            ]),
             clickItem() {
                 this.isHover = true;
                 this.$emit('change');
@@ -179,7 +181,7 @@
                 
             },
             folderDragEnd() {
-                console.log('fuck')
+                // console.log('fuck')
             },
             itemEdit(e){
                 // e.preventDefault();
@@ -212,7 +214,7 @@
                     itemInfo: this.itemInfo,
                     index: this.itemIndex
                 }
-                this.DELETE_ONE_SITE(payload)
+                this.deleteOne(payload)
             }
         },
         mounted(){
@@ -302,9 +304,10 @@
         z-index: 11;
         /* opacity: 0.8; */
         box-shadow: #ccc 0 0 2px;
+        cursor: pointer;
     }
     .item-img-close:hover{
-        background-color: rgba(255, 255, 255,1);;
+        background-color: rgba(255, 255, 255,1);
         /* transform: scale(1.1) */
     }
     .edit-drawer-top {
