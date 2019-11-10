@@ -197,6 +197,7 @@
                     let slide;
                     if (self.dragging) {
                         if (e.clientX < 200 && !judge) {
+                            judge = false;
                             judge = true;
                             // clearInterval(slide)
                             slide = setInterval(_pageSlideLeft, 500)
@@ -211,6 +212,7 @@
                             }
                             
                         } else if (e.clientX > screenWidth - 200 && !judge) {
+                            judge = false;
                             judge = true;
                             // clearInterval(slide)
                              slide = setInterval(_pageSlideRight, 500)
@@ -223,10 +225,6 @@
                                     swiper.slideTo(self.currentIndex)
                                 }
                             }
-                            // if (self.currentIndex !== pages - 1) {
-                            //     self.currentIndex++;
-                            //     swiper.slideTo(self.currentIndex)
-                            // }
                         } else if (e.clientX > 200 && e.clientX < screenWidth - 200) {
                             judge = false
                         }
@@ -265,16 +263,7 @@
             },
             dragStart(e) {
             },
-            onDrag() {
-            },
-            onChoose() {
-
-            },
-            onChange() {
-            },
-            onMove(evt, originalEvt) {
-                
-            },
+            
             onStart(evt) {
                 this.dragging = true;
                 this.startIndex = this.currentIndex;
@@ -343,16 +332,6 @@
 
                     }
                 }
-                // 更新后存入本地或云端服务器
-                // let newList = [];
-                // for (let w=0; w<this.homeWebList.length; w++) {
-                //     newList = newList.concat(this.homeWebList[w])
-                // }
-                // newList.forEach((item, index) => {
-                //     item.index = index
-                // })
-                // this.AFTER_CHANGE(this.homeWebList)
-                console.log('this.homeWebList', this.homeWebList)
                 this.afterChanged(this.homeWebList)
             },
             editDrawerClose() {
