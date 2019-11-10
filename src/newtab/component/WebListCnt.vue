@@ -1,6 +1,6 @@
 <template>
     <div style="margin: 0; padding: 0">
-        <ul style="margin: 0; padding: 0" v-if="hasContent === true" :infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore" :infinite-scroll-immediate="false">
+        <ul style="margin: 0; padding: 0" v-if="hasContent === true" infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore">
             <li style="overflow:auto" v-for="item in currentSiteList" :key="item.sid">
                 <web-list-item :item="item"></web-list-item>
             </li>
@@ -13,7 +13,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import localeText from '../../../static/locale/index.js'
-import webListItem from './webListItem.vue'
+import webListItem from './webListItem.vue';
 
 export default {
     name: 'webListCnt',
@@ -50,7 +50,6 @@ export default {
             if(this.newId !== oldId) {
                 this.SET_SITES_PAGE(1)
                 this.getCategorySite(newId);
-                this.DIS_AUTO_LOAD(false);
             }
         },
         currentSiteList: function() {

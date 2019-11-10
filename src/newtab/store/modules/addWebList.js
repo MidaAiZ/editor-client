@@ -1,7 +1,6 @@
 import sitesCategories from '../../services/apis/sitesCategories.js'
 import req from '../../services/index.js'
-import { localSave } from '../../utils/localSave.js'
-import localeText from '../../../../static/locale/index.js'
+
 import {
     SET_SITES_CATEGORY,
     SET_SITES_PAGE,
@@ -30,12 +29,15 @@ const getters = {
 // actions
 const actions = {
     async getSitesInCategory ({ commit }, payload) { // 从服务器获取网站分类列表
-
+        commit('DIS_AUTO_LOAD', false)
         //payload: {categoryIds, keyword, pageNum, pageSize, countryCodes}
         const { data } = await req(sitesCategories.getSitesInCategory, payload)
         commit('SET_LOADING', false)
         // localSave('categories', data.data)
         commit('SET_SITES_CATEGORY', data.data)
+        if(data.data.length < payload.pageSize) {
+            commit('DIS_AUTO_LOAD', true)
+        }
     },
     async loadMore ({ state, commit }, payload) { // 从服务器获取网站分类列表
 
@@ -48,7 +50,7 @@ const actions = {
             commit('SET_SITES_CATEGORY', arr)
             let pN = state.pageNum+1;
             commit('SET_SITES_PAGE', pN)
-            if(data.data.length === 0) {
+            if(data.data.length < payload.pageSize) {
                 commit('DIS_AUTO_LOAD', true)
             }
         }

@@ -143,6 +143,11 @@ const actions = {
     },
     async afterChanged ({ commit, rootState }, newList) {
         // let localList = JSON.stringify(newList);
+        newList.forEach((arr, pageIndex) => {
+            if(arr.length === 0 && newList.length !== 1) {
+                newList.splice(pageIndex, 1)
+            }
+        })
 
         if(rootState.settings.cloudSave) {
             const menuClone = JSON.parse(JSON.stringify(newList));
@@ -199,9 +204,6 @@ const actions = {
         let index = payload.index;
         let arr = state.homeWebList;
         arr[pageIndex].splice(index, 1);
-        if(arr[pageIndex].length === 0 && arr.length !== 1) {
-            arr.splice(pageIndex, 1)
-        }
         let menus = {
             version: false,
             menus: arr
