@@ -56,6 +56,7 @@
     import homeWebList from "src/newtab/store/modules/homeWebList";
     import '../component/style/suggestion.css'
     import { imgToBase64 } from "../utils/localSave.js";
+    import debounce from '../utils/debounce.js';
 
     export default {
         name: 'suggestions',
@@ -176,25 +177,45 @@
             ...mapMutations('homeWebList', ['CHANGE_IS_EDIT', 'EDIT_DRAWER_VISIBLE', 'AFTER_CHANGE']),
             ...mapActions('homeWebList', ['afterChanged']),
             judgeItemPositionToSlide() {
-                let screenWidth = document.body.clientWidth;
                 let swiper = this.$refs.mySwiper.swiper;
                 let self = this;
                 let judge = false;
                 document.onmousemove = function (e) {
+                    let screenWidth = document.body.clientWidth;
                     let pages = self.homeWebList.length;
+                    let slide;
                     if (self.dragging) {
                         if (e.clientX < 200 && !judge) {
                             judge = true;
-                            if (self.currentIndex !== 0) {
-                                self.currentIndex--;
-                                swiper.slideTo(self.currentIndex)
+                            // clearInterval(slide)
+                            slide = setInterval(_pageSlideLeft, 500)
+                            function _pageSlideLeft() {
+                                if(!judge) {
+                                    clearInterval(slide)
+                                }
+                                if (self.currentIndex !== 0) {
+                                    self.currentIndex--;
+                                    swiper.slideTo(self.currentIndex)
+                                }
                             }
+                            
                         } else if (e.clientX > screenWidth - 200 && !judge) {
                             judge = true;
-                            if (self.currentIndex !== pages - 1) {
-                                self.currentIndex++;
-                                swiper.slideTo(self.currentIndex)
+                            // clearInterval(slide)
+                             slide = setInterval(_pageSlideRight, 500)
+                            function _pageSlideRight() {
+                                if(!judge) {
+                                    clearInterval(slide)
+                                }
+                                if (self.currentIndex !== pages - 1) {
+                                    self.currentIndex++;
+                                    swiper.slideTo(self.currentIndex)
+                                }
                             }
+                            // if (self.currentIndex !== pages - 1) {
+                            //     self.currentIndex++;
+                            //     swiper.slideTo(self.currentIndex)
+                            // }
                         } else if (e.clientX > 200 && e.clientX < screenWidth - 200) {
                             judge = false
                         }
