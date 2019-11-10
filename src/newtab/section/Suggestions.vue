@@ -17,13 +17,14 @@
                         </transition-group>
                     </draggable>
                 </swiper-slide>
+                <div class="swiper-pagination"  slot="pagination"></div>
             </swiper>
         </div>
-        <div class="bullet">
+        <!-- <div class="bullet">
             <span v-for="(item, index) in homeWebList" :class="{ 'active':index===currentIndex }"
                 @click="changeIndex($event,index)" :key="index">
             </span>
-        </div>
+        </div> -->
         <el-drawer :visible='editDrawerVisible' size='500px' :show-close="false" :modal="showModal"
             :append-to-body='true' @close='editDrawerClose' custom-class='edit-drawer' :destroy-on-close='true'>
             <div slot="title" class="edit-drawer-top">
@@ -154,6 +155,10 @@
                 // homeWebList: [],
                 startIndex: 0,
                 swiperOption: {
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    },
                     on: {
                         slideChangeTransitionEnd: function () {
                             self.currentIndex = this.activeIndex;
@@ -167,6 +172,12 @@
             }
         },
         watch: {
+            iconLayout: function(newLayout, oldLayout) {
+                if (newLayout.name !== oldLayout.name) {
+                    console.log('fuck', this.iconLayout);
+                    this.paging()
+                }
+            }
         },
         created() {
         },
@@ -225,14 +236,24 @@
             paging: function () {
                 let rowNumber = this.iconLayout.row; //一页多少行
                 let colNumber = this.iconLayout.col; //一行多少个
+                console.log('总数', this.totalSize)
                 let pages = Math.ceil(this.totalSize / (rowNumber * colNumber));
                 let everyPageNumber = rowNumber * colNumber;
-                for (let i = 0; i < pages; i++) {
-                    let tempArray = (i === (pages - 1) ? this.sortArray.slice(i * everyPageNumber) : this.sortArray
-                        .slice(i *
-                            everyPageNumber, (i + 1) * everyPageNumber));
-                    this.homeWebList.push(tempArray)
+                let wholeArr = [];
+                let newList = [];
+                for(let j = 0; j < this.homeWebList.length; j++) {
+                    wholeArr = wholeArr.concat(this.homeWebList[j])
                 }
+                console.log('所有数组', wholeArr)
+                for (let i = 0; i < pages; i++) {
+                    let tempArray = (i === (pages - 1) 
+                                            ? 
+                                            wholeArr.slice(i * everyPageNumber) 
+                                            : 
+                                            wholeArr.slice(i * everyPageNumber, (i + 1) * everyPageNumber));
+                    newList.push(tempArray)
+                }
+                this.afterChanged(newList)
             },
             changeItem: function (num) {
             },
@@ -384,27 +405,8 @@
 
     #suggestions .swiper-container {
         height: 100%;
-    }
-
-    .bullet {
-        z-index: 10;
-        text-align: center;
-    }
-
-    .bullet span {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        border: none;
-        background: white;
-        display: inline-block;
-        margin-right: 15px;
-        opacity: 0.5;
-        cursor: pointer;
-    }
-
-    .bullet span:last-child {
-        margin-right: 0;
+        --swiper-theme-color: #ff6600;
+        --swiper-pagination-color: #00ff33;/* 两种都可以 */
     }
 
     .active {
@@ -414,11 +416,6 @@
     .sortable-fallback {
         cursor: pointer;
         /*background-color: red;*/
-    }
-
-    .sortable-chosen {
-        /*position: absolute;*/
-        /*top:0;*/
     }
 
     .edit-drawer-top {

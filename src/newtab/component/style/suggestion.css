@@ -27,3 +27,26 @@
 .ghost .item-name{
     opacity: 0 !important;
 }
+
+.swiper-pagination {
+    position: fixed !important;
+    width: 100vw !important;
+    text-align: center !important;
+    font-family: PingFangSC-Regular;
+    color: #fff;
+    letter-spacing: 0;
+    left: 0 !important;
+    bottom: 10vh !important;
+}
+.swiper-pagination-bullet {
+  background: #fff !important;
+  opacity: 0.8;
+  height: 8px !important;
+  border-radius: 8px !important;
+  width: 8px !important;
+  margin: 0 5px !important;
+  transition: all 0.2s;
+}
+.swiper-pagination-bullet-active {
+      /* width: 30px; */
+    }
