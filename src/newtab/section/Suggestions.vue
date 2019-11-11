@@ -28,7 +28,7 @@
         <el-drawer :visible='editDrawerVisible' size='500px' :show-close="false" :modal="showModal"
             :append-to-body='true' @close='editDrawerClose' custom-class='edit-drawer' :destroy-on-close='true'>
             <div slot="title" class="edit-drawer-top">
-                <span class="edit-drawer-title">编辑</span>
+                <span class="edit-drawer-title">{{edit}}</span>
                 <span class="edit-drawer-close" @click="editDrawerClose()">
                     <i class="el-icon-close"></i>
                 </span>
@@ -43,6 +43,7 @@
     import SuggestionItem from '../component/SuggestionItem.vue'
     import draggable from 'vuedraggable'
     import EditDrawer from '../component/EditDrawer.vue'
+    import localeText from '../../../static/locale/index.js'
     import {
         swiper,
         swiperSlide,
@@ -136,14 +137,13 @@
                     //                'margin-right': 2.5*this.itemNumber+'vw',
                 }
             },
-            nameText: function () {
-                return {
-                    'edit': '编辑'
-                }
+            edit: function () {
+                return localeText[this.location].edit
             },
             ...mapState('homeWebList', ['homeWebList', 'isEdit', 'editDrawerVisible']),
             ...mapState('settings', ['iconLayout', 'iconSizeValue']),
             ...mapGetters('homeWebList', ['totalSize', 'sortArray', 'isEdit']),
+            ...mapState('locale', ['location']),
         },
         data() {
             const self = this;
@@ -196,38 +196,48 @@
                     let pages = self.homeWebList.length;
                     let slide;
                     if (self.dragging) {
-                        if (e.clientX < 200 && !judge) {
-                            judge = false;
-                            judge = true;
-                            // clearInterval(slide)
-                            slide = setInterval(_pageSlideLeft, 500)
-                            function _pageSlideLeft() {
-                                if(!judge) {
-                                    clearInterval(slide)
+                        function slideLeft() {
+                            if (e.clientX < 200 && !judge) {
+                                judge = true;
+                                clearTimeout(slide)
+                                slide = setTimeout(_pageSlideLeft, 1000)
+                                function _pageSlideLeft() {
+                                    console.log('左', slide);
+                                    if(!judge) return clearTimeout(slide);
+                                    if (self.currentIndex !== 0) {
+                                        self.currentIndex--;
+                                        swiper.slideTo(self.currentIndex);
+                                    }
+                                    slide = setTimeout(_pageSlideLeft, 1000)
                                 }
-                                if (self.currentIndex !== 0) {
-                                    self.currentIndex--;
-                                    swiper.slideTo(self.currentIndex)
-                                }
-                            }
-                            
-                        } else if (e.clientX > screenWidth - 200 && !judge) {
-                            judge = false;
-                            judge = true;
-                            // clearInterval(slide)
-                             slide = setInterval(_pageSlideRight, 500)
-                            function _pageSlideRight() {
-                                if(!judge) {
-                                    clearInterval(slide)
-                                }
-                                if (self.currentIndex !== pages - 1) {
-                                    self.currentIndex++;
-                                    swiper.slideTo(self.currentIndex)
-                                }
-                            }
-                        } else if (e.clientX > 200 && e.clientX < screenWidth - 200) {
-                            judge = false
+                                return true;
+                            } 
                         }
+                         function slideRight() {
+                            if (e.clientX > screenWidth - 200 && !judge) {
+                                judge = true;
+                                clearTimeout(slide)
+                                slide = setTimeout(_pageSlideRight, 1000);
+                                function _pageSlideRight() {
+                                    console.log('右', slide);
+                                    if(!judge) return clearTimeout(slide);
+                                    if (self.currentIndex !== pages - 1) {
+                                        self.currentIndex++;
+                                        swiper.slideTo(self.currentIndex);
+                                    }
+                                    slide = setTimeout(_pageSlideRight, 1000)
+                                }
+                                return true;
+                            }
+                        }
+                        function cancelSlide() {
+                            if (e.clientX > 200 && e.clientX < screenWidth - 200) {
+                                    judge = false;
+                                    clearTimeout(slide);
+                                    return true;
+                                }
+                        }
+                        slideLeft() || slideRight() || cancelSlide();
                     }
                 };
             },

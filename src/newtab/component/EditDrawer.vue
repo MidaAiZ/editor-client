@@ -1,31 +1,32 @@
 <template>
     <div id="edit-drawer">
-        <div class="edit-drawer-input"><el-input v-model="currentItem.url"></el-input></div>
-        <div class="edit-drawer-input"><el-input v-model="currentItem.title"></el-input></div>
+        <div class="edit-drawer-input"><el-input v-model="currentItem.itemInfo.url"></el-input></div>
+        <div class="edit-drawer-input"><el-input v-model="currentItem.itemInfo.title"></el-input></div>
         <div class='edit-drawer-img'>
-            <!-- <canvas ref='editCanvas' class="edit-drawer-canvas" width="100" height="100"></canvas> -->
-            <img :src='currentItem.icon'/>
+            <img :src='currentItem.itemInfo.iconSrc'/>
             <span>
                 <div class="edit-drawer-img-edit img-edit" @click="showEditDialog">{{nameText.editPicture}}</div>
-                <div class="img-edit">{{nameText.removePicture}}</div>
+                <div style="position: relative">
+                    <div class="img-edit">{{nameText.removePicture}}</div>
+                    <input type="file" class="img-edit-input" @change="e => inputIcon(e)"/>
+                </div>
             </span>
         </div>
-        <!-- <div class="color-container">
-            <span v-for='(item,index) in colorList' :key="index"></span>
-        </div> -->
         <button class='edit-brawer-button' @click='editComplete'>{{nameText.complete}}</button>
         <el-dialog :visible.sync="editDialogVisible" width='360px' :modal="false" :append-to-body="true"
             :destory-on-close='true' class="cropper-dialog">
-            <image-cropper v-on:finish='getCropperData' :img='currentItem.icon'></image-cropper>
+            <image-cropper v-on:finish='getCropperData' :img="cropperContent"></image-cropper>
         </el-dialog>
-        <!-- <img ref='editImg' src='https://picsum.photos/201/300'/> -->
     </div>
 </template>
 <script>
-    import './style/upload.css' 
-    import {VueCropper} from 'vue-cropper'
-    import ImageCropper from './imageCropper.vue'
-    import {mapMutations,mapState} from 'vuex'
+    import './style/upload.css';
+    import { VueCropper } from 'vue-cropper';
+    import ImageCropper from './imageCropper.vue';
+    import { mapMutations,mapState, mapActions } from 'vuex';
+    import { upBase64 } from '../services/uploadImg.js';
+    import imgHost from '../services/apis/imgHost.js';
+
     export default {
         name: 'app',
         // props:['info'],
@@ -33,15 +34,9 @@
             ImageCropper,
             VueCropper
         },
-        // watch:{
-        //     info:function(newInfo,oldInfo){
-        //         if(newInfo!==oldInfo){
-        //             this.webInfo = window.Object.assign({},newInfo)
-        //         }
-        //     }
-        // },
         computed:{
-            ...mapState('homeWebList',['currentItem']),
+            ...mapState('homeWebList',['currentItem', 'homeWebList']),
+            ...mapState('settings', ['cloudSave', 'iconLayout']),
             nameText:function(){
                 return{
                     'editPicture': '编辑图片',
@@ -49,119 +44,78 @@
                     'complete': '完成'
                 }
             },
-            // webInfo: function(){
-            //     return window.Object.assign({},this.currentItem)
-            // }
-            // webInfo: function(){
-                
-            // },
-            // web: function(){
-            //     return window.Object.assign({},this.info)
-            // }
         },
         data() {
             return {
                 editDialogVisible: false,
-                webInfo: {
-                    id: 5,
-                    url: 'http://www.baidu.com/s?wd=#content#',
-                    img: 'https://picsum.photos/201/300',
-                    name: '百度',
-                    isChoose: true
-                },
-                canvas:'',
-                cxt: '',
-                colorList: ['#1abc9c','#2ecc71','#33c5c5','#3498db','#9859b6','#34495e','#f1c40f','#e67e22','#e74c3c','']
+                tempBase64: '',
+                tempSrc: '',
+                cropperContent: ''
             }
         },
+        mounted(){
+            console.log(this.currentItem)
+            this.tempBase64 = this.currentItem.itemInfo.iconBase64 ? this.currentItem.itemInfo.iconBase64 : '';
+                this.tempSrc = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
+                this.cropperContent = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
+            // if (!this.currentItem.isNew) {
+            //     console.log('旧的')
+            //     this.tempBase64 = this.currentItem.itemInfo.iconBase64 ? this.currentItem.itemInfo.iconBase64 : '';
+            //     this.tempSrc = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
+            //     this.cropperContent = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
+            // } else {
+            //     console.log('xinjian')
+            //     this.tempBase64 = '';
+            //     this.tempSrc = '';
+            //     this.cropperContent = '';
+            //     this.currentItem.itemInfo.iconSrc = '';
+            //     this.currentItem.itemInfo.iconBase64 = '';
+            //     this.currentItem.itemInfo.title = '';
+            //     this.currentItem.itemInfo.url = '';
+            // }
+        },
         methods:{
-            ...mapMutations('homeWebList',['CHANGE_WEB_INFO','EDIT_DRAWER_VISIBLE']),
-            getCropperData(data){
-                this.currentItem.img = data;
+            ...mapMutations('homeWebList',['CHANGE_WEB_INFO','EDIT_DRAWER_VISIBLE', 'CHANGE_CURRENT_ITEM']),
+            ...mapActions('homeWebList',['afterChanged']),
+            async getCropperData(data){
+                this.currentItem.itemInfo.iconSrc = data;
+                this.tempBase64 = data;
+                if (this.cloudSave) {
+                    await upBase64(data, (key) => {this.tempSrc = imgHost + key}, () => {console.log('上传失败')})
+                }
                 this.editDialogVisible = false;
             },
             showEditDialog(){
                 this.editDialogVisible = true;
             },
             changeBg(rgb){
-                // let self = this;
-                // this.cxt.fillStyle = rgb
-                // this.canvas.style.backgroundImage = rgb;
-                // this.cxt.fillRect(0,0,100,100);
-                // let img = new Image();
-                // img.onload = function(){
-                // // cxt.drawImage(img,0,0,100,100)
-                // let scale = img.height/(img.width*1.0);
-                // if(scale>1){
-                //     img.width = 100/scale;
-                //     img.height = 100.0;
-                //     let offset = 100.0-img.width;
-                //     self.cxt.drawImage(img,offset/2.0,0,img.width,img.height)
-                //     // let offset = 1 
-                // }else{
-                //     img.height = 100 * scale;
-                //     img.width = 100;
-                //     let offset = 100-img.height;
-                //     self.cxt.drawImage(img,0,offset/2.0,img.width,img.height);
-                // }
-            // }
-            // img.src = this.webInfo.img;
+            },
+            inputIcon(e) {
+                this.tempSrc = window.URL.createObjectURL(e.target.files[0]);
+                this.cropperContent = window.URL.createObjectURL(e.target.files[0]);
+                this.editDialogVisible = true;
             },
             editComplete(){
-                this.CHANGE_WEB_INFO(this.currentItem);
+                // this.CHANGE_WEB_INFO(this.currentItem);
+                console.log(this.currentItem, '当前编辑');
+                let changedItem = this.currentItem.itemInfo;
+                changedItem.iconSrc = this.tempSrc;
+                changedItem.iconBase64 = this.tempBase64;
+                console.log(changedItem, '编辑后');
+                let newList = this.homeWebList;
+                if (this.currentItem.isNew) {
+                    let pageSize = this.iconLayout.row * this.iconLayout.col;
+                    if(this.homeWebList[this.homeWebList.length - 1].length === pageSize) {
+                        newList.push([]);
+                        newList[newList.length - 1].push(changedItem)
+                    } else {
+                        newList[this.currentItem.pageIndex][this.currentItem.itemIndex] = changedItem
+                    }
+                }
+                this.afterChanged(newList)
                 this.EDIT_DRAWER_VISIBLE(false);
-                // let self = this;
-                // this.cxt.backgroundImg = rgb;
-                // this.cxt.fillRect(0,0,100,100);
-                // let img = new Image();
-                // img.onload = function(){
-                // cxt.drawImage(img,0,0,100,100)
-            //     let scale = img.height/(img.width*1.0);
-            //     if(scale>1){
-            //         img.width = 100/scale;
-            //         img.height = 100.0;
-            //         let offset = 100.0-img.width;
-            //         self.cxt.drawImage(img,offset/2.0,0,img.width,img.height)
-            //         // let offset = 1 
-            //     }else{
-            //         img.height = 100 * scale;
-            //         img.width = 100;
-            //         let offset = 100-img.height;
-            //         self.cxt.drawImage(img,0,offset/2.0,img.width,img.height);
-            //     }
-            // }
-            // img.src = this.webInfo.img;
             }
         },
-        mounted(){
-            // this.webInfo = this.currentItem;
-            // console.log(this.webInfo);
-            // let self = this;
-            // this.canvas = this.$refs.editCanvas;
-            // this.cxt = this.canvas.getContext('2d');
-            // // let img = this.$refs.editImg;
-            // let img = new Image();
-            // img.onload = function(){
-            //     // cxt.drawImage(img,0,0,100,100)
-            //     let scale = img.height/(img.width*1.0);
-            //     if(scale>1){
-            //         img.width = 100/scale;
-            //         img.height = 100.0;
-            //         let offset = 100.0-img.width;
-            //         self.cxt.drawImage(img,offset/2.0,0,img.width,img.height)
-            //         // let offset = 1 
-            //     }else{
-            //         img.height = 100 * scale;
-            //         img.width = 100;
-            //         let offset = 100-img.height;
-            //         self.cxt.drawImage(img,0,offset/2.0,img.width,img.height);
-            //     }
-            // }
-            // img.src = this.webInfo.img;
-        },
-        // updated(){
-        //     this.webInfo = this.info;
-        // }
     }
 </script>
 <style scoped>
@@ -216,6 +170,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+    .img-edit-input {
+        position: absolute;
+        bottom: 0;
+        opacity: 0;
+        cursor: pointer;
     }
     /* .color-item{
 

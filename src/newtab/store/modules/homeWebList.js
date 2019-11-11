@@ -142,8 +142,7 @@ const actions = {
         // commit('SET_HOMEMENUS', menu.menus)
     },
     async afterChanged ({ commit, rootState }, newList) {
-        // let localList = JSON.stringify(newList);
-        newList.forEach((arr, pageIndex) => {
+        newList.forEach((arr, pageIndex) => { // 变更过后删除为空的子数组
             if(arr.length === 0 && newList.length !== 1) {
                 newList.splice(pageIndex, 1)
             }
@@ -244,13 +243,14 @@ const mutations = {
             if(state.homeWebList[i].id === webInfo.id){
                 state.homeWebList[i].title = webInfo.title;
                 state.homeWebList[i].url = webInfo.url;
-                state.homeWebList[i].img = webInfo.img;
+                state.homeWebList[i].iconBase64 = webInfo.iconBase64;
+                state.homeWebList[i].iconSrc = webInfo.iconSrc;
                 break;
             }
         }
     },
-    [CHANGE_CURRENT_ITEM] (state,item) {
-        state.currentItem = window.Object.assign({},item);
+    [CHANGE_CURRENT_ITEM] (state,payload) {
+        state.currentItem = payload;
     },
     [ADD_ONE_SITE] (state, payload) {
         let item = payload.item

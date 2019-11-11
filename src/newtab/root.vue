@@ -7,6 +7,7 @@
       </div>
       <systemBar />
       <settingDialog />
+      <customAddDrawer />
       <manage />
       <div id="content">
         <div id="main">
@@ -25,6 +26,7 @@ import background from './section/Background.vue';
 import systemBar from './section/SystemBar.vue';
 import suggestions from './section/Suggestions.vue';
 import customSearch from './section/CustomSearch.vue';
+import customAddDrawer from './component/CustomAddDrawer.vue';
 import settingDialog from './section/SettingDialog.vue';
 import bookmarks from './section/Bookmarks.vue';
 import manage from './section/Manage.vue';
@@ -41,6 +43,7 @@ export default {
         suggestions,
         customSearch,
         settingDialog,
+        customAddDrawer,
         bookmarks,
         manage
     },
@@ -84,7 +87,6 @@ export default {
       // 判断是否登录
       const loginInfo = await this.judgeLogin()
       if(loginInfo === 'hasLogined') {
-        console.log('dengluxinxi', loginInfo)
               this.getUserSettings()
             } else {
               if (!localStorage.getItem('homeMenus')) {

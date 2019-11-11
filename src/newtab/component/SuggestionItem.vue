@@ -200,8 +200,14 @@
             },
             editDrawerShow(e){
                 e.stopPropagation();
+                let payload = {
+                    isNew: false,
+                    itemInfo: this.itemInfo,
+                    pageIndex: this.pageIndex,
+                    itemIndex: this.itemIndex
+                }
                 // this.$emit("current",this.itemInfo);
-                this.CHANGE_CURRENT_ITEM(this.itemInfo);
+                this.CHANGE_CURRENT_ITEM(payload);
                 this.CHANGE_IS_EDIT(false);
                 this.EDIT_DRAWER_VISIBLE(true)
             },
@@ -232,6 +238,7 @@
         position: relative;
         display: inline-block;
         padding-top: 8px;
+        /* transition: left .5s ease */
         /*margin-bottom: 20px;*/
         /*transition: all .5s;*/
         /*height:50%;*/

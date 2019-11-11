@@ -1,7 +1,7 @@
 <template>
     <div class="bar-web-search-wrap">
         <input class="bar-web-search" @input="handleSearchSite($event.target.value)" v-model="searchSiteIptValue" :placeholder="placeholder" />
-        <el-button class="add-web-btn" icon="el-icon-plus" size="medium" circle></el-button>
+        <el-button @click="openCustomAdd" class="add-web-btn" icon="el-icon-plus" size="medium" circle></el-button>
     </div>
 </template>
 <script>
@@ -35,6 +35,9 @@ export default {
             'ADD_SEARCH_CATE',
             'DELETE_SEARCH_CATE'
         ]),
+        ...mapMutations('drawersVis', [
+            'SET_CAVIS',
+        ]),
         ...mapActions('addWebList', [
             'searchSite'
         ]),
@@ -50,6 +53,9 @@ export default {
             } else {
                 this.DELETE_SEARCH_CATE()
             }
+        },
+        openCustomAdd() {
+            this.SET_CAVIS(true)
         }
     }
 }
