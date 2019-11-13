@@ -105,7 +105,8 @@
     } from 'vuex';
     import {
         VueCropper
-    } from 'vue-cropper'
+    } from 'vue-cropper';
+    import { localSave } from '../utils/localSave.js';
     export default {
         components: {
             VueCropper,
@@ -154,9 +155,9 @@
                 dialogVisible: false,
                 customEngine: {
                     id: '',
-                    url: '',
-                    img: '',
-                    name: '',
+                    urls: {web: ''},
+                    iconSrc: '',
+                    title: '',
                     isChoose: ''
                 },
                 option: {
@@ -176,6 +177,11 @@
                     enlarge: 1
                 },
                 //                isShow:false
+            }
+        },
+        created: function() {
+            if (!localStorage.getItem('engineList')) {
+                localSave('engineList', {engineList: this.searchEngineList})
             }
         },
         methods: {
@@ -241,9 +247,9 @@
                 this.customEngine.id = this.maxID + 1;
                 this.customEngine.isChoose = true;
                 this.ADD_CUSTOM_ENGINE({...this.customEngine});
-                this.customEngine.url = '';
-                this.customEngine.img = '';
-                this.customEngine.name = '';
+                this.customEngine.urls.web = '';
+                this.customEngine.iconSrc = '';
+                this.customEngine.title = '';
                 this.isAdd = false;
             },
             deleteCustomEngine(item){
@@ -257,7 +263,7 @@
                 }
             },
             getCropperData(data){
-                this.customEngine.img = data;
+                this.customEngine.iconSrc = data;
                 this.dialogVisible = false;
             }
         }

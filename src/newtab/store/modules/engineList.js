@@ -1,6 +1,7 @@
 import { ADD_CHOOSE_ENGINE, DELETE_CHOOSE_ENGINE, OPEN_ENGINE_POPOVER, CLOSE_ENGINE_POPOVER, CHANGE_CURRENT_ENGINE, 
     ADD_CUSTOM_ENGINE,DELETE_CUSTOME_ENGINE,OPEN_CUSTOM_ENGINE,CLOSE_CUSTOM_ENGINE} from './mutations-type.js'
 import engineList from '../../services/apis/engineList.js';
+import { localSave } from '../../utils/localSave.js'
 // initial state
 const baidu = require('../../../../static/logos/baidu.svg');
 const yahoo = require('../../../../static/logos/yahoo.svg');
@@ -80,9 +81,9 @@ const state = {
         id: 0,
         isChoose: true
     },
-    searchEngineList: localStorage.getItem('engineList') ? {
-        ...JSON.parse(localStorage.getItem('engineList'))
-      } : defaultEngineList,
+    searchEngineList: localStorage.getItem('engineList') ? 
+        JSON.parse(localStorage.getItem('engineList')).engineList
+      : defaultEngineList,
     allEngineList:[
         {
             id: 5,
@@ -190,7 +191,7 @@ const mutations = {
     [ADD_CUSTOM_ENGINE] (state, customEngine){
         state.customEngineList.push(customEngine);
         state.searchEngineList.push(customEngine);
-        console.log(state.customEngineList);
+        localSave('engineList', {engineList: state.searchEngineList})
     },
     [DELETE_CUSTOME_ENGINE] (state, customEngine){
         let result = state.customEngineList.filter(engine => {
@@ -201,6 +202,7 @@ const mutations = {
             return engine.id !== customEngine.id;
         })
         state.searchEngineList = result1;
+        localSave('engineList', {engineList: state.searchEngineList})
     },
     [OPEN_CUSTOM_ENGINE] (state,index){
         state.customEngineList[index].isChoose = true;

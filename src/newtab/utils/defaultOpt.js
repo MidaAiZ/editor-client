@@ -80,7 +80,7 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     maskOpacityValue: 30,
     bgBlurValue: 20,
     newSiteNewTabValue: false,
-    cloudSave: false,
+    cloudSave: true,
     searchResultNewTabValue: false,
     openMarkNewTabValue: false,
     historyNewTabValue: false,
