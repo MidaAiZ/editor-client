@@ -2,13 +2,13 @@
     <div id="custom-search" :style="searchStyle">
         <div id="search-tab-container">
             <span v-for="(item,index) in tabList" class="search-tab" :class="{searchClick:index === tabIndex}"
-                @click="changeTab(index)" :key="index">{{item}}</span>
+                @click="changeTab(item, index)" :key="index">{{item.title}}</span>
         </div>
         <div id="search-input-container">
-            <el-popover placement="bottom-start" title="标题" trigger="manual" width="6vw" :style="popoverRadius"
+            <el-popover placement="bottom-start" trigger="manual" width="6vw" :style="popoverRadius"
                 v-model="searchPopoverVisible" :visible-arrow="showArrow" popper-class="search-popover">
                 <span class="input-icon-container" :style="inputIconStyle" slot="reference" @click="openPopover">
-                    <img :src="currentSearchEngine.img" class="input-icon" />
+                    <img :src="currentSearchEngine.iconSrc" class="input-icon" />
                     <div class="select-triangle"></div>
                 </span>
                 <search-popover></search-popover>
@@ -32,6 +32,7 @@
 </template>
 <script>
     import zh_CN from '../../../static/locale/zh_CN.js'
+    import localeText from '../../../static/locale/index.js'
     import searchPopover from '../component/SearchPopover.vue'
     import '../component/style/popover.css'
     import {
@@ -50,6 +51,7 @@
         computed: {
             ...mapState('engineList', ['searchPopoverVisible', 'currentSearchEngine']),
             ...mapState('settings', ['searchBarSizeValue', 'searchBarRadiusValue', 'searchBarOpacityValue']),
+            ...mapState('locale', ['location']),
             inputIconStyle: function () {
                 return {
                     'border-radius': 4.0 * (this.searchBarRadiusValue * 2.0) / 100 + 'vh' + ' 0 0 ' + 4.0 * (this
@@ -77,24 +79,77 @@
                     'border-radius': 4.0 * (this.searchBarRadiusValue * 2.0) / 100 + 'vh'
                 }
             },
+            searchPlaceholder: function() {
+                return localeText[this.location].searchPlaceholder
+            },
+        },
+        watch: {
+            currentSearchEngine: function(newEngine, oldEngine) {
+                if(newEngine.title !== oldEngine.title) {
+                    this.setTabs()
+                }
+            }
         },
         data() {
             return {
-                tabList: zh_CN.searchTab,
-                searchPlaceholder: zh_CN.searchPlaceholder,
                 tabIndex: 0,
                 showArrow: false,
                 popoverVis: false,
                 inputValue: '',
                 sugPopoverVisible: false,
                 sugList: [],
+                tabList: [],
+                currentSearchType: 'web',
                 //            isShow: false
             }
         },
         methods: {
             ...mapMutations('engineList', ['OPEN_ENGINE_POPOVER']),
-            changeTab(index) {
+            setTabs() {
+                let tabArr = [];
+                let tabListLocale = localeText[this.location].searchTab;
+                let hasUrls = this.currentSearchEngine.urls;
+                if (hasUrls.web) {
+                    let obj = {
+                        type: 'web',
+                        title: tabListLocale.web
+                    }
+                    tabArr.push(obj)
+                }
+                if (hasUrls.image) {
+                    let obj = {
+                        type: 'image',
+                        title: tabListLocale.image
+                    }
+                    tabArr.push(obj)
+                }
+                if (hasUrls.video) {
+                    let obj = {
+                        type: 'video',
+                        title: tabListLocale.video
+                    }
+                    tabArr.push(obj)
+                }
+                if (hasUrls.news) {
+                    let obj = {
+                        type: 'news',
+                        title: tabListLocale.news
+                    }
+                    tabArr.push(obj)
+                }
+                if (hasUrls.map) {
+                    let obj = {
+                        type: 'map',
+                        title: tabListLocale.map
+                    }
+                    tabArr.push(obj)
+                }
+                this.tabList = tabArr
+            },
+            changeTab(item, index) {
                 this.tabIndex = index;
+                this.currentSearchType = item.type;
+                console.log(item, index)
             },
             inputFocus() {
                 document.getElementById('custom-search').style.opacity = 1;
@@ -121,8 +176,8 @@
                 this.sugList = [];
             },
             search() {
-                let url = this.currentSearchEngine.url;
-                url = url.replace('#content#', this.inputValue);
+                let url = this.currentSearchEngine.urls[this.currentSearchType];
+                url = url.replace(/\#content\#/g, this.inputValue);
                 window.open(url)
             },
             async inputChange() {
@@ -137,8 +192,7 @@
                 };
                 const {
                     data
-                } = await req(sugurl, input)
-                console.log(data);
+                } = await req(sugurl, input);
                 let str = `${data}`;
                 let regex = /\[(.*?)\]/g;
                 let options = str.match(regex);
@@ -166,7 +220,7 @@
             }
         },
         mounted() {
-
+            this.setTabs()
         }
     }
 </script>

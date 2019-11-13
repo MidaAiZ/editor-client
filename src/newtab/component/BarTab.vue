@@ -23,9 +23,9 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
-import localeText from '../../../static/locale/index.js'
-import logregModal from './Logreg.vue'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
+import localeText from '../../../static/locale/index.js';
+import logregModal from './Logreg.vue';
 
 export default {
     name: 'barTab',
@@ -64,7 +64,6 @@ export default {
           this.logoutVis  = vis
       },
       handleLogout() {
-          console.log('开始处理登出')
           this.logoutFunc()
       },
     ...mapMutations('user', [

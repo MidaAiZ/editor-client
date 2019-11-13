@@ -6,8 +6,8 @@
                 <span v-if="index === engineList.length-1" class="add-icon">
                     <span class="icon-container"><i class="el-icon-circle-plus-outline"></i></span>
                 </span>
-                <img v-else :src="item.img" class="engine-img" />
-                <div class="engine-name">{{item.name}}</div>
+                <img v-else :src="item.iconSrc" class="engine-img" />
+                <div class="engine-name">{{item.title}}</div>
             </div>
         </span>
         <el-drawer :visible="drawer" size="500px" @close="drawerClose()" :show-close="false" :modal="false">
@@ -28,8 +28,8 @@
                     <div class="engine-list-container">
                         <div class="engine-list-item" v-for="(item,index) in allEngineList" :key="item.id">
                             <span style="display: flex;align-items: center">
-                                <img :src="item.img" />
-                                <span class="engine-item-name">{{item.name}}</span>
+                                <img :src="item.iconSrc" />
+                                <span class="engine-item-name">{{item.title}}</span>
                             </span>
                             <el-switch v-model="item.isChoose" @change="changeChoose(index)"></el-switch>
                         </div>
@@ -41,8 +41,8 @@
                             <div v-if="customEngineList.length!==0">
                                 <div class="engine-list-item" v-for="(item,index) in customEngineList" :key="index">
                                     <span class="engine-list-item-left">
-                                        <img :src="item.img" />
-                                        <span class="engine-item-name">{{item.name}}</span>
+                                        <img :src="item.iconSrc" />
+                                        <span class="engine-item-name">{{item.title}}</span>
                                     </span>
                                     <span class="engine-list-item-right">
                                         <el-switch v-model="item.isChoose" @change='customEngineChange(index)'></el-switch>
@@ -70,7 +70,7 @@
                                         action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false"
                                         :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
                                         :on-change="uploadChange" :auto-upload="false">
-                                        <img v-if="customEngine.img" :src="customEngine.img" class="avatar">
+                                        <img v-if="customEngine.iconSrc" :src="customEngine.iconSrc" class="avatar">
                                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     </el-upload>
                                 </div>
@@ -84,31 +84,13 @@
                 </div>
             </div>
         </el-drawer>
-        <el-dialog :visible.sync="dialogVisible" width="360px" :modal="false" :append-to-body="true"
-            class="cropper-dialog">
-            <!-- <div class="cropper">
-                <vue-cropper ref="cropper" :img="option.img" :outputSize="option.size" :outputType="option.outputType"
-                    :info="true" :full="option.full" :canMove="option.canMove" :canMoveBox="option.canMoveBox"
-                    :original="option.original" :autoCrop="option.autoCrop" :autoCropWidth="option.autoCropWidth"
-                    :autoCropHeight="option.autoCropHeight" :fixedBox="option.fixedBox" @realTime="realTime"
-                    :fixed="option.fixed" :fixedNumber="option.fixedNumber"></vue-cropper>
-            </div>
-            <div class="cropper-operate-container">
-                <span>
-                    <span class="cropper-operate border-left" @click="rotateLeft()"><i class="el-icon-refresh-left"></i></span>
-                    <span class="cropper-operate border-right" @click="rotateRight()"><i class="el-icon-refresh-right"></i></span>
-                </span>
-                <span>
-                    <span class="cropper-operate border-left" @click="changeScale(1)"><i class="el-icon-zoom-in"></i></span>
-                    <span class="cropper-operate border-right" @click="changeScale(-1)"><i class="el-icon-zoom-out"></i></span>
-                </span>
-                <span>
-                    <span class="cropper-operate" style="padding: 2px 25px;
-                        border-radius: 5px;" @click="cropperRefresh()"><i class="el-icon-refresh"></i>
-                    </span>
-                </span>
-            </div>
-            <div class="cropper-complete-button" @click="cropperFinish('blob')">{{nameText.complete}}</div> -->
+        <el-dialog 
+            :visible.sync="dialogVisible"
+            width="360px" 
+            :modal="false" 
+            :append-to-body="true"
+            class="cropper-dialog"
+        >
             <image-cropper v-on:finish='getCropperData' :img='imageUrl'></image-cropper>
         </el-dialog>
     </div>

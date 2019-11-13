@@ -1,113 +1,139 @@
 import { ADD_CHOOSE_ENGINE, DELETE_CHOOSE_ENGINE, OPEN_ENGINE_POPOVER, CLOSE_ENGINE_POPOVER, CHANGE_CURRENT_ENGINE, 
     ADD_CUSTOM_ENGINE,DELETE_CUSTOME_ENGINE,OPEN_CUSTOM_ENGINE,CLOSE_CUSTOM_ENGINE} from './mutations-type.js'
+import engineList from '../../services/apis/engineList.js';
 // initial state
-const baidu = require('../../../../static/logos/baidu.svg')
-const yahoo = require('../../../../static/logos/yahoo.svg')
-const sougou = require('../../../../static/logos/sougou.svg')
-const bing = require('../../../../static/logos/bing.svg')
-const google = require('../../../../static/logos/google.svg')
-const yandex = require('../../../../static/logos/yandex.svg')
-const search360 = require('../../../../static/logos/360.svg')
-const naver = require('../../../../static/logos/naver.svg')
-const duckduckgo = require('../../../../static/logos/duckduckgo.svg')
+const baidu = require('../../../../static/logos/baidu.svg');
+const yahoo = require('../../../../static/logos/yahoo.svg');
+const sougou = require('../../../../static/logos/sougou.svg');
+const bing = require('../../../../static/logos/bing.svg');
+const google = require('../../../../static/logos/google.svg');
+const yandex = require('../../../../static/logos/yandex.svg');
+const search360 = require('../../../../static/logos/360.svg');
+const naver = require('../../../../static/logos/naver.svg');
+const duckduckgo = require('../../../../static/logos/duckduckgo.svg');
+const defaultEngineList = [
+    {
+        id: 5,
+        urls:{
+            web: 'https://www.baidu.com/s?wd=#content#',
+            news: 'https://www.baidu.com/s?wd=#content#&tn=news',
+            image: 'https://image.baidu.com/search/index?tn=baiduimage&ps=1&cl=2&ie=utf-8&word=#content#',
+            video: 'https://www.baidu.com/sf/vsearch?wd=#content#&pd=video&tn=vsearch',
+            map: 'https://map.baidu.com/search/f?querytype=s&wd=#content#'
+        },
+        iconSrc: baidu,
+        title: '百度',
+        isChoose: true
+    },
+    {
+        urls: {
+            news: "https://google.com/search?q=#content#&source=lnms&tbm=nws",
+            image: "https://google.com/search?q=#content#&source=lnms&tbm=isch",
+            web: "https://google.com/search?q=#content#&oq=#content#",
+            video: "https://google.com/search?q=#content#&source=lnms&tbm=vid",
+            map: "https://www.google.com/maps/search/#content#"
+        },
+        title: "Google",
+        iconSrc: google,
+        id: 0,
+        isChoose: true
+    },
+    {
+        id: 1,
+        urls: {
+            web: 'https://search.yahoo.com/search?p=#content#'
+        },
+        iconSrc: yahoo,
+        title: 'Yahoo!',
+        isChoose: true
+    },{
+        id: 4,
+        urls: {
+            web: 'http://www.so.com/s?q=#content#'
+        },
+        iconSrc: search360,
+        title: '360搜索',
+        isChoose: true
+    },{
+        id: 6,
+        urls: {
+            web: 'https://www.sogou.com/web?query=#content#'
+        },
+        iconSrc: sougou,
+        title: '搜狗',
+        isChoose: true
+    }
+];
 
 const state = {
     searchPopoverVisible: false,
     currentSearchEngine:{
-        url: 'http://www.baidu.com/s?wd=#content#',
-        img: baidu,
-        name: '百度',
-    },
-    searchEngineList:[
-        {
-            id: 5,
-            url: 'http://www.baidu.com/s?wd=#content#',
-            img: baidu,
-            name: '百度',
-            isChoose: true
-        },{
-            id: 0,
-            url: 'https://www.google.com/search?q=#content#',
-            img: google,
-            name: '谷歌',
-            isChoose: true
+        urls: {
+            news: "https://google.com/search?q=#content#&source=lnms&tbm=nws",
+            image: "https://google.com/search?q=#content#&source=lnms&tbm=isch",
+            web: "https://google.com/search?q=#content#&oq=#content#",
+            video: "https://google.com/search?q=#content#&source=lnms&tbm=vid",
+            map: "https://www.google.com/maps/search/#content#"
         },
-        {
-            id: 1,
-            url: 'https://search.yahoo.com/search?p=#content#',
-            img: yahoo,
-            name: 'Yahoo!',
-            isChoose: true
-        },{
-            id: 4,
-            url: 'http://www.so.com/s?q=#content#',
-            img: search360,
-            name: '360搜索',
-            isChoose: true
-        },{
-            id: 6,
-            url: 'https://www.sogou.com/web?query=#content#',
-            img: sougou,
-            name: '搜狗',
-            isChoose: true
-        }
-    ],
+        title: "Google",
+        iconSrc: google,
+        id: 0,
+        isChoose: true
+    },
+    searchEngineList: localStorage.getItem('engineList') ? {
+        ...JSON.parse(localStorage.getItem('engineList'))
+      } : defaultEngineList,
     allEngineList:[
         {
+            id: 5,
+            urls:{
+                web: 'https://www.baidu.com/s?wd=#content#',
+                news: 'https://www.baidu.com/s?wd=#content#&tn=news',
+                image: 'https://image.baidu.com/search/index?tn=baiduimage&ps=1&cl=2&ie=utf-8&word=#content#',
+                video: 'https://www.baidu.com/sf/vsearch?wd=#content#&pd=video&tn=vsearch',
+                map: 'https://map.baidu.com/search/f?querytype=s&wd=#content#'
+            },
+            iconSrc: baidu,
+            title: '百度',
+            isChoose: true
+        },
+        {
+            urls: {
+                news: "https://google.com/search?q=#content#&source=lnms&tbm=nws",
+                image: "https://google.com/search?q=#content#&source=lnms&tbm=isch",
+                web: "https://google.com/search?q=#content#&oq=#content#",
+                video: "https://google.com/search?q=#content#&source=lnms&tbm=vid",
+                map: "https://www.google.com/maps/search/#content#"
+            },
+            title: "Google",
+            iconSrc: google,
             id: 0,
-            url: 'https://www.google.com/search?q=#content#',
-            img: google,
-            name: '谷歌',
             isChoose: true
         },
         {
             id: 1,
-            url: 'https://search.yahoo.com/search?p=#content#',
-            img: yahoo,
-            name: 'Yahoo!',
+            urls: {
+                web: 'https://search.yahoo.com/search?p=#content#'
+            },
+            iconSrc: yahoo,
+            title: 'Yahoo!',
             isChoose: true
-        },{
-            id: 3,
-            url: 'https://yandex.ru/search/?text=#content#',
-            img: yandex,
-            name: 'YandexRU',
-            isChoose: false
         },{
             id: 4,
-            url: 'http://www.so.com/s?q=#content#',
-            img: search360,
-            name: '360搜索',
-            isChoose: true
-        },{
-            id: 5,
-            url: 'http://www.baidu.com/s?wd=#content#',
-            img: baidu,
-            name: '百度',
+            urls: {
+                web: 'http://www.so.com/s?q=#content#'
+            },
+            iconSrc: search360,
+            title: '360搜索',
             isChoose: true
         },{
             id: 6,
-            url: 'https://www.sogou.com/web?query=#content#',
-            img: sougou,
-            name: '搜狗',
+            urls: {
+                web: 'https://www.sogou.com/web?query=#content#'
+            },
+            iconSrc: sougou,
+            title: '搜狗',
             isChoose: true
-        },{
-            id: 7,
-            url: 'https://search.naver.com/search.naver?query=#content#',
-            img: naver,
-            name: 'NAVER',
-            isChoose: false
-        },{
-            id: 8,
-            url: 'https://duckduckgo.com/?p=#content#',
-            img: duckduckgo,
-            name: 'Duckduckgo',
-            isChoose: false
-        },{
-            id: 9,
-            url: 'https://cn.bing.com/search?q=#content#',
-            img: bing,
-            name: '必应',
-            isChoose: false
         }
     ],
     customEngineList:[]

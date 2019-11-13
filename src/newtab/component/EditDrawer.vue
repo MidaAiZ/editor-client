@@ -6,7 +6,7 @@
             <img :src='currentItem.itemInfo.iconSrc'/>
             <span>
                 <div class="edit-drawer-img-edit img-edit" @click="showEditDialog">{{nameText.editPicture}}</div>
-                <div style="position: relative">
+                <div style="position: relative; cursor: pointer">
                     <div class="img-edit">{{nameText.removePicture}}</div>
                     <input type="file" class="img-edit-input" @change="e => inputIcon(e)"/>
                 </div>
@@ -54,29 +54,16 @@
             }
         },
         mounted(){
-            console.log(this.currentItem)
             this.tempBase64 = this.currentItem.itemInfo.iconBase64 ? this.currentItem.itemInfo.iconBase64 : '';
-                this.tempSrc = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
-                this.cropperContent = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
-            // if (!this.currentItem.isNew) {
-            //     console.log('旧的')
-            //     this.tempBase64 = this.currentItem.itemInfo.iconBase64 ? this.currentItem.itemInfo.iconBase64 : '';
-            //     this.tempSrc = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
-            //     this.cropperContent = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
-            // } else {
-            //     console.log('xinjian')
-            //     this.tempBase64 = '';
-            //     this.tempSrc = '';
-            //     this.cropperContent = '';
-            //     this.currentItem.itemInfo.iconSrc = '';
-            //     this.currentItem.itemInfo.iconBase64 = '';
-            //     this.currentItem.itemInfo.title = '';
-            //     this.currentItem.itemInfo.url = '';
-            // }
+            this.tempSrc = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
+            this.cropperContent = this.currentItem.itemInfo.iconSrc ? this.currentItem.itemInfo.iconSrc : '';
         },
         methods:{
             ...mapMutations('homeWebList',['CHANGE_WEB_INFO','EDIT_DRAWER_VISIBLE', 'CHANGE_CURRENT_ITEM']),
-            ...mapActions('homeWebList',['afterChanged']),
+            ...mapActions('homeWebList',['afterChanged', 'addOne']),
+            ...mapMutations('drawersVis', [
+                'SET_CAVIS',
+            ]),
             async getCropperData(data){
                 this.currentItem.itemInfo.iconSrc = data;
                 this.tempBase64 = data;
@@ -96,24 +83,24 @@
                 this.editDialogVisible = true;
             },
             editComplete(){
-                // this.CHANGE_WEB_INFO(this.currentItem);
-                console.log(this.currentItem, '当前编辑');
                 let changedItem = this.currentItem.itemInfo;
                 changedItem.iconSrc = this.tempSrc;
                 changedItem.iconBase64 = this.tempBase64;
-                console.log(changedItem, '编辑后');
                 let newList = this.homeWebList;
                 if (this.currentItem.isNew) {
                     let pageSize = this.iconLayout.row * this.iconLayout.col;
-                    if(this.homeWebList[this.homeWebList.length - 1].length === pageSize) {
-                        newList.push([]);
-                        newList[newList.length - 1].push(changedItem)
-                    } else {
-                        newList[this.currentItem.pageIndex][this.currentItem.itemIndex] = changedItem
-                    }
+                    let addItem = changedItem;
+                    addItem.icon = this.tempSrc;
+                    let payload = {
+                        item: addItem,
+                        size: pageSize
+                    };
+                    this.addOne(payload);
+                    this.SET_CAVIS(false);
+                } else {
+                    this.afterChanged(newList);
+                    this.EDIT_DRAWER_VISIBLE(false);
                 }
-                this.afterChanged(newList)
-                this.EDIT_DRAWER_VISIBLE(false);
             }
         },
     }
@@ -142,6 +129,7 @@
     }
     .img-edit:hover{
         text-decoration: underline;
+        cursor: pointer;
         /* border-bottom: 1px solid #ffc81f; */
     }
     .edit-drawer-img-edit{

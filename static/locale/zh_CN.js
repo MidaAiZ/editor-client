@@ -1,11 +1,11 @@
  const zh_CN = {
-    searchTab: [
-        '网页',
-        '图片',
-        '新闻',
-        '视频',
-        '地图'
-    ],
+    searchTab: {
+        web: '网页',
+        image: '图片',
+        news: '新闻',
+        video: '视频',
+        map: '地图'
+    },
     searchType: {},
     searchPlaceholder: '输入并搜索...',
     appName: {
