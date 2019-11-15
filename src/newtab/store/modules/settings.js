@@ -78,7 +78,6 @@ const state = localStorage.getItem('settings') ? {
         // console.log(data)
         if (data.code === 'Success') {
             if(data.data.cloudSave) {
-                console.log('开启了')
                 commit('SET_ALL', data.data)
                 dispatch('homeWebList/getUserMenus', {},{root:true})
             }

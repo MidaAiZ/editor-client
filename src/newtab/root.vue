@@ -60,14 +60,14 @@ export default {
     },
     methods:{
         ...mapMutations('engineList',['CLOSE_ENGINE_POPOVER']),
-        ...mapMutations('homeWebList',['CHANGE_IS_EDIT']),
+        ...mapMutations('homeWebList',['CHANGE_IS_EDIT','AFTER_CHANGE']),
         closeEnginePopover(){
             this.CLOSE_ENGINE_POPOVER();
         },
         ...mapActions('user', ['judgeLogin']),
         ...mapActions('settings', ['getDefaultSettings', 'getUserSettings', 'uploadSettings']),
         ...mapActions('categories', ['getCategories']),
-        ...mapActions('homeWebList', ['getDefaultMenus', 'getUserMenus']),
+        ...mapActions('homeWebList', ['afterChanged', 'getDefaultMenus', 'getUserMenus']),
         unedit() {
           this.CHANGE_IS_EDIT(false);
         },
@@ -105,6 +105,20 @@ export default {
       // 初始化
       this.getCategories()
       this.setTrack()
+      let that = this;
+      window.addEventListener('storage', function(e) {  
+        console.log(JSON.parse(e.newValue), 'fuckLocal')
+        that.afterChanged(JSON.parse(e.newValue).menus);
+      });
+      // chrome.storage.local.get('homeMenus', (content) => {this.AFTER_CHANGE(content.menus)})
+      // chrome.storage.onChanged.addListener(
+      //   (content) => {
+      //     if(content.homeMenus.newValue.menus) {
+      //       console.log('fucksync', content)
+      //       this.AFTER_CHANGE(content.homeMenus.newValue.menus)
+      //     }
+      //   }
+      // )
     },
 }
 </script>

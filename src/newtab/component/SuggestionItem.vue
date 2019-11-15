@@ -248,8 +248,10 @@
         text-align: center;
         /*font-size:15px;*/
         padding-top: 10px;
-        width: 100%;
+        width: 80%;
+        margin-left: 10%;
         text-overflow: ellipsis;
+        overflow: hidden;
         white-space: nowrap;
         /*color: #ffffff;*/
         opacity: 0.9;
@@ -264,15 +266,19 @@
     }
     .item-img{
         position:relative;
-        display: flex;
+        /* display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: center; */
         overflow: hidden;
     }
     .item-img img{
         width: 100%;
         height: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
     }
     .item-img-mask{
         position: absolute;

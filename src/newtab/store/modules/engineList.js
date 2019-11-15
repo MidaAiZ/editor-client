@@ -137,7 +137,7 @@ const state = {
             isChoose: true
         }
     ],
-    customEngineList:[]
+    customEngineList:localStorage.getItem('customEngineList') ? JSON.parse(localStorage.getItem('customEngineList')).engineList : []
 
 }
 
@@ -192,6 +192,7 @@ const mutations = {
         state.customEngineList.push(customEngine);
         state.searchEngineList.push(customEngine);
         localSave('engineList', {engineList: state.searchEngineList})
+        localSave('customEngineList', {engineList: state.customEngineList})
     },
     [DELETE_CUSTOME_ENGINE] (state, customEngine){
         let result = state.customEngineList.filter(engine => {
@@ -203,6 +204,7 @@ const mutations = {
         })
         state.searchEngineList = result1;
         localSave('engineList', {engineList: state.searchEngineList})
+        localSave('customEngineList', {engineList: state.customEngineList})
     },
     [OPEN_CUSTOM_ENGINE] (state,index){
         state.customEngineList[index].isChoose = true;

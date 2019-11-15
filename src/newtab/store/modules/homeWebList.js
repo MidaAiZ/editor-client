@@ -15,7 +15,6 @@ import localeText from '../../../../static/locale/index.js'
 import { SET_HOMEMENUS } from './mutations-type.js'
 import {defaultMenu} from '../../utils/defaultOpt.js'
 import { Message } from 'element-ui'
-
 const state = {
     // homeWebList:defaultMenu,
     isEdit:false,
@@ -105,7 +104,7 @@ const actions = {
             }
         } else {
             menu = {
-                version: true,
+                version: JSON.parse(localStorage.getItem('homeMenus')).version,
                 menus: state.homeWebList
             }
         }
@@ -115,28 +114,30 @@ const actions = {
             })
         })
 
-        let listArr = menu.menus;
+        if (menu.version !== JSON.parse(localStorage.getItem('homeMenus')).version) {
+            let listArr = menu.menus;
 
-        const promises = [];
-            listArr.forEach(function(page, index){
-                page.forEach(function(item, idx){
-                    promises.push(new Promise(async (resolve) => {
-                        // let itm = item
-                        if(!item.iconBase64) {
-                            const base64 = await imgToBase64(item.iconSrc)
-                        // listArr[index][idx] = item;
-                            item.iconBase64 = base64;
-                            listArr[index][idx] = item;
-                        }
-                        resolve();
-                }));
-            });
-        })
-        Promise.all(promises).then((args) => {
-            menu.menus = listArr;
-            localSave('homeMenus', menu)
-            commit('SET_HOMEMENUS', menu.menus)
-        })
+            const promises = [];
+                listArr.forEach(function(page, index){
+                    page.forEach(function(item, idx){
+                        promises.push(new Promise(async (resolve) => {
+                            // let itm = item
+                            if(!item.iconBase64) {
+                                const base64 = await imgToBase64(item.iconSrc)
+                            // listArr[index][idx] = item;
+                                item.iconBase64 = base64;
+                                listArr[index][idx] = item;
+                            }
+                            resolve();
+                    }));
+                });
+            })
+            Promise.all(promises).then((args) => {
+                menu.menus = listArr;
+                localSave('homeMenus', menu)
+                commit('SET_HOMEMENUS', menu.menus)
+            })
+        }
         // let menuArr = menu.menus
         // localSave('homeMenus', menu)
         // commit('SET_HOMEMENUS', menu.menus)
@@ -148,7 +149,8 @@ const actions = {
             }
         })
 
-        if(rootState.settings.cloudSave) {
+        if(rootState.settings.cloudSave && rootState.user.hasLogin) {
+            // console.log(rootState.user.hasLogin)
             const menuClone = JSON.parse(JSON.stringify(newList));
             optimizeMenu(menuClone);
             const { data } = await req(homeMenus.changeAll, {}, menuClone)
@@ -188,7 +190,7 @@ const actions = {
         }
         arr[arr.length-1].push(newItem);
         let menus = {
-            version: false,
+            version: JSON.parse(localStorage.getItem('homeMenus')).version,
             menus: arr
         };
         commit('AFTER_CHANGE', arr);
@@ -204,7 +206,7 @@ const actions = {
         let arr = state.homeWebList;
         arr[pageIndex].splice(index, 1);
         let menus = {
-            version: false,
+            version: JSON.parse(localStorage.getItem('homeMenus')).version,
             menus: arr
         };
         localSave('homeMenus', menus);
@@ -269,7 +271,7 @@ const mutations = {
         }
         arr[arr.length-1].push(newItem);
         let menus = {
-            version: false,
+            version: JSON.parse(localStorage.getItem('homeMenus')).version,
             menus: arr
         };
         localSave('homeMenus', menus);
@@ -277,7 +279,7 @@ const mutations = {
     },
     [AFTER_CHANGE] (state, menus) {
         let newMenus = {
-            version: false,
+            version: JSON.parse(localStorage.getItem('homeMenus')).version,
             menus,
         }
         localSave('homeMenus', newMenus);

@@ -36,6 +36,7 @@
         "http://*/*",
         "https://*/*",
         "<all_urls>",
-        "bookmarks"
+        "bookmarks",
+        "tabs"
     ]
 }

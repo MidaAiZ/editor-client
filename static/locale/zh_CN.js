@@ -131,5 +131,8 @@
     nullContent: '没有相关内容',
     edit: '编辑',
     customAdd: '自定义添加站点',
+    title: '标题',
+    url: 'url',
+    loadCloud: '正在同步数据...',
 }
 export default zh_CN

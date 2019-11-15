@@ -60,14 +60,18 @@ const saveImg = (key, srcUrl, callBack) => {
     };
 }
 
-const NoIconFunc = async (title, width, height) => {
+const NoIconFunc = async (title, width, height, color) => {
     // let imgDom = new Image();
     let imgCanvas = document.createElement("canvas");
     let imgContext = imgCanvas.getContext("2d");
         // 确保canvas尺寸和图片一致
     imgCanvas.width = width;
     imgCanvas.height = height;
-    imgContext.fillStyle='rgba('+ Math.floor(Math.random()*255) +','+ Math.floor(Math.random()*255) +','+ Math.floor(Math.random()*255) +',0.8)';;
+    if(!color) {
+        imgContext.fillStyle = 'rgba('+ Math.floor(Math.random()*255) +','+ Math.floor(Math.random()*255) +','+ Math.floor(Math.random()*255) +',0.8)';
+    } else {
+        imgContext.fillStyle = color;
+    }
     imgContext.fillRect(0,0,width, height);
     let imgText = title.slice(0, 1);
     imgContext.fillStyle="#fff";
@@ -82,6 +86,7 @@ const NoIconFunc = async (title, width, height) => {
         iconBase64: base64Src,
         iconSrc: src
     }
+    console.log('imgObj', imgObj)
     return imgObj;
 }
 
