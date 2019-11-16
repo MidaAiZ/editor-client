@@ -7,6 +7,7 @@ import {DELETE_CHOOSE_ENGINE,
     ADD_ONE_SITE,
     DELETE_ONE_SITE,
     AFTER_CHANGE,
+    SET_GET_LOADING
 } from "./mutations-type.js";
 import homeMenus from '../../services/apis/homeMenus.js'
 import req from '../../services/index.js'
@@ -15,11 +16,13 @@ import localeText from '../../../../static/locale/index.js'
 import { SET_HOMEMENUS } from './mutations-type.js'
 import {defaultMenu} from '../../utils/defaultOpt.js'
 import { Message } from 'element-ui'
+
 const state = {
     // homeWebList:defaultMenu,
     isEdit:false,
     editDrawerVisible:false,
     currentItem: {},
+    getting: false,
     homeWebList: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).menus : defaultMenu.menus,
 };
 
@@ -95,6 +98,7 @@ const actions = {
         commit('SET_HOMEMENUS', menu.menus)
     },
     async getUserMenus ({ state, commit }) { // 从服务器获取默认主页添加网站
+        commit('SET_GET_LOADING', true)
         const { data } = await req(homeMenus.user_menu)
         let menu;
         if (data.data && data.data.menu && data.data.menu.length !== 0) {
@@ -104,7 +108,7 @@ const actions = {
             }
         } else {
             menu = {
-                version: JSON.parse(localStorage.getItem('homeMenus')).version,
+                version: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).version : '',
                 menus: state.homeWebList
             }
         }
@@ -114,8 +118,7 @@ const actions = {
             })
         })
 
-        if (menu.version !== JSON.parse(localStorage.getItem('homeMenus')).version) {
-            let listArr = menu.menus;
+        let listArr = menu.menus;
 
             const promises = [];
                 listArr.forEach(function(page, index){
@@ -136,8 +139,8 @@ const actions = {
                 menu.menus = listArr;
                 localSave('homeMenus', menu)
                 commit('SET_HOMEMENUS', menu.menus)
+                commit('SET_GET_LOADING', false)
             })
-        }
         // let menuArr = menu.menus
         // localSave('homeMenus', menu)
         // commit('SET_HOMEMENUS', menu.menus)
@@ -155,6 +158,11 @@ const actions = {
             optimizeMenu(menuClone);
             const { data } = await req(homeMenus.changeAll, {}, menuClone)
             if (data.code === 'Success') {
+                let newMenus = {
+                    version: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).version : '',
+                    menus: newList,
+                }
+                localSave('homeMenus', newMenus);
                 commit('AFTER_CHANGE', newList);
                 // commit('SET_HOMEMENUS', data.data)
             } else {
@@ -190,7 +198,7 @@ const actions = {
         }
         arr[arr.length-1].push(newItem);
         let menus = {
-            version: JSON.parse(localStorage.getItem('homeMenus')).version,
+            version: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).version : '',
             menus: arr
         };
         commit('AFTER_CHANGE', arr);
@@ -206,7 +214,7 @@ const actions = {
         let arr = state.homeWebList;
         arr[pageIndex].splice(index, 1);
         let menus = {
-            version: JSON.parse(localStorage.getItem('homeMenus')).version,
+            version: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).version : '',
             menus: arr
         };
         localSave('homeMenus', menus);
@@ -219,6 +227,9 @@ const actions = {
 
 // mutations
 const mutations = {
+    [SET_GET_LOADING] (state, loading) {
+        state.getting = loading;
+    },
     [DELETE_CHOOSE_ENGINE] (state,index) {
         let result = state.searchEngineList.filter(engine => {
             return engine.id !== state.allEngineList[index].id
@@ -271,7 +282,7 @@ const mutations = {
         }
         arr[arr.length-1].push(newItem);
         let menus = {
-            version: JSON.parse(localStorage.getItem('homeMenus')).version,
+            version: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).version : '',
             menus: arr
         };
         localSave('homeMenus', menus);
@@ -279,7 +290,7 @@ const mutations = {
     },
     [AFTER_CHANGE] (state, menus) {
         let newMenus = {
-            version: JSON.parse(localStorage.getItem('homeMenus')).version,
+            version: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).version : '',
             menus,
         }
         localSave('homeMenus', newMenus);

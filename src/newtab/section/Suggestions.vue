@@ -1,6 +1,6 @@
 <template>
     <div style="z-index:1">
-        <div id="suggestions" :style="[suggestionsWidth,suggestionsHeight]">
+        <div v-if="!hideAllIcons" id="suggestions" :style="[suggestionsWidth,suggestionsHeight]">
             <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}" style='height:100%'>
                 <swiper-slide v-for="(page,index) in homeWebList" :key="index" class='suggestion-swiper'>
                     <draggable v-model="homeWebList[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
@@ -141,7 +141,7 @@
                 return localeText[this.location].edit
             },
             ...mapState('homeWebList', ['homeWebList', 'isEdit', 'editDrawerVisible']),
-            ...mapState('settings', ['iconLayout', 'iconSizeValue']),
+            ...mapState('settings', ['iconLayout', 'iconSizeValue', 'hideAllIcons']),
             ...mapGetters('homeWebList', ['totalSize', 'sortArray', 'isEdit']),
             ...mapState('locale', ['location']),
         },

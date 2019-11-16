@@ -52,7 +52,7 @@ import { localSave } from '../../utils/localSave.js'
     fontColorValue: '#fff',
   }
 // initial state
-const state = localStorage.getItem('settings') ? {
+const state = (localStorage.getItem('settings') && JSON.parse(localStorage.getItem('settings')) !== {}) ? {
     ...JSON.parse(localStorage.getItem('settings'))
   } : defaultSetting
   

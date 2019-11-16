@@ -1,5 +1,5 @@
 <template>
-    <div class="suggestion-item" :style="width" :class="{'my-shake': isEdit,'shake-constant':isEdit}">
+    <div class="suggestion-item" :style="width" :class="isEdit ? 'my-shake': ''">
         <div class="item-img-container">
             <span class="item-img-close" @mouseover="closeHover" @click.prevent.stop="deleteOneSite" v-show='isEdit'>
                 <i class='el-icon-close'></i>
@@ -23,7 +23,6 @@
     import {
         mapState,mapMutations,mapActions
     } from 'vuex'
-    import 'csshake/dist/csshake.min.css'
     import './style/shakeRotate.scss'
     import draggable from 'vuedraggable'
     import { openSite } from '../services/openSite.js';

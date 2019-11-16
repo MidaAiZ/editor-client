@@ -6,6 +6,9 @@
         <bookmarks />
       </div>
       <systemBar />
+      <div class="loading-tips">
+        <cloud-tips />
+      </div>
       <settingDialog />
       <customAddDrawer />
       <manage />
@@ -24,6 +27,7 @@
 import { mapState,mapMutations, mapActions } from 'vuex';
 import background from './section/Background.vue';
 import systemBar from './section/SystemBar.vue';
+import cloudTips from './section/CloudTips.vue';
 import suggestions from './section/Suggestions.vue';
 import customSearch from './section/CustomSearch.vue';
 import customAddDrawer from './component/CustomAddDrawer.vue';
@@ -44,6 +48,7 @@ export default {
         customSearch,
         settingDialog,
         customAddDrawer,
+        cloudTips,
         bookmarks,
         manage
     },
@@ -60,6 +65,7 @@ export default {
     },
     methods:{
         ...mapMutations('engineList',['CLOSE_ENGINE_POPOVER']),
+        ...mapMutations('settings',['SET_ALL']),
         ...mapMutations('homeWebList',['CHANGE_IS_EDIT','AFTER_CHANGE']),
         closeEnginePopover(){
             this.CLOSE_ENGINE_POPOVER();
@@ -94,7 +100,7 @@ export default {
                 this.getDefaultMenus()
               }
               // 初始化用户设置
-              if (!localStorage.getItem('settings')) {
+              if (!localStorage.getItem('settings') || JSON.parse(localStorage.getItem('settings')) === {}) {
                 // getDefault()
                 localSave('settings', defaultSettings)
                 this.getDefaultSettings()
@@ -170,5 +176,10 @@ export default {
   }
   .displayNone{
     display: none;
+  }
+  .loading-tips {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
   }
 </style>

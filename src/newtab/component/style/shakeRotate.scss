@@ -1,5 +1,61 @@
-@import '~csshake/scss/csshake-rotate.scss';
 
-.my-shake{
-    @include do-shake('shake-rotate',0,0,10,6s)
+.my-shake {
+    // display: inline-block;
+    // -webkit-transform-origin: center center;
+    // -ms-transform-origin: center center;
+    // transform-origin: center center;
+    -webkit-animation-name: shaky-slow;
+    -ms-animation-name: shaky-slow;
+    animation-name: shaky-slow;
+    -webkit-animation-duration: .8s;
+    -ms-animation-duration: .8s;
+    animation-duration: .8s;
+    -webkit-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-delay: 0s;
+    -ms-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-play-state: running;
+    -ms-animation-play-state: running;
+    animation-play-state: running;
+}
+@-webkit-keyframes shaky-slow {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    
+    25% {
+        -webkit-transform: rotate(5deg);
+    }
+    50% {
+        -webkit-transform: rotate(0deg);
+    }
+    75% {
+        -webkit-transform: rotate(-5deg);
+    }
+    100% {
+        -webkit-transform: rotate(0deg);
+    }
+}
+@keyframes shaky-slow {
+    0% {
+        transform: rotate(0deg);
+    }
+    
+    25% {
+        transform: rotate(5deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }

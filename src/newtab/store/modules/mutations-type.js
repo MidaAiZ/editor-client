@@ -70,3 +70,4 @@ export const DELETE_SEARCH_CATE = 'DELETE_SEARCH_CATE' // 删除搜索分类
 // 主页添加网站 相关的mutation
 
 export const SET_HOMEMENUS = 'SET_HOMEMENUS' // 设置主页网站
+export const SET_GET_LOADING = 'SET_GET_LOADING' // 设置主页网站

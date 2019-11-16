@@ -84,7 +84,7 @@ const NoIconFunc = async (title, width, height, color) => {
     await upBase64(base64Src, (key) => {src = imgHost + key}, () => {console.log('上传失败')})
     let imgObj = {
         iconBase64: base64Src,
-        iconSrc: src
+        iconSrc: src || ''
     }
     console.log('imgObj', imgObj)
     return imgObj;
