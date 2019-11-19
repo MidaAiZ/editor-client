@@ -1,5 +1,5 @@
-import req from './index.js'
-import siteHistory from './apis/siteHistory.js'
+import req from './index.js';
+import siteHistory from './apis/siteHistory.js';
 
 /**
  *

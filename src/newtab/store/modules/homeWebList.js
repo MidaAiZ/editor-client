@@ -118,7 +118,8 @@ const actions = {
             })
         })
 
-        let listArr = menu.menus;
+        if (data.data.version !== JSON.parse(localStorage.getItem('homeMenus')).version) {
+            let listArr = menu.menus;
 
             const promises = [];
                 listArr.forEach(function(page, index){
@@ -141,6 +142,8 @@ const actions = {
                 commit('SET_HOMEMENUS', menu.menus)
                 commit('SET_GET_LOADING', false)
             })
+        }
+
         // let menuArr = menu.menus
         // localSave('homeMenus', menu)
         // commit('SET_HOMEMENUS', menu.menus)

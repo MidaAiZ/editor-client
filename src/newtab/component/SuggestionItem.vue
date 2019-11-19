@@ -38,15 +38,13 @@
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
                 'iconLayout','newSiteNewTabValue']),
             ...mapState('homeWebList',['isEdit','editDrawerVisible']),
-            src: {
-                get() {
+            src: function(){
                     let itemInfo = this.itemInfo;
                     if(itemInfo.iconBase64) {
                         return itemInfo.iconBase64
                     } else {
                         return itemInfo.iconSrc
                     }
-                }
             },
             width: function () {
                 let widthStyle = {

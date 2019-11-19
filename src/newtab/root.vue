@@ -5,6 +5,9 @@
       <div class="bookmarks-wrap" v-if="showBookMarkBar">
         <bookmarks />
       </div>
+      <!-- <div class="weather-wrap">
+        <weather />
+      </div> -->
       <systemBar />
       <div class="loading-tips">
         <cloud-tips />
@@ -30,6 +33,7 @@ import systemBar from './section/SystemBar.vue';
 import cloudTips from './section/CloudTips.vue';
 import suggestions from './section/Suggestions.vue';
 import customSearch from './section/CustomSearch.vue';
+import weather from './section/Weather.vue';
 import customAddDrawer from './component/CustomAddDrawer.vue';
 import settingDialog from './section/SettingDialog.vue';
 import bookmarks from './section/Bookmarks.vue';
@@ -50,7 +54,8 @@ export default {
         customAddDrawer,
         cloudTips,
         bookmarks,
-        manage
+        manage,
+        weather
     },
     data(){
         return{
@@ -180,6 +185,11 @@ export default {
   .loading-tips {
     position: absolute;
     bottom: 10px;
-    left: 20px;
+    left: 25px;
+  }
+  .weather-wrap {
+    position: absolute;
+    left: 25px;
+    top: 20px;
   }
 </style>

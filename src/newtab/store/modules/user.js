@@ -95,6 +95,11 @@ const actions = {
             commit('loginSuccess', false)
             commit('setUserName', '')
             Message.success({message: localeText[rootState.locale.location].logoutMessage.success})
+            let menu = {
+                version: 'logout',
+                menus: JSON.parse(localStorage.getItem('homeMenus')).menus
+            }
+            localSave('homeMenus', menu);
         }
     },
 }

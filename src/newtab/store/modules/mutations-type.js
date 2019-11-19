@@ -71,3 +71,9 @@ export const DELETE_SEARCH_CATE = 'DELETE_SEARCH_CATE' // 删除搜索分类
 
 export const SET_HOMEMENUS = 'SET_HOMEMENUS' // 设置主页网站
 export const SET_GET_LOADING = 'SET_GET_LOADING' // 设置主页网站
+
+// 天气预报相关mutation
+
+export const SET_CURRENT_CITY = 'SET_CURRENT_CITY' // 设置默认展示的城市
+export const SET_CURRENT_WEATHER = 'SET_CURRENT_WEATHER' // 设置默认展示城市的天气
+export const SET_CURRENT_TMP = 'SET_CURRENT_TMP' // 设置默认展示城市的温度
