@@ -1,12 +1,12 @@
 
 // initial state
 const state = {
-    location: 'zh_CN',
+  location: 'zh_CN',
 }
 
 // getters
 const getters = {
-  
+
 }
 
 // actions

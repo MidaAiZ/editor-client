@@ -51,7 +51,8 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
-            {from:path.resolve(__dirname,'src/manifest.json'),to:''},
+            {from:path.resolve(__dirname,'manifest.json'),to:''},
+            {from:path.resolve(__dirname,'chrome_locales/'), to:'_locales/'},
             {from:path.resolve(__dirname,'static/'), to:'static/'}
         ])
     ],

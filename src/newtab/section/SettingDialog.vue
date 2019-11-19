@@ -33,7 +33,6 @@ import searchBarSetting from '../component/settingComponents/SearchBarSetting.vu
 import fontSetting from '../component/settingComponents/FontSetting.vue'
 import resetAll from '../component/settingComponents/ResetAll.vue'
 
-
 export default {
     name: 'settingDialog',
     components: {

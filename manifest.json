@@ -1,8 +1,9 @@
 {
     "manifest_version": 2,
-    "name": "Vue-crx 模板",
+    "name": "__MSG_extName__",
     "version": "1.0.0",
-    "description": "1119030015@qq.com",
+    "default_locale": "en",
+    "description": "__MSG_extDesc__",
     "icons": {
         "16":"static/img/icon.png",
         "19":"static/img/icon.png",
