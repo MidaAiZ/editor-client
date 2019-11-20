@@ -59,6 +59,7 @@
     import '../component/style/suggestion.css'
     import { imgToBase64 } from "../utils/localSave.js";
     import debounce from '../utils/debounce.js';
+    let slide;
 
     export default {
         name: 'suggestions',
@@ -194,7 +195,6 @@
                 document.onmousemove = function (e) {
                     let screenWidth = document.body.clientWidth;
                     let pages = self.homeWebList.length;
-                    let slide;
                     if (self.dragging) {
                         function slideLeft() {
                             if (e.clientX < 200 && !judge) {
@@ -279,26 +279,26 @@
                 this.startIndex = this.currentIndex;
             },
             onEnd() {
-
+                clearTimeout(slide);
                 // 重新排序
                 this.dragging = false;
-                if (this.homeWebList[this.startIndex].length === 0) {
-                    this.homeWebList = this.homeWebList.filter(function (item) {
-                        return item.length > 0;
-                    })
-                    if (this.startIndex < this.currentIndex) {
-                        this.currentIndex--;
-                        let swiper = this.$refs.mySwiper.swiper;
-                        swiper.slideTo(this.currentIndex);
-                    }
-                }
+                // if (this.homeWebList[this.startIndex].length === 0) {
+                //     this.homeWebList = this.homeWebList.filter(function (item) {
+                //         return item.length > 0;
+                //     })
+                //     if (this.startIndex < this.currentIndex) {
+                //         this.currentIndex--;
+                //         let swiper = this.$refs.mySwiper.swiper;
+                //         swiper.slideTo(this.currentIndex);
+                //     }
+                // }
                 
 
                 let everyPages = this.iconLayout.row * this.iconLayout.col; //一页有多少个item
-                if (this.startIndex === this.currentIndex) {
+                // if (this.startIndex === this.currentIndex) {
                     
-                    // this.homeWebList[this.currentIndex][evt.]
-                } else {
+                //     // this.homeWebList[this.currentIndex][evt.]
+                // } else {
                     
                     if (this.homeWebList[this.currentIndex].length === this.iconLayout.row * this.iconLayout.col+1) {
                         // let currentArray = this.homeWebList[this.currentIndex];
@@ -341,7 +341,7 @@
                         }
 
                     }
-                }
+                // }
                 this.afterChanged(this.homeWebList)
             },
             editDrawerClose() {

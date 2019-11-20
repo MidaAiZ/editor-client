@@ -270,6 +270,7 @@
     }
     .item-img{
         position:relative;
+        background-color:rgba(255, 255, 255,0);
         /* display: flex;
         flex-direction: column;
         align-items: center;
