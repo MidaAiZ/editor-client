@@ -59,3 +59,10 @@
         transform: rotate(0deg);
     }
 }
+
+
+.is_delete {
+    transition: all ease .2s !important;
+    transform: scale(0.01);
+    -webkit-transform: scale(0.01);
+}

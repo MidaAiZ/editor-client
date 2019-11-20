@@ -100,6 +100,7 @@ const actions = {
     async getUserMenus ({ state, commit }) { // 从服务器获取默认主页添加网站
         commit('SET_GET_LOADING', true)
         const { data } = await req(homeMenus.user_menu)
+        commit('SET_GET_LOADING', false)
         let menu;
         if (data.data && data.data.menu && data.data.menu.length !== 0) {
             menu = {
@@ -140,7 +141,6 @@ const actions = {
                 menu.menus = listArr;
                 localSave('homeMenus', menu)
                 commit('SET_HOMEMENUS', menu.menus)
-                commit('SET_GET_LOADING', false)
             })
         }
 
@@ -162,7 +162,7 @@ const actions = {
             const { data } = await req(homeMenus.changeAll, {}, menuClone)
             if (data.code === 'Success') {
                 let newMenus = {
-                    version: localStorage.getItem('homeMenus') ? JSON.parse(localStorage.getItem('homeMenus')).version : '',
+                    version: data.data.version,
                     menus: newList,
                 }
                 localSave('homeMenus', newMenus);

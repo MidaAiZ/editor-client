@@ -1,6 +1,6 @@
 <template>
-    <div class="suggestion-item" :style="width" :class="isEdit ? 'my-shake': ''">
-        <div class="item-img-container">
+    <div class="suggestion-item" :style="width" :class="{'my-shake': isEdit, 'is_delete': isDelete}">
+        <div class="item-img-container" :class="{'is_delete': isDelete}">
             <span class="item-img-close" @mouseover="closeHover" @click.prevent.stop="deleteOneSite" v-show='isEdit'>
                 <i class='el-icon-close'></i>
             </span>
@@ -137,7 +137,8 @@
         data() {
             return {
                 isHover: false,
-                editImg: require('../../../static/img/edit.svg')
+                editImg: require('../../../static/img/edit.svg'),
+                isDelete: false,
                 // isEdit: false
             }
         },
@@ -217,7 +218,13 @@
                     itemInfo: this.itemInfo,
                     index: this.itemIndex
                 }
-                this.deleteOne(payload)
+                clearTimeout(deleteTime);
+                let that = this;
+                this.isDelete = true;
+                let deleteTime = setTimeout(() => {
+                    that.isDelete = false;
+                    that.deleteOne(payload);
+                }, 10);
             }
         },
         mounted(){
