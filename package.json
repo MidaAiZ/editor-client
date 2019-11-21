@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "使用Vue开发Chrome扩展插件的模板",
   "scripts": {
-    "build": "webpack --progress",
-    "watch": "webpack --progress --watch"
+    "build": "webpack --config webpack.prod.js --progress",
+    "watch": "webpack --watch --config webpack.dev.js --progress"
   },
   "author": "No.96",
   "license": "ISC",
@@ -33,6 +33,7 @@
     "vue-waterfall-easy": "^2.4.4",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.2",
+    "webpack-merge": "^4.2.2",
     "webpack-parallel-uglify-plugin": "^1.1.2"
   },
   "dependencies": {

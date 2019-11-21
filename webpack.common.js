@@ -4,7 +4,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var CleanWebpackPlugin = require('clean-webpack-plugin')
 module.exports = {
-    mode:'production',
     entry:{
         'background':'./src/background/background.js',
         'content':'./src/content/content.js',
@@ -51,12 +50,11 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
-            {from:path.resolve(__dirname,'mainfest.json'),to:''},
+            {from:path.resolve(__dirname,'manifest.json'),to:''},
             {from:path.resolve(__dirname,'chrome_locales/'), to:'_locales/'},
             {from:path.resolve(__dirname,'static/'), to:'static/'}
         ])
     ],
-    devtool: 'source-map',
     module:{
         rules:[
             {
