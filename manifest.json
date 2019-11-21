@@ -21,12 +21,12 @@
     "background":
     {
         "persistent": false,
-        "scripts": ["background.main.js"]
+        "scripts": ["background.bundle.js"]
     },
     "content_scripts": [
     {
         "matches": ["https://*.baidu.com/*", "http://*.baidu.com/*"],
-        "js": ["content.main.js"],
+        "js": ["content.bundle.js"],
         "run_at": "document_end"
     }],
     "chrome_url_overrides": {
