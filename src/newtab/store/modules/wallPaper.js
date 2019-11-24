@@ -8,7 +8,7 @@ const state = {
     ?
     JSON.parse(localStorage.getItem(`storageWallPaper`)).img
     :
-    require('../../../../static/defaultWallPapers/moren.jpg'),
+    require('../../../../static/defaultWallPapers/bg.jpg'),
   }
   
   // getters

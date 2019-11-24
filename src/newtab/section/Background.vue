@@ -5,7 +5,7 @@
         <div
             class="background bg-not-default unsplash-src"
             :style="{
-                backgroundImage: `url(${this.bgSrc === 'default' ? require('../../../static/defaultWallPapers/moren.jpg') : this.wallPaperSrc})`,
+                backgroundImage: `url(${this.bgSrc === 'default' ? require('../../../static/defaultWallPapers/bg.jpg') : this.wallPaperSrc})`,
                 filter: `blur(${bgBlurValue / 10}px)`,
                 transform: `scale(${1 + bgBlurValue / 1000})`
                 }">
