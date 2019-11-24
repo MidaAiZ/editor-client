@@ -49,19 +49,8 @@ export default {
     name: 'viewSetting',
     data() {
         return {
-            view: '',
-            showRandomBg: '',
-            showOftenUsedWeb: '',
-            showEmail: '',
-            showBookMark: '',
+    
         }
-    },
-    created: function() {
-        this.view = localeText[this.location].view
-        this.showRandomBg = localeText[this.location].showRandomBg
-        this.showOftenUsedWeb = localeText[this.location].showOftenUsedWeb
-        this.showEmail = localeText[this.location].showEmail
-        this.showBookMark = localeText[this.location].showBookMark
     },
     computed: {
         ...mapState('settings', [
@@ -72,7 +61,22 @@ export default {
         ]),
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        view: function() {
+            return localeText[this.location].view
+        },
+        showRandomBg: function() {
+            return localeText[this.location].showRandomBg
+        },
+        showOftenUsedWeb: function() {
+            return localeText[this.location].showOftenUsedWeb
+        },
+        showEmail: function() {
+            return localeText[this.location].showEmail
+        },
+        showBookMark: function() {
+            return localeText[this.location].showBookMark
+        }
     },
     methods: {
         toggleHomeBtnSetting(value, type) {

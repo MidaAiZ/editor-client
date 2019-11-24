@@ -31,14 +31,6 @@ export default {
             // brushAnimate: false
         }
     },
-    // mounted: async function () {
-    //     // this.getBingWallPaper()
-    //     if (this.bgSrc = 'Bing') {
-    //         const defaultWallPaperUrl = await storageWallPaper(this.bgSrc, 'http://bing.ioliu.cn/v1/rand?w=1366', 'bing-wall-paper')
-    //     }
-    //     // console.log(defaultWallPaperUrl)
-    //     // this.imgUrl = defaultWallPaperUrl
-    // },
     computed: {
         ...mapState('wallPaper', [
             'wallPaperLoading',

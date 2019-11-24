@@ -1,4 +1,4 @@
- const zh_CN = {
+const en_US = {
     searchTab: {
         web: '网页',
         image: '图片',
@@ -145,4 +145,4 @@
     searchEngine: '搜索引擎',
     engineUrl: '网址（用“#content#”代替搜索字词)',
 }
-export default zh_CN
+export default en_US

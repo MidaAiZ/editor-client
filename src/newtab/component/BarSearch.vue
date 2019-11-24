@@ -1,6 +1,6 @@
 <template>
     <div class="bar-web-search-wrap">
-        <input class="bar-web-search" @input="handleSearchSite($event.target.value)" v-model="searchSiteIptValue" :placeholder="placeholder" />
+        <input class="bar-web-search" @input="handleSearchSite($event.target.value)" :value="searchSiteIptValue" :placeholder="addAppPlaceholder" />
         <el-button @click="openCustomAdd" class="add-web-btn" icon="el-icon-plus" size="medium" circle></el-button>
     </div>
 </template>
@@ -13,7 +13,6 @@ export default {
     name: 'barSearch',
     data() {
         return {
-            placeholder: ''
         }
     },
     computed: {
@@ -23,9 +22,9 @@ export default {
         ...mapState('addWebList', [
             'searchSiteIptValue',
         ]),
-    },
-    created: function() {
-        this.placeholder = localeText[this.location].addAppPlaceholder
+        addAppPlaceholder: function() {
+            return localeText[this.location].addAppPlaceholder
+        },
     },
     methods: {
         ...mapMutations('addWebList', [

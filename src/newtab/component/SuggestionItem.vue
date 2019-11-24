@@ -24,9 +24,10 @@
 <script>
     import {
         mapState,mapMutations,mapActions
-    } from 'vuex'
-    import './style/shakeRotate.scss'
-    import draggable from 'vuedraggable'
+    } from 'vuex';
+    import './style/shakeRotate.scss';
+    import draggable from 'vuedraggable';
+    import localeText from '../../../static/locale/index.js';
     import { openSite } from '../services/openSite.js';
     import { imgToBase64, NoIconFunc } from '../utils/localSave.js';
     // const editIcon = require('../../../static/img/edit.svg')
@@ -132,11 +133,9 @@
                     'shake-constant':this.isEdit
                 }
             },
-            nameText:function(){
-                return{
-                    'edit': '编辑'
-                }
-            }
+            edit: function() {
+                return localeText[this.location].edit
+            },
         },
         data() {
             return {
@@ -155,6 +154,7 @@
             ]),
             ...mapMutations('drawersVis',[
                 'SET_WEATHER_DRAWER',
+                'SET_SETTINGVIS'
             ]),
             ...mapActions('homeWebList',[
                 'deleteOne'
@@ -183,10 +183,14 @@
                     siteTitle: itemInfo.title
                 };
                 let cbFunc;
+                let that = this;
                 if(this.itemInfo.url.indexOf('tabplus://weather') === 0) {
-                    let that = this;
                     cbFunc = function() {
                         that.SET_WEATHER_DRAWER(true)
+                    }
+                } else if(this.itemInfo.url.indexOf('tabplus://settings') === 0) {
+                    cbFunc = function() {
+                        that.SET_SETTINGVIS(true)
                     }
                 }
                 openSite(siteObj, this.newSiteNewTabValue ? 'newtab' : '', cbFunc);

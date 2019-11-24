@@ -22,21 +22,24 @@
                     </span>
                 </span>
             </div>
-            <div class="cropper-complete-button" @click="cropperFinish('blob')">{{nameText.complete}}</div>
+            <div class="cropper-complete-button" @click="cropperFinish('blob')">{{complete}}</div>
     </div>
 </template>
 <script>
-    import {VueCropper} from 'vue-cropper'
+    import {VueCropper} from 'vue-cropper';
+    import { mapState } from 'vuex';
+    import localeText from '../../../static/locale/index.js';
     export default {
         props: ['img'],
         components: {
             VueCropper
         },
         computed: {
-            nameText: function () {
-                return {
-                    'complete':'完成'
-                }
+            ...mapState('locale', [
+                'location',
+            ]),
+            complete: function () {
+                return localeText[this.location].complete
             }
         },
         watch:{

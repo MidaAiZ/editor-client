@@ -30,6 +30,12 @@ export default {
         ...mapState('locale', [
             'location',
         ]),
+        cloudSaveBtn: function() {
+            return localeText[this.location].cloudSaveBtn
+        },
+        cloudSaveTip: function() {
+            return localeText[this.location].cloudSaveTip
+        },
         ...mapState('settings', [
             'bgSrc',
             'maskOpacityValue',
@@ -97,10 +103,6 @@ export default {
         ...mapActions('settings', [
             'uploadSettings',
         ]),
-    },
-    created: function() {
-        this.cloudSaveBtn = localeText[this.location].cloudSaveBtn
-        this.cloudSaveTip = localeText[this.location].cloudSaveTip
     },
 }
 </script>

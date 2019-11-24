@@ -54,11 +54,6 @@ export default {
     data() {
         return {
             // targetOpenType: '',
-            targetOpenTypeTip: '',
-            newSiteNewTab: '',
-            searchResultNewTab: '',
-            openMarkNewTab: '',
-            historyNewTab: ''
         }
     },
     computed: {
@@ -73,16 +68,22 @@ export default {
         ]),
         ...mapState('locale', [
             'location',
-        ])
-    },
-    created: function() {
-        this.resetAll = localeText[this.location].resetAll
-        // this.targetOpenType = localeText[this.location].targetOpenType
-        this.targetOpenTypeTip = localeText[this.location].targetOpenTypeTip
-        this.newSiteNewTab = localeText[this.location].newSiteNewTab
-        this.searchResultNewTab = localeText[this.location].searchResultNewTab
-        this.openMarkNewTab = localeText[this.location].openMarkNewTab
-        this.historyNewTab = localeText[this.location].historyNewTab
+        ]),
+        targetOpenTypeTip: function() {
+            return localeText[this.location].targetOpenTypeTip
+        },
+        newSiteNewTab: function() {
+            return localeText[this.location].newSiteNewTab
+        },
+        searchResultNewTab: function() {
+            return localeText[this.location].searchResultNewTab
+        },
+        openMarkNewTab: function() {
+            return localeText[this.location].openMarkNewTab
+        },
+        historyNewTab: function() {
+            return localeText[this.location].historyNewTab
+        }
     },
     methods: {
         toggleNewType(value, type) {

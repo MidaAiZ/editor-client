@@ -5,14 +5,14 @@
         <div class='edit-drawer-img'>
             <img :src='currentItem.itemInfo.iconSrc'/>
             <span>
-                <div class="edit-drawer-img-edit img-edit" @click="showEditDialog">{{nameText.editPicture}}</div>
+                <div class="edit-drawer-img-edit img-edit" @click="showEditDialog">{{editPicture}}</div>
                 <div style="position: relative; cursor: pointer">
-                    <div class="img-edit">{{nameText.removePicture}}</div>
+                    <div class="img-edit">{{selectPicture}}</div>
                     <input type="file" class="img-edit-input" @change="e => inputIcon(e)"/>
                 </div>
             </span>
         </div>
-        <button class='edit-brawer-button' @click='editComplete'>{{nameText.complete}}</button>
+        <button class='edit-brawer-button' @click='editComplete'>{{complete}}</button>
         <el-dialog :visible.sync="editDialogVisible" width='360px' :modal="false" :append-to-body="true"
             :destory-on-close='true' class="cropper-dialog">
             <image-cropper v-on:finish='getCropperData' :img="cropperContent"></image-cropper>
@@ -23,6 +23,7 @@
     import './style/upload.css';
     import { VueCropper } from 'vue-cropper';
     import ImageCropper from './imageCropper.vue';
+    import localeText from '../../../static/locale/index.js';
     import { mapMutations,mapState, mapActions } from 'vuex';
     import { upBase64 } from '../services/uploadImg.js';
     import imgHost from '../services/apis/imgHost.js';
@@ -37,13 +38,18 @@
         computed:{
             ...mapState('homeWebList',['currentItem', 'homeWebList']),
             ...mapState('settings', ['cloudSave', 'iconLayout']),
-            nameText:function(){
-                return{
-                    'editPicture': '编辑图片',
-                    'removePicture': '选择图片',
-                    'complete': '完成'
-                }
+            ...mapState('locale', [
+                'location',
+            ]),
+            editPicture: function() {
+                return localeText[this.location].editPicture
             },
+            selectPicture: function() {
+                return localeText[this.location].selectPicture
+            },
+            complete: function() {
+                return localeText[this.location].complete
+            }
         },
         data() {
             return {

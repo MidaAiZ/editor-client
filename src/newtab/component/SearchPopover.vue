@@ -12,7 +12,7 @@
         </span>
         <el-drawer :visible="drawer" size="500px" @close="drawerClose()" :show-close="false" :modal="false">
             <div slot="title" class="engine-drawer-top">
-                <span class="engine-drawer-title">{{nameText.search}}</span>
+                <span class="engine-drawer-title">{{search}}</span>
                 <span class="engine-drawer-close" @click="drawerClose()">
                     <i class="el-icon-close"></i>
                 </span>
@@ -20,9 +20,9 @@
             <div>
                 <div style="display:flex">
                     <span class="engine-drawer-tab" :class="{'backgroundColor':isDefault}"
-                        @click="isDefault=true">{{nameText.default}}</span>
+                        @click="isDefault=true">{{defaultAdd}}</span>
                     <span class="engine-drawer-tab" :class="{'backgroundColor':!isDefault}"
-                        @click="isDefault=false">{{nameText.custom}}</span>
+                        @click="isDefault=false">{{custom}}</span>
                 </div>
                 <div v-if="isDefault">
                     <div class="engine-list-container">
@@ -50,21 +50,21 @@
                                     </span>
                                 </div>
                             </div>
-                            <div v-else class="not-add-engine-text">{{nameText.notAddCustomEngine}}</div>
+                            <div v-else class="not-add-engine-text">{{notAddCustomEngine}}</div>
                             <button class="add-custom-engine-button"
-                                @click="isAdd=true">{{nameText.addNewSearchEngine}}</button>
+                                @click="isAdd=true">{{addNewSearchEngine}}</button>
                         </div>
                         <div v-else>
                             <div class="form-item-container">
-                                <div class="form-label">{{nameText.searchEngine}}</div>
+                                <div class="form-label">{{searchEngine}}</div>
                                 <el-input v-model="customEngine.name"></el-input>
                             </div>
                             <div class="form-item-container">
-                                <div class="form-label">{{nameText.engineUrl}}</div>
+                                <div class="form-label">{{engineUrl}}</div>
                                 <el-input type="textarea" v-model="customEngine.url"></el-input>
                             </div>
                             <div class="form-item-container">
-                                <div class="form-label">{{nameText.engineIcon}}</div>
+                                <div class="form-label">{{engineIcon}}</div>
                                 <div>
                                     <el-upload class="avatar-uploader"
                                         action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false"
@@ -75,9 +75,9 @@
                                     </el-upload>
                                 </div>
                             </div>
-                            <button class="add-custom-engine-button" @click="addCustomEngine">{{nameText.add}}</button>
+                            <button class="add-custom-engine-button" @click="addCustomEngine">{{add}}</button>
                             <button class="cancel-custom-engine-button"
-                                @click="isAdd=false">{{nameText.cancel}}</button>
+                                @click="isAdd=false">{{cancel}}</button>
                             <!-- <image-cropper v-on:finish='getCropperData' :img='imageUrl'></image-cropper> -->
                         </div>
                     </div>
@@ -98,6 +98,7 @@
 <script>
     import './style/upload.css';
     import ImageCropper from './imageCropper.vue';
+    import localeText from '../../../static/locale/index.js';
     import {
         mapState,
         mapGetters,
@@ -116,6 +117,9 @@
             ...mapGetters('engineList',['maxID']),
             ...mapState('engineList', ['searchEngineList', 'allEngineList','customEngineList']),
             ...mapState('settings', ['searchBarRadiusValue']),
+            ...mapState('locale', [
+                'location',
+            ]),
             borderRadius: function () {
                 return {
                     'border-radius': 4.0 * (this.searchBarRadiusValue * 2.0) / 100 + 'vh'
@@ -129,21 +133,39 @@
                 console.log(this.searchEngineList);
                 return result
             },
-            nameText: function () {
-                return {
-                    search: '搜索',
-                    default: '默认',
-                    custom: '自定义',
-                    notAddCustomEngine: '没有添加任何自定义搜索引擎',
-                    addNewSearchEngine: '添加新的搜索引擎',
-                    searchEngine: '搜索引擎',
-                    engineUrl: '网址（用“#content#”代替搜索字词）',
-                    engineIcon: '图标',
-                    add: '添加',
-                    cancel: '取消添加',
-                    complete: '完成'
-                }
-            }
+            search: function() {
+                return localeText[this.location].search
+            },
+            defaultAdd: function() {
+                return localeText[this.location].addType.default
+            },
+            custom: function() {
+                return localeText[this.location].addType.customize
+            },
+            notAddCustomEngine: function() {
+                return localeText[this.location].notAddCustomEngine
+            },
+            addNewSearchEngine: function() {
+                return localeText[this.location].addNewSearchEngine
+            },
+            searchEngine: function() {
+                return localeText[this.location].searchEngine
+            },
+            engineUrl: function() {
+                return localeText[this.location].engineUrl
+            },
+            engineIcon: function() {
+                return localeText[this.location].icon
+            },
+            add: function() {
+                return localeText[this.location].addSite
+            },
+            cancel: function() {
+                return localeText[this.location].cancel
+            },
+            complete: function() {
+                return localeText[this.location].complete
+            },
         },
         data() {
             return {
@@ -483,55 +505,4 @@
         cursor: pointer; 
     }
 
-    /* .image-cropper {
-        width: 100%;
-    }
-    .cropper {
-        width: 100%;
-        height: 310px;
-    }
-
-    .cropper-operate {
-        cursor: pointer;
-        box-sizing: border-box;
-        padding: 2px 15px;
-        background-color: #656565;
-        color: white;
-        font-size: 20px;
-        opacity: 0.8;
-    }
-
-    .cropper-operate:hover {
-        opacity: 1;
-    }
-
-    .border-left {
-        border-radius: 5px 0 0 5px;
-    }
-
-    .border-right {
-        border-radius: 0 5px 5px 0;
-    }
-
-    .cropper-operate-container {
-        display: flex;
-        justify-content: space-between;
-        margin: 15px 0;
-    }
-
-    .cropper-complete-button {
-        background-color: #656565;s
-        color: white;
-        cursor: pointer;
-        margin-top: 15px;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 15px;
-        padding: 12px 0;
-        opacity: 0.8;
-    }
-
-    .cropper-complete-button:hover {
-        opacity: 1;
-    } */
 </style>

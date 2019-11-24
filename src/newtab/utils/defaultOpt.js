@@ -15,6 +15,7 @@ const weibo = require('../../../static/logos/sina-weibo.svg')
 const facebook = require('../../../static/logos/facebook.svg')
 const ebay = require('../../../static/logos/ebay.svg')
 const gmail = require('../../../static/logos/gmail.svg')
+const settings = require('../../../static/logos/settings.png')
 
 export const defaultCategories = [ // 默认分类，如果服务器获取失败且本地没有存储，
     {
@@ -281,12 +282,20 @@ export const defaultMenu = {
         children: []
       },
       {
-
         title: 'weather',
         iconSrc: '',
         iconBase64: '',
         url: 'tabplus://weather',
         index: 16,
+        isFolder: false,
+        children: []
+      },
+      {
+        title: 'settings',
+        iconSrc: settings,
+        iconBase64: '',
+        url: 'tabplus://settings',
+        index: 17,
         isFolder: false,
         children: []
       },

@@ -4,7 +4,7 @@
             {{backgroundImgSetting}}
         </p>
         <div class="setting-bg-item">
-            <el-radio @change="changeBgSrc('default')" v-model="bgSrc" label="default">
+            <el-radio @change="changeBgSrc('default')" :value="bgSrc" label="default">
                 <span class="bg-name">{{ defaultBg }}</span>
             </el-radio>
             <p class="bg-desc">
@@ -12,7 +12,7 @@
             </p>
         </div>
         <div class="setting-bg-item">
-            <el-radio @change="changeBgSrc('Unsplash')" v-model="bgSrc" label="Unsplash">
+            <el-radio @change="changeBgSrc('Unsplash')" :value="bgSrc" label="Unsplash">
                 <span class="bg-name">{{ UnsplashBg }}</span>
                 <p class="bg-desc">
                     {{ UnsplashDesc }}
@@ -30,25 +30,7 @@ export default {
     name: 'wallPaper',
     data() {
         return {
-            backgroundImgSetting: '',
-            BingBg: '',
-            UnsplashBg: '',
-            randomBg: '',
-            BingDesc: '',
-            UnsplashDesc: '',
-            randomDesc: '',
         }
-    },
-    created: function() {
-        this.backgroundImgSetting = localeText[this.location].backgroundImgSetting
-        this.defaultBg = localeText[this.location].defaultBg.title
-        this.defaultDesc = localeText[this.location].defaultBg.desc
-        this.BingBg = localeText[this.location].BingBg.title
-        this.UnsplashBg = localeText[this.location].UnsplashBg.title
-        this.randomBg = localeText[this.location].randomBg.title
-        this.BingDesc = localeText[this.location].BingBg.desc
-        this.UnsplashDesc = localeText[this.location].UnsplashBg.desc
-        this.randomDesc = localeText[this.location].randomBg.desc
     },
     computed: {
         ...mapState('settings', [
@@ -56,7 +38,22 @@ export default {
         ]),
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        backgroundImgSetting: function() {
+            return localeText[this.location].backgroundImgSetting
+        },
+        defaultBg: function() {
+            return localeText[this.location].defaultBg.title
+        },
+        defaultDesc: function() {
+            return localeText[this.location].defaultBg.desc
+        },
+        UnsplashBg: function() {
+            return localeText[this.location].UnsplashBg.title
+        },
+        UnsplashDesc: function() {
+            return localeText[this.location].UnsplashBg.desc
+        }
     },
     methods: {
         changeBgSrc(src) {

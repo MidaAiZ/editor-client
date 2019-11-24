@@ -16,13 +16,13 @@
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ iconRadius }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" max="50" v-model="iconRadiusValue" @input="setIconRadius($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :max="50" :value="iconRadiusValue" @input="setIconRadius($event)"></el-slider>
         </div>
         <div class="bg-mask-setting-item">
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ iconSize }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" :min="50" :max="100" v-model="iconSizeValue" @input="setIconSize($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :min="50" :max="100" :value="iconSizeValue" @input="setIconSize($event)"></el-slider>
         </div>
     </div>
 </template>
@@ -36,10 +36,6 @@ export default {
     name: 'iconSetting',
     data() {
         return {
-            icon: '',
-            hideIcon: '',
-            iconRadius: '',
-            iconSize: '',
         }
     },
     computed: {
@@ -50,14 +46,19 @@ export default {
         ]),
         ...mapState('locale', [
             'location',
-        ])
-    },
-    created: function() {
-        this.settingName = localeText[this.location].settingName
-        this.icon = localeText[this.location].icon
-        this.hideIcon = localeText[this.location].hideIcon
-        this.iconRadius = localeText[this.location].iconRadius
-        this.iconSize = localeText[this.location].iconSize
+        ]),
+        icon: function() {
+            return localeText[this.location].icon
+        },
+        hideIcon: function() {
+            return localeText[this.location].hideIcon
+        },
+        iconRadius: function() {
+            return localeText[this.location].iconRadius
+        },
+        iconSize: function() {
+            return localeText[this.location].iconSize
+        }
     },
     methods: {
         formatTooltip(val) {

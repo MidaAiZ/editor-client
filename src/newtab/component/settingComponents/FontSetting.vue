@@ -7,7 +7,7 @@
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ fontSize }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" :min="12" :max="30" v-model="fontSizeValue" @input="setFontSize($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :min="12" :max="30" :value="fontSizeValue" @input="setFontSize($event)"></el-slider>
         </div>
         <div class="setting-open-item">
             <span class="setting-open-title">{{ fontColor }}</span>
@@ -33,9 +33,6 @@ export default {
     },
     data() {
         return {
-            font: '',
-            fontSize: '',
-            fontColor: '',
             colorPickerVis: false,
         }
     },
@@ -46,12 +43,16 @@ export default {
         ]),
         ...mapState('locale', [
             'location'
-        ])
-    },
-    created: function () {
-        this.font = localeText[this.location].font
-        this.fontSize = localeText[this.location].fontSize
-        this.fontColor = localeText[this.location].fontColor
+        ]),
+        font: function() {
+            return localeText[this.location].font
+        },
+        fontSize: function() {
+            return localeText[this.location].fontSize
+        },
+        fontColor: function() {
+            return localeText[this.location].fontColor
+        }
     },
     mounted: function () {
         let that = this;

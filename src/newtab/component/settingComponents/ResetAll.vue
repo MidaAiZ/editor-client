@@ -18,13 +18,15 @@ export default {
     name: 'resetAll',
     data() {
         return {
-            resetAll: ''
         }
     },
     computed: {
         ...mapState('locale', [
             'location',
         ]),
+        resetAll: function() {
+            return localeText[this.location].resetAll
+        }
     },
     methods: {
         handleReset() {
@@ -37,9 +39,6 @@ export default {
         ...mapActions('settings', [
             'uploadSettings',
         ]),
-    },
-    created: function() {
-        this.resetAll = localeText[this.location].resetAll
     },
 }
 </script>

@@ -35,7 +35,6 @@ export default {
     },
     data() {
         return {
-            logreg: '',
             logoutVis: false
         }
     },
@@ -47,10 +46,10 @@ export default {
         ]),
         logout: function() {
             return localeText[this.location].logout
+        },
+        logreg: function() {
+            return localeText[this.location].logreg
         }
-    },
-    created: function() {
-        this.logreg = localeText[this.location].logreg
     },
   methods: {
       setModalVis(vis) {

@@ -89,11 +89,7 @@ export default {
     name: 'iconLayout',
     data() {
         return {
-            layout: '',
         }
-    },
-    created: function() {
-        this.layout = localeText[this.location].layout
     },
     computed: {
         ...mapState('settings', [
@@ -101,7 +97,10 @@ export default {
         ]),
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        layout: function() {
+            return localeText[this.location].layout
+        }
     },
     methods: {
         setLayout(name, row, col) {

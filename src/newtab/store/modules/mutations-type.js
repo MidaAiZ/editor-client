@@ -82,3 +82,6 @@ export const SET_CURRENT_ICON = 'SET_CURRENT_ICON' // 设置默认展示城市�
 export const SET_WEATHER_DRAWER = 'SET_WEATHER_DRAWER' // 设置天气面板的开关
 export const SET_WEATHER_FORECAST = 'SET_WEATHER_FORECAST' // 设置天气预报
 export const CHANGE_UNIT = 'CHANGE_UNIT' // 切换计量单位
+
+// 语言类型相关的 mutation
+export const CHANGE_LOCALE = 'CHANGE_LOCALE' // 切换语言

@@ -4,13 +4,13 @@
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ bgMaskOpacity }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" v-model="maskOpacityValue" @input="changeOpacity($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :value="maskOpacityValue" @input="changeOpacity($event)"></el-slider>
         </div>
         <div class="bg-mask-setting-item-last">
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ bgBlur }}
             </p>
-            <el-slider v-model="bgBlurValue" @input="changeBlur($event)" :format-tooltip="formatTooltip"></el-slider>
+            <el-slider :value="bgBlurValue" @input="changeBlur($event)" :format-tooltip="formatTooltip"></el-slider>
         </div>
     </div>
 </template>
@@ -24,8 +24,6 @@ export default {
     name: 'wallPaperMask',
     data() {
         return {
-            bgMaskOpacity: '',
-            bgBlur: '',
         }
     },
     computed: {
@@ -35,13 +33,18 @@ export default {
         ]),
         ...mapState('locale', [
             'location',
-        ])
-    },
-    created: function() {
-        this.bgMaskOpacity = localeText[this.location].bgMaskOpacity
-        this.bgBlur = localeText[this.location].bgBlur
+        ]),
+        bgMaskOpacity: function() {
+            return localeText[this.location].bgMaskOpacity
+        },
+        bgBlur: function() {
+            return localeText[this.location].bgBlur
+        }
     },
     methods: {
+        formatTooltip(val) {
+            return val + '%';
+        },
         changeOpacity(value) {
             this.SET_BGMASKOPACITY(value)
             let debounceReq = debounce(this.uploadSettings, 500)

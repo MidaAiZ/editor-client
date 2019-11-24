@@ -17,11 +17,7 @@ import webListItem from './webListItem.vue';
 
 export default {
     name: 'webListCnt',
-    props: {
-    cid: {
-      type: String,
-      default: ""
-    }},
+    props: ['cid'],
     components: {
         webListItem,
     },

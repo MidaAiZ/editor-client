@@ -1,9 +1,9 @@
 <template>
     <div class="web-list-wrap">
         <el-menu
-            :default-active="0"
+            :default-active="defaultActive"
             class="web-list-menu">
-            <el-menu-item v-for="item in categories" v-bind:key="item.cid" :index="item.index" @click="changeCategory(item.cid)" >
+            <el-menu-item v-for="item in categories" v-bind:key="item.cid" :index="item.index.toString()" @click="changeCategory(item.cid)" >
                 <span class="menu-title" slot="title">{{ item.title }}</span>
             </el-menu-item>
         </el-menu>
@@ -25,8 +25,8 @@ export default {
     data() {
         return {
             menuListName: {},
-            cid: 0,
-            defaultActive: 0,
+            cid: '0',
+            defaultActive: '0',
         }
     },
     computed: {
@@ -44,6 +44,7 @@ export default {
             } else {
                 this.changeCategory(this.categories[0].cid)
                 this.$refs.addContent.getCategorySite(this.categories[0].cid)
+                this.defaultActive = '0'
             }
         }
     },

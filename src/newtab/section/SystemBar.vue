@@ -43,7 +43,6 @@ export default {
     data() {
       return {
         direction: 'rtl',
-        loginSuggest: '',
       };
     },
     computed: {
@@ -54,10 +53,10 @@ export default {
         ...mapState('drawersVis', ['systemBarVis']),
         ...mapState('settings', [
             'showBookMarkBar'
-        ])
-    },
-    created: function() {
-        this.loginSuggest = localeText[this.location].loginSuggest
+        ]),
+        loginSuggest: function() {
+            return localeText[this.location].loginSuggest
+        }
     },
     methods: {
       handleClose(done) {

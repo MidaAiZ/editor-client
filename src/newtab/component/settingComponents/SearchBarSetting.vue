@@ -25,19 +25,19 @@
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ searchBarRadius }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" max="50" v-model="searchBarRadiusValue" @input="setSearchBarRadius($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :max="50" :value="searchBarRadiusValue" @input="setSearchBarRadius($event)"></el-slider>
         </div>
         <div class="bg-mask-setting-item">
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ searchBarSize }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" v-model="searchBarSizeValue" @input="setSearchBarSize($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :value="searchBarSizeValue" @input="setSearchBarSize($event)"></el-slider>
         </div>
         <div class="bg-mask-setting-item">
             <p class="setting-type-name bg-mask-setting-item-name">
                 {{ searchBarOpacity }}
             </p>
-            <el-slider :format-tooltip="formatTooltip" v-model="searchBarOpacityValue" @input="setSearchBarOpacity($event)"></el-slider>
+            <el-slider :format-tooltip="formatTooltip" :value="searchBarOpacityValue" @input="setSearchBarOpacity($event)"></el-slider>
         </div>
     </div>
 </template>
@@ -51,21 +51,7 @@ export default {
     name: 'searchBarSetting',
     data() {
         return {
-            searchBar: '',
-            hideSearchBar: '',
-            hideSearchType: '',
-            searchBarSize: '',
-            searchBarRadius: '',
-            searchBarOpacity: '',
         }
-    },
-    created: function() {
-        this.searchBar = localeText[this.location].searchBar
-        this.hideSearchBar = localeText[this.location].hideSearchBar
-        this.hideSearchType = localeText[this.location].hideSearchType
-        this.searchBarSize = localeText[this.location].searchBarSize
-        this.searchBarRadius = localeText[this.location].searchBarRadius
-        this.searchBarOpacity = localeText[this.location].searchBarOpacity
     },
     computed: {
         ...mapState('settings', [
@@ -77,7 +63,25 @@ export default {
         ]),
         ...mapState('locale', [
             'location',
-        ])
+        ]),
+        searchBar: function() {
+            return localeText[this.location].searchBar
+        },
+        hideSearchBar: function() {
+            return localeText[this.location].hideSearchBar
+        },
+        hideSearchType: function() {
+            return localeText[this.location].hideSearchType
+        },
+        searchBarSize: function() {
+            return localeText[this.location].searchBarSize
+        },
+        searchBarRadius: function() {
+            return localeText[this.location].searchBarRadius
+        },
+        searchBarOpacity: function() {
+            return localeText[this.location].searchBarOpacity
+        }
     },
     methods: {
         formatTooltip(val) {

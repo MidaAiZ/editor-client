@@ -96,6 +96,11 @@
                 if(newEngine.title !== oldEngine.title) {
                     this.setTabs()
                 }
+            },
+            location: function(newLocation, oldLocation) {
+                if(newLocation !== oldLocation) {
+                    this.setTabs()
+                }
             }
         },
         data() {
