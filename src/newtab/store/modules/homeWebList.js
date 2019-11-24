@@ -56,19 +56,7 @@ const getters = {
             sum = sum + data.length
         })
         return sum
-    },
-    //将数组按index属性排序
-    sortArray: (state,getters) => {
-
-            let arr = state.homeWebList;
-            arr.forEach((item, index) => {
-                item.forEach((i, idx) => {
-                    i.index = idx
-                })
-            })
-            return arr
-        // return state.homeWebList.sort(compare('index'))
-    },
+    }
 
 }
 

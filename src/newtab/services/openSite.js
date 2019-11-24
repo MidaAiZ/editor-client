@@ -7,8 +7,8 @@ import siteHistory from './apis/siteHistory.js';
  * @param  {string} openWay       打开新网站的方式，实在本页面直接打开还是在新标签页打开
  */
 export const openSite = (siteObj, openWay, callback) => {
-    if(siteObj.siteUrl.indexOf('tabplus') === 0) {
-        console.log('you')
+    if(siteObj.siteUrl.indexOf('tabplus://') === 0) {
+        // console.log('you')
         callback();
     } else {
         req(siteHistory.record, {}, siteObj)

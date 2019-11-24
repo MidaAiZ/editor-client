@@ -78,3 +78,7 @@ export const SET_GET_LOADING = 'SET_GET_LOADING' // 设置主页网站
 export const SET_CURRENT_CITY = 'SET_CURRENT_CITY' // 设置默认展示的城市
 export const SET_CURRENT_WEATHER = 'SET_CURRENT_WEATHER' // 设置默认展示城市的天气
 export const SET_CURRENT_TMP = 'SET_CURRENT_TMP' // 设置默认展示城市的温度
+export const SET_CURRENT_ICON = 'SET_CURRENT_ICON' // 设置默认展示城市的天气图标
+export const SET_WEATHER_DRAWER = 'SET_WEATHER_DRAWER' // 设置天气面板的开关
+export const SET_WEATHER_FORECAST = 'SET_WEATHER_FORECAST' // 设置天气预报
+export const CHANGE_UNIT = 'CHANGE_UNIT' // 切换计量单位

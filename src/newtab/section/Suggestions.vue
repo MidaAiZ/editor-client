@@ -151,7 +151,7 @@
             },
             ...mapState('homeWebList', ['homeWebList', 'isEdit', 'editDrawerVisible']),
             ...mapState('settings', ['iconLayout', 'iconSizeValue', 'hideAllIcons']),
-            ...mapGetters('homeWebList', ['totalSize', 'sortArray', 'isEdit']),
+            ...mapGetters('homeWebList', ['totalSize', 'isEdit']),
             ...mapState('locale', ['location']),
         },
         data() {

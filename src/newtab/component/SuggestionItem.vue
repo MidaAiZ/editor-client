@@ -7,15 +7,17 @@
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
             <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" id="item-img"
                 @click='toNewSite' @mouseup="itemEdit" 
-                @contextmenu.stop.prevent="contextMenu">
-                <img :src="src" class='handle-img'/>
+                @contextmenu.stop.prevent="contextMenu"
+            >
+                <img :src="isWeather ? currentIcon : src" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>
                 </div>
             </div>
         </div>
         <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
-            {{itemInfo.title}}
+            <span v-if="isWeather">{{currentTmp}}</span>
+            <span v-else>{{itemInfo.title}}</span>
         </div>
     </div>
 </template>
@@ -37,6 +39,8 @@
         computed: {
             ...mapState('settings', ['fontColorValue', 'fontSizeValue', 'iconSizeValue', 'iconRadiusValue',
                 'iconLayout','newSiteNewTabValue']),
+            ...mapState('locale', ['location']),
+            ...mapState('weather', ['currentTmp', 'currentIcon']),
             ...mapState('homeWebList',['isEdit','editDrawerVisible']),
             src: function(){
                     let itemInfo = this.itemInfo;
@@ -86,7 +90,7 @@
                 let imgStyle = {
                     'width': '',
                     'height': '',
-                    'border-radius': this.iconRadiusValue + '%'
+                    'border-radius': this.iconRadiusValue + '%',
                 };
                 let col = this.iconLayout.col;
                 switch (this.iconLayout.row) {
@@ -139,6 +143,7 @@
                 isHover: false,
                 editImg: require('../../../static/img/edit.svg'),
                 isDelete: false,
+                isWeather: false,
                 // isEdit: false
             }
         },
@@ -148,9 +153,13 @@
                 'EDIT_DRAWER_VISIBLE',
                 'CHANGE_CURRENT_ITEM',
             ]),
+            ...mapMutations('drawersVis',[
+                'SET_WEATHER_DRAWER',
+            ]),
             ...mapActions('homeWebList',[
                 'deleteOne'
             ]),
+            ...mapActions('weather', ['getCurrentWeather']),
             clickItem() {
                 this.isHover = true;
                 this.$emit('change');
@@ -173,7 +182,14 @@
                     siteUrl: itemInfo.url,
                     siteTitle: itemInfo.title
                 };
-                openSite(siteObj, this.newSiteNewTabValue ? 'newtab' : '');
+                let cbFunc;
+                if(this.itemInfo.url.indexOf('tabplus://weather') === 0) {
+                    let that = this;
+                    cbFunc = function() {
+                        that.SET_WEATHER_DRAWER(true)
+                    }
+                }
+                openSite(siteObj, this.newSiteNewTabValue ? 'newtab' : '', cbFunc);
                 // window.open(this.itemInfo.url,!this.newSiteNewTabValue);
                 
                 
@@ -232,6 +248,15 @@
             document.onclick=function(){
                 self.CHANGE_IS_EDIT(false);
             }
+            if(this.itemInfo.url.indexOf('tabplus://weather') === 0) {
+                this.isWeather = true;
+                let lang = this.location
+                let payload = {
+                    location: 'auto_ip',
+                    lang: this.location
+                }
+                this.getCurrentWeather(payload)
+            }
         }
     }
 </script>
@@ -270,7 +295,7 @@
     }
     .item-img{
         position:relative;
-        background-color:rgba(255, 255, 255,0);
+        background-color:rgba(255, 255, 255,0.9);
         /* display: flex;
         flex-direction: column;
         align-items: center;

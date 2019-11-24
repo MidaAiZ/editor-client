@@ -220,7 +220,7 @@ export const defaultMenu = {
         isFolder: false,
         children: []
       },],
-      [{
+[      {
         sid: 12,
         title: 'steam',
         iconSrc: '',

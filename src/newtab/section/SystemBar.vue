@@ -7,7 +7,7 @@
             <i class="el-icon-menu"></i>
         </div>
         <el-drawer
-            :visible.sync="systemBarVis"
+            :visible="systemBarVis"
             :direction="direction"
             :show-close="false"
             @close="SET_SYSBARVIS(false)"

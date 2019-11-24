@@ -52,10 +52,10 @@ import { localSave } from '../../utils/localSave.js'
     fontColorValue: '#fff',
   }
 // initial state
-const state = (localStorage.getItem('settings') && JSON.parse(localStorage.getItem('settings')) !== {}) ? {
-    ...JSON.parse(localStorage.getItem('settings'))
-  } : defaultSetting
-  
+const localSettings = localStorage.getItem('settings');
+const state = Object.assign(defaultSetting, JSON.parse(localSettings || "{}"));
+
+
   // getters
   const getters = {
     

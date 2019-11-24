@@ -5,15 +5,16 @@
       <div class="bookmarks-wrap" v-if="showBookMarkBar">
         <bookmarks />
       </div>
-      <div class="weather-wrap">
+      <!-- <div class="weather-wrap">
         <weather />
-      </div>
+      </div> -->
       <systemBar />
       <div class="loading-tips">
         <cloud-tips />
       </div>
       <settingDialog />
       <customAddDrawer />
+      <weather />
       <manage />
       <div id="content">
         <div id="main">
