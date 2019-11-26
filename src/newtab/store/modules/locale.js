@@ -22,11 +22,11 @@ const state = {
       name: 'Deutsch',
     },
     {
-      code: 'GB',
+      code: 'en',
       name: 'English(UK)'
     },
     {
-      code: 'US',
+      code: 'en_US',
       name: 'English(United States)'
     }
   ]
