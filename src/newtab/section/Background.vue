@@ -43,7 +43,7 @@ export default {
     methods: {
         setWallPaperCb(localUrl) {
             this.imgUrl = localUrl
-            this.SET_WALLPAPERLOADING(false)
+            // this.SET_WALLPAPERLOADING(false)
         },
         ...mapMutations('wallPaper', [
             'SET_WALLPAPERLOADING'

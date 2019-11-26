@@ -140,5 +140,7 @@ const zh_TW = {
     addNewSearchEngine: '添加新的搜索引擎',
     searchEngine: '搜索引擎',
     engineUrl: '網址（用“#content#”代替搜索字詞)',
+    loadImgFail: '圖片加載錯誤',
+    wrongNetwork: '網絡錯誤'
 }
 export default zh_TW

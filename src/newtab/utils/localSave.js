@@ -1,6 +1,7 @@
 import req from '../services/index.js';
 import { upBase64 } from '../services/uploadImg.js';
 import imgHost from '../services/apis/imgHost.js';
+import { Message } from 'element-ui';
 
 const localSave = (settingKey, settingValue) => {
     let oldSetting = localStorage.getItem(settingKey) || "{}";
@@ -58,6 +59,9 @@ const saveImg = (key, srcUrl, callBack) => {
         }
         callBack(storageImg.img)
     };
+    imgDom.onerror = function() {
+        Message.error({message: localeText[rootState.locale.location].loadImgFail})
+    }
 }
 
 const NoIconFunc = async (title, width, height, color) => {

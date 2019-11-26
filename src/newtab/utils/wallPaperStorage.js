@@ -1,6 +1,7 @@
 import { saveImg } from './localSave.js'
 import req from '../services/index.js'
 import wallPaper from '../services/apis/wallPaper.js'
+import { Message } from 'element-ui';
 
 const storageWallPaper = (imgSrc, srcUrl, wallDomId, callBack) => {
     //在本地存储中保存图片
@@ -24,7 +25,12 @@ const setWallPaper = (imgSrc, srcUrl, callBack) => {
 
 const getUnsplashWallPaper = async (callBack) => {
     const { data } = await req(wallPaper.random)
-    setWallPaper('Unsplash', data.data, callBack)
+    if( data && data.code === 'Success') {
+        setWallPaper('Unsplash', data.data, callBack)
+    } else {
+        console.log('failImg')
+        callBack('')
+    }
 }
 
 export {
