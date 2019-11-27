@@ -81,7 +81,7 @@ const NoIconFunc = async (title, width, height, color) => {
     imgContext.fillText(imgText, width / 2, height / 2);
     const base64Src = imgCanvas.toDataURL("image/png");
     let src;
-    await upBase64(base64Src, (key) => {src = imgHost + key}, () => {console.log('上传失败')})
+    await upBase64(base64Src, (key, cdnHost) => {src = (cdnHost || imgHost) + key}, () => {console.log('上传失败')})
     let imgObj = {
         iconBase64: base64Src,
         iconSrc: src || ''

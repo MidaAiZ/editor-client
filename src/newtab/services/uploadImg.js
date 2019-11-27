@@ -78,7 +78,7 @@ export class UploadImgServer {
       };
       let { data } = await req(upImgServerObj, {}, imgD, headers, false);
       console.log(data, "上传成功");
-      successCb(tokenData.data.key);
+      successCb(tokenData.data.key, tokenData.data.cdnHost);
     } else {
       failCb();
     }

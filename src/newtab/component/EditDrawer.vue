@@ -68,7 +68,7 @@
                 this.currentItem.itemInfo.iconSrc = data;
                 this.tempBase64 = data;
                 if (this.cloudSave) {
-                    await upBase64(data, (key) => {this.tempSrc = imgHost + key}, () => {console.log('上传失败')})
+                    await upBase64(data, (key, cdnHost) => {this.tempSrc = (cdnHost || imgHost) + key}, () => {console.log('上传失败')})
                 }
                 this.editDialogVisible = false;
             },
