@@ -116,7 +116,7 @@
     fontColor: '字体颜色',
     resetAll: '恢复默认设置',
     cloudSaveBtn: '云同步',
-    cloudSaveTip: '您的设置、书签等会被同步到云端',
+    cloudSaveTip: '您的设置、首页添加网站等会被同步到云端',
     manageBtn: '管理',
     manageTitle: '管理书签、历史记录',
     bookmarksName: '书签',

@@ -86,7 +86,7 @@ export default {
         padding-right: 5px;
     }
     .logo {
-        width: 150px;
+        min-width: 150px;
         text-align: left;
         font-size: 20px;
         line-height: 40px;
