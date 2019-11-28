@@ -1,6 +1,6 @@
 <template>
     <div style="margin: 0; padding: 0">
-        <ul style="margin: 0; padding: 0" v-if="hasContent === true" infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore">
+        <ul style="margin: 0; padding: 0" v-if="hasContent === true" :infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore">
             <li style="overflow:auto" v-for="item in currentSiteList" :key="item.sid">
                 <web-list-item :item="item"></web-list-item>
             </li>
@@ -43,7 +43,7 @@ export default {
     },
     watch: {
         cid: function(newId, oldId) {
-            if(this.newId !== oldId) {
+            if(newId !== oldId && newId !== 'hottest') {
                 this.SET_SITES_PAGE(1)
                 this.getCategorySite(newId);
             }
@@ -67,6 +67,7 @@ export default {
         ...mapActions('addWebList', [
             'getSitesInCategory',
             'loadMore',
+            'getHottest'
         ]),
         ...mapMutations('addWebList', [
             'SET_SITES_PAGE',
@@ -82,6 +83,11 @@ export default {
                 pageSize: this.pageSize,
             }
             this.getSitesInCategory(payload)
+        },
+        getHot() {
+            this.SET_LOADING(true)
+            this.SET_SITES_PAGE(1)
+            this.getHottest()
         },
         handleLoadMore() {
             this.SET_LOADING(true)

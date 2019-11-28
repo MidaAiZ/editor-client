@@ -12,6 +12,10 @@ const sitesCategories = {
     search: {
         p: `${host}sites`, // 搜索某一网站 接收参数{keyword}
         m: 'GET'
+    },
+    hottest: {
+        p: `${host}sites/popular`, // 获取热门站点
+        m: 'GET'
     }
 }
 

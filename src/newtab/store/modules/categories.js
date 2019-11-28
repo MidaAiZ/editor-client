@@ -27,7 +27,7 @@ const actions = {
         // console.log(data, '分类')
         localSave('categories', data.data)
         commit('SET_CATEGORIES', data.data)
-    },
+    }
 }
 
 // mutations

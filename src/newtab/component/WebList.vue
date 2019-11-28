@@ -3,7 +3,10 @@
         <el-menu
             :default-active="defaultActive"
             class="web-list-menu">
-            <el-menu-item style="height: auto; line-height: 20px" v-for="item in categories" v-bind:key="item.cid" :index="item.index.toString()" @click="changeCategory(item.cid)" >
+            <el-menu-item style="height: auto; line-height: 20px" :index="'hottest'" @click="getHot" v-if="categories[0].cid !== 'search'">
+                <div class="menu-title" slot="title">{{ hottest }}</div>
+            </el-menu-item>
+            <el-menu-item style="height: auto; line-height: 20px" v-for="(item, index) in categories" v-bind:key="item.cid" :index="index.toString()" @click="changeCategory(item.cid)" >
                 <div class="menu-title" slot="title">{{ item.title }}</div>
             </el-menu-item>
         </el-menu>
@@ -25,8 +28,8 @@ export default {
     data() {
         return {
             menuListName: {},
-            cid: '0',
-            defaultActive: '0',
+            cid: 'hottest',
+            defaultActive: 'hottest',
         }
     },
     computed: {
@@ -36,31 +39,46 @@ export default {
         ...mapState('categories', [
             'categories'
         ]),
+        hottest: function() {
+            return localeText[this.location].appTypeList.hottest
+        }
     },
     watch: {
         categories: function() {
             if(this.categories[0].cid === 'search') {
                 this.defaultActive = 'search'
             } else {
-                this.changeCategory(this.categories[0].cid)
-                this.$refs.addContent.getCategorySite(this.categories[0].cid)
-                this.defaultActive = '0'
+                this.changeCategory('hottest')
+                this.$refs.addContent.getHot()
+                this.defaultActive = 'hottest'
             }
         }
     },
     mounted: function(){
-        this.cid = this.categories[0].cid;
+        // this.cid = this.categories[0].cid;
     },
     created: function() {
-        this.getCategories()
+        this.getHottest()
         // this.menuListName = localeText[this.location].appTypeList
     },
     methods: {
         ...mapActions('categories', ['getCategories']),
+        ...mapActions('addWebList', ['getHottest']),
+        ...mapMutations('addWebList', [
+            'SET_SITES_PAGE',
+            'DIS_AUTO_LOAD',
+            'SET_LOADING'
+        ]),
         changeCategory(cid) {
             // console.log('cid', cid)
             this.cid = cid
 
+        },
+        getHot() {
+            this.cid = 'hottest'
+            this.SET_LOADING(true);
+            this.SET_SITES_PAGE(1);
+            this.getHottest()
         }
     }
 }
