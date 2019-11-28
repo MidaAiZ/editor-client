@@ -25,19 +25,6 @@ const naver = require('../../../../static/logos/naver.svg');
 const duckduckgo = require('../../../../static/logos/duckduckgo.svg');
 const defaultEngineList = [
     {
-        id: 5,
-        urls:{
-            web: 'https://www.baidu.com/s?wd=#content#',
-            news: 'https://www.baidu.com/s?wd=#content#&tn=news',
-            image: 'https://image.baidu.com/search/index?tn=baiduimage&ps=1&cl=2&ie=utf-8&word=#content#',
-            video: 'https://www.baidu.com/sf/vsearch?wd=#content#&pd=video&tn=vsearch',
-            map: 'https://map.baidu.com/search/f?querytype=s&wd=#content#'
-        },
-        iconSrc: baidu,
-        title: '百度',
-        isChoose: true
-    },
-    {
         urls: {
             news: "https://google.com/search?q=#content#&source=lnms&tbm=nws",
             image: "https://google.com/search?q=#content#&source=lnms&tbm=isch",
@@ -48,6 +35,19 @@ const defaultEngineList = [
         title: "Google",
         iconSrc: google,
         id: 0,
+        isChoose: true
+    },
+    {
+        id: 5,
+        urls:{
+            web: 'https://www.baidu.com/s?wd=#content#',
+            news: 'https://www.baidu.com/s?wd=#content#&tn=news',
+            image: 'https://image.baidu.com/search/index?tn=baiduimage&ps=1&cl=2&ie=utf-8&word=#content#',
+            video: 'https://www.baidu.com/sf/vsearch?wd=#content#&pd=video&tn=vsearch',
+            map: 'https://map.baidu.com/search/f?querytype=s&wd=#content#'
+        },
+        iconSrc: baidu,
+        title: 'Baidu',
         isChoose: true
     },
     {
@@ -58,57 +58,29 @@ const defaultEngineList = [
         iconSrc: yahoo,
         title: 'Yahoo!',
         isChoose: true
-    },{
-        id: 4,
-        urls: {
-            web: 'http://www.so.com/s?q=#content#'
-        },
-        iconSrc: search360,
-        title: '360搜索',
-        isChoose: true
-    },{
-        id: 6,
-        urls: {
-            web: 'https://www.sogou.com/web?query=#content#'
-        },
-        iconSrc: sougou,
-        title: '搜狗',
-        isChoose: true
     }
 ];
+let cE = {
+    urls: {
+        news: "https://google.com/search?q=#content#&source=lnms&tbm=nws",
+        image: "https://google.com/search?q=#content#&source=lnms&tbm=isch",
+        web: "https://google.com/search?q=#content#&oq=#content#",
+        video: "https://google.com/search?q=#content#&source=lnms&tbm=vid",
+        map: "https://www.google.com/maps/search/#content#"
+    },
+    title: "Google",
+    iconSrc: google,
+    id: 0,
+    isChoose: true
+};
 
 const state = {
     searchPopoverVisible: false,
-    currentSearchEngine:{
-        urls: {
-            news: "https://google.com/search?q=#content#&source=lnms&tbm=nws",
-            image: "https://google.com/search?q=#content#&source=lnms&tbm=isch",
-            web: "https://google.com/search?q=#content#&oq=#content#",
-            video: "https://google.com/search?q=#content#&source=lnms&tbm=vid",
-            map: "https://www.google.com/maps/search/#content#"
-        },
-        title: "Google",
-        iconSrc: google,
-        id: 0,
-        isChoose: true
-    },
+    currentSearchEngine: localStorage.getItem('currentEngine') ? JSON.parse(localStorage.getItem('currentEngine')).cE : cE,
     searchEngineList: localStorage.getItem('engineList') ? 
         JSON.parse(localStorage.getItem('engineList')).engineList
       : defaultEngineList,
     allEngineList:[
-        {
-            id: 5,
-            urls:{
-                web: 'https://www.baidu.com/s?wd=#content#',
-                news: 'https://www.baidu.com/s?wd=#content#&tn=news',
-                image: 'https://image.baidu.com/search/index?tn=baiduimage&ps=1&cl=2&ie=utf-8&word=#content#',
-                video: 'https://www.baidu.com/sf/vsearch?wd=#content#&pd=video&tn=vsearch',
-                map: 'https://map.baidu.com/search/f?querytype=s&wd=#content#'
-            },
-            iconSrc: baidu,
-            title: '百度',
-            isChoose: true
-        },
         {
             urls: {
                 news: "https://google.com/search?q=#content#&source=lnms&tbm=nws",
@@ -130,22 +102,36 @@ const state = {
             iconSrc: yahoo,
             title: 'Yahoo!',
             isChoose: true
-        },{
+        },
+        {
+            id: 5,
+            urls:{
+                web: 'https://www.baidu.com/s?wd=#content#',
+                news: 'https://www.baidu.com/s?wd=#content#&tn=news',
+                image: 'https://image.baidu.com/search/index?tn=baiduimage&ps=1&cl=2&ie=utf-8&word=#content#',
+                video: 'https://www.baidu.com/sf/vsearch?wd=#content#&pd=video&tn=vsearch',
+                map: 'https://map.baidu.com/search/f?querytype=s&wd=#content#'
+            },
+            iconSrc: baidu,
+            title: 'Baidu',
+            isChoose: true
+        },
+        {
             id: 4,
             urls: {
                 web: 'http://www.so.com/s?q=#content#'
             },
             iconSrc: search360,
-            title: '360搜索',
-            isChoose: true
+            title: '360',
+            isChoose: false
         },{
             id: 6,
             urls: {
                 web: 'https://www.sogou.com/web?query=#content#'
             },
             iconSrc: sougou,
-            title: '搜狗',
-            isChoose: true
+            title: 'sougou',
+            isChoose: false
         }
     ],
     customEngineList:localStorage.getItem('customEngineList') ? JSON.parse(localStorage.getItem('customEngineList')).engineList : []
@@ -202,8 +188,9 @@ const mutations = {
         state.searchPopoverVisible = false;
     },
     [CHANGE_CURRENT_ENGINE] (state,index){
-        console.log(index);
+        // console.log(index);
         state.currentSearchEngine = state.searchEngineList[index]
+        localSave('currentEngine', {cE: state.currentSearchEngine})
     },
     [ADD_CUSTOM_ENGINE] (state, customEngine){
         state.customEngineList.push(customEngine);

@@ -145,6 +145,7 @@ const en = {
     searchEngine: 'search engine',
     engineUrl: 'URL (use "# content #" instead of search terms)',
     loadImgFail: 'Image loading error',
-    wrongNetwork: 'Network Error'
+    wrongNetwork: 'Network Error',
+    noDesc: 'No Description',
 }
 export default en

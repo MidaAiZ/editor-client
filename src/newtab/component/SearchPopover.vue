@@ -1,15 +1,17 @@
 <template>
     <div id="search-popover" :style="borderRadius">
-        <span class="search-engine-container" v-for="(item,index) in engineList" @click="changeEngine(index)"
+        <div class="search-engine-container" v-for="(item,index) in engineList" @click="changeEngine(index)"
             :key="index">
-            <div class="search-engine">
+            <div v-if="index === engineList.length-1" class="search-engine">
                 <span v-if="index === engineList.length-1" class="add-icon">
-                    <span class="icon-container"><i class="el-icon-circle-plus-outline"></i></span>
+                    <div class="icon-container"><i class="el-icon-circle-plus-outline"></i></div>
                 </span>
-                <img v-else :src="item.iconSrc" class="engine-img" />
+            </div>
+            <div v-else class="search-engine">
+                <img :src="item.iconSrc" class="engine-img" />
                 <div class="engine-name">{{item.title}}</div>
             </div>
-        </span>
+        </div>
         <el-drawer :visible="drawer" size="500px" @close="drawerClose()" :show-close="false" :modal="false">
             <div slot="title" class="engine-drawer-top">
                 <span class="engine-drawer-title">{{search}}</span>
@@ -57,17 +59,17 @@
                         <div v-else>
                             <div class="form-item-container">
                                 <div class="form-label">{{searchEngine}}</div>
-                                <el-input v-model="customEngine.name"></el-input>
+                                <el-input v-model="customEngine.title"></el-input>
                             </div>
                             <div class="form-item-container">
                                 <div class="form-label">{{engineUrl}}</div>
-                                <el-input type="textarea" v-model="customEngine.url"></el-input>
+                                <el-input type="textarea" v-model="customEngine.urls"></el-input>
                             </div>
                             <div class="form-item-container">
                                 <div class="form-label">{{engineIcon}}</div>
                                 <div>
-                                    <el-upload class="avatar-uploader"
-                                        action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false"
+                                    <el-upload class="avatar-uploader" :show-file-list="false"
+                                        action=""
                                         :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
                                         :on-change="uploadChange" :auto-upload="false">
                                         <img v-if="customEngine.iconSrc" :src="customEngine.iconSrc" class="avatar">
@@ -129,9 +131,8 @@
             engineList: function () {
                 let result = this.searchEngineList.slice();
                 result.push({
-                    'name': '添加'
+                    'name': 'add'
                 });
-                console.log(this.searchEngineList);
                 return result
             },
             search: function() {
@@ -178,10 +179,10 @@
                 dialogVisible: false,
                 customEngine: {
                     id: '',
-                    urls: {web: ''},
+                    urls: '',
                     iconSrc: '',
                     title: '',
-                    isChoose: ''
+                    isChoose: true
                 },
                 option: {
                     img: '', // 裁剪图片的地址  (默认：空)
@@ -271,6 +272,7 @@
             addCustomEngine(){
                 this.customEngine.id = this.maxID + 1;
                 this.customEngine.isChoose = true;
+                this.customEngine.urls = {web: this.customEngine.urls}
                 this.ADD_CUSTOM_ENGINE({...this.customEngine});
                 this.customEngine.urls.web = '';
                 this.customEngine.iconSrc = '';
@@ -304,7 +306,7 @@
     }
 
     .search-engine-container {
-        display: inline-block;
+        float: left;
         width: 20%;
         height: 6vw;
         cursor: pointer;

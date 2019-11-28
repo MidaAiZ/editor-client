@@ -93,9 +93,7 @@
         },
         watch: {
             currentSearchEngine: function(newEngine, oldEngine) {
-                if(newEngine.title !== oldEngine.title) {
-                    this.setTabs()
-                }
+                this.setTabs()
             },
             location: function(newLocation, oldLocation) {
                 if(newLocation !== oldLocation) {
@@ -117,7 +115,7 @@
             }
         },
         methods: {
-            ...mapMutations('engineList', ['OPEN_ENGINE_POPOVER']),
+            ...mapMutations('engineList', ['OPEN_ENGINE_POPOVER', 'CHANGE_CURRENT_ENGINE']),
             setTabs() {
                 let tabArr = [];
                 let tabListLocale = localeText[this.location].searchTab;
@@ -194,15 +192,26 @@
                 window.open(url)
             },
             async inputChange() {
-                console.log('change');
-                let sugurl = {
-                    p: 'http://suggestion.baidu.com/su',
-                    m: 'GET'
-                };
-                let input = {
-                    wd: this.inputValue,
+                let sugurl;
+                let input;
+                if(this.location === 'zh_CN') {
+                    sugurl = {
+                        p: 'http://suggestion.baidu.com/su',
+                        m: 'GET'
+                    };
+                    input = {
+                        wd: this.inputValue,
 
-                };
+                    };
+                } else {
+                    sugurl = {
+                        p: 'http://sg1.api.bing.com/qsonhs.aspx',
+                        m: 'GET'
+                    };
+                    input = {
+                        q: this.inputValue,
+                    }
+                }
                 const {
                     data
                 } = await req(sugurl, input);
@@ -234,7 +243,9 @@
         },
         mounted() {
             this.setTabs();
-            console.log('th', this.$store)
+            if(this.location === 'zh_CN' && !localStorage.getItem('currentEngine')) {
+                this.CHANGE_CURRENT_ENGINE(1)
+            }
         }
     }
 </script>
@@ -274,6 +285,8 @@
     }
 
     #search-input-container {
+        width: 40vw;
+        min-width: 451px;
         display: flex;
         align-items: center;
         position: relative;

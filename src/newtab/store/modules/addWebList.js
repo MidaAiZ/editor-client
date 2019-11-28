@@ -40,10 +40,12 @@ const actions = {
         }
     },
     async loadMore ({ state, commit }, payload) { // 从服务器获取网站分类列表
+        commit('DIS_AUTO_LOAD', true)
         if(payload.categoryIds === 'hottest') {
             const { data } = await req(sitesCategories.hottest, payload)
             commit('SET_LOADING', false)
-            if (data.code === 'Success') { 
+            if (data.code === 'Success') {
+                commit('DIS_AUTO_LOAD', false) 
                 let arr = state.currentSiteList.concat(data.data)
                 // localSave('categories', data.data)
                 commit('SET_SITES_CATEGORY', arr)
