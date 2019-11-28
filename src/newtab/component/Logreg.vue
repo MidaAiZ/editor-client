@@ -14,9 +14,6 @@
                 :value="loginPassword" 
                 @input="inputLogin($event.target.value, 'loginPassword')"
             />
-            <div class="forget-psw-wrap">
-                {{forgetPsw}}
-            </div>
             <div class="log-or-reg">
                 <el-button class="login-btn" :loading="loginLoading" @click="handleLogin" type="primary">{{loginBtn}}</el-button>
                 <div class="new-user-btn" @click="filter = 'register'">

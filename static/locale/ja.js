@@ -31,7 +31,7 @@ const ja = {
         hottest: '人気の',
         application: 'アプリ',
         news: 'ニュース',
-        musicAndVideo: '音楽動画',
+        musicAndVideo: '音楽と動画',
         img: 'イメージ',
         shopping: 'ショッピング',
         socialNetworkAndBlog: 'SNS',
@@ -145,6 +145,7 @@ const ja = {
     searchEngine: '搜索引擎',
     engineUrl: '网址（用“#content#”代替搜索字词)',
     loadImgFail: '图片加载错误',
-    wrongNetwork: '网络错误'
+    wrongNetwork: '网络错误',
+    noDesc: '没有简介',
 }
 export default ja

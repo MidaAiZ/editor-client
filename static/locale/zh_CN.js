@@ -1,4 +1,4 @@
- const zh_CN = {
+const zh_CN = {
     searchTab: {
         web: '网页',
         image: '图片',
@@ -145,6 +145,7 @@
     searchEngine: '搜索引擎',
     engineUrl: '网址（用“#content#”代替搜索字词)',
     loadImgFail: '图片加载错误',
-    wrongNetwork: '网络错误'
+    wrongNetwork: '网络错误',
+    noDesc: '没有简介',
 }
 export default zh_CN

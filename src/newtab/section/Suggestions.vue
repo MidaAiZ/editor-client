@@ -14,7 +14,7 @@
                                 :item-info="item" 
                                 :page-index="index" 
                                 :item-index="idx" 
-                                :key="item.index" 
+                                :key="idx" 
                                 v-on:change="changeDrag" 
                                 v-on:leave="leaveDrag" 
                                 class="list-complete-item"

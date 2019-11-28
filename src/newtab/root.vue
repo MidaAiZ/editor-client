@@ -99,6 +99,8 @@ export default {
         
     },
     created: async function () {
+      // console.log('languageeee', localLang)
+      // 判断是否登录
       let localLang = navigator.language ? navigator.language : navigator.userLanguage;
       localLang = localLang.replace(/-/, "_");
       let localSettings = JSON.parse(localStorage.getItem('settings') || "{}")
@@ -109,8 +111,13 @@ export default {
           this.changeLocale('en')
         }
       }
-      // console.log('languageeee', localLang)
-      // 判断是否登录
+      if(!localSettings || !localSettings.defaultLocale) {
+        if(localeText[localLang]) {
+          this.changeLocale(localLang)
+        } else {
+          this.changeLocale('en')
+        }
+      }
       const loginInfo = await this.judgeLogin()
       if(loginInfo === 'hasLogined') {
               this.getUserSettings()
