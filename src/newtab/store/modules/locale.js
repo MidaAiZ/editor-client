@@ -6,7 +6,7 @@ import { defaultSettings } from '../../utils/defaultOpt.js';
 // initial state
 let localSettings = JSON.parse(localStorage.getItem('settings') || "{}");
 const state = {
-  location: localSettings.defaultLocale ? localSettings.defaultLocale.lang : 'en',
+  location: localSettings.defaultLocale ? localSettings.defaultLocale : 'en',
   locationList: [
     {
       code: 'en',
@@ -44,7 +44,7 @@ const getters = {
 const actions = {
   async changeLocale({commit, dispatch, state}, locale) {
     commit('CHANGE_LOCALE', locale)
-    let newSettings = Object.assign(defaultSettings, localSettings, {defaultLocale: {version: 'user',lang: locale}});
+    let newSettings = Object.assign(defaultSettings, localSettings, {defaultLocale: locale, localeVersion: 'user'});
     dispatch('settings/uploadSettings', newSettings, {root:true});
     commit('settings/SET_ALL', newSettings, {root:true});
   }

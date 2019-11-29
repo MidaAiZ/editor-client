@@ -100,6 +100,7 @@ export const defaultMenu = {
         url: 'tabplus://weather',
         index: 1,
         isFolder: false,
+        isWeather: true,
         children: []
       },
       {

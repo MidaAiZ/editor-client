@@ -104,7 +104,7 @@ export default {
       let localLang = navigator.language ? navigator.language : navigator.userLanguage;
       localLang = localLang.replace(/-/, "_");
       let localSettings = JSON.parse(localStorage.getItem('settings') || "{}")
-      if(localSettings.defaultLocale && localSettings.defaultLocale.version === 'default') {
+      if(localSettings.defaultLocale && localSettings.localeVersion === 'default') {
         if(localeText[localLang]) {
           this.changeLocale(localLang)
         } else {

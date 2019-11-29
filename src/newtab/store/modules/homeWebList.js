@@ -114,7 +114,7 @@ const actions = {
         const { data } = await req(homeMenus.user_menu)
         commit('SET_GET_LOADING', false)
         let menu;
-        if (data.data && data.data.menu && data.data.menu.length !== 0) {
+        if (data.data && data.data.menu ) {
             menu = {
                 version: data.data.version,
                 menus: data.data.menu
@@ -134,7 +134,7 @@ const actions = {
             })
         })
 
-        if (data.data.version !== JSON.parse(localStorage.getItem('homeMenus')).version) {
+        if (!localStorage.getItem('homeMenus') || data.data.version !== JSON.parse(localStorage.getItem('homeMenus')).version) {
             let listArr = menu.menus;
 
             const promises = [];
