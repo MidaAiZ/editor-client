@@ -62,13 +62,36 @@ const getters = {
 
 // actions
 const actions = {
-    async getDefaultMenus ({ commit }) { // 从服务器获取默认主页添加网站
+    async getDefaultMenus ({ commit, rootState }) { // 从服务器获取默认主页添加网站
+        console.log('rootState', rootState)
         const { data } = await req(homeMenus.default)
         let menu;
         if (data.code === 'Success') {
+            let rowNumber = rootState.settings.iconLayout.row; //一页多少行
+            let colNumber = rootState.settings.iconLayout.col; //一行多少个
+            // let totalSize = 0;
+            let sum = 0;
+            data.data.forEach((p) => {
+                sum = sum + p.length
+            })
+            let pages = Math.ceil(sum / (rowNumber * colNumber));
+            let everyPageNumber = rowNumber * colNumber;
+            let wholeArr = [];
+            let newList = [];
+            for(let j = 0; j < data.data.length; j++) {
+                wholeArr = wholeArr.concat(data.data[j])
+            }
+            for (let i = 0; i < pages; i++) {
+                let tempArray = (i === (pages - 1) 
+                                        ? 
+                                        wholeArr.slice(i * everyPageNumber) 
+                                        : 
+                                        wholeArr.slice(i * everyPageNumber, (i + 1) * everyPageNumber));
+                newList.push(tempArray)
+            }
             menu = {
                 version: false,
-                menus: data.data
+                menus: newList
             }
         } else {
             menu = {
