@@ -152,26 +152,6 @@ export const defaultMenu = {
         children: []
       },
       {
-        sid: 3,
-        title: '书签',
-        iconSrc: '',
-        iconBase64: bookmark,
-        url: '',
-        index: 1,
-        isFolder: false,
-        children: []
-      },
-      {
-        sid: 4,
-        title: '历史',
-        iconSrc: '',
-        iconBase64: history,
-        url: '',
-        index: 2,
-        isFolder: false,
-        children: []
-      },
-      {
         sid: 5,
         title: '亚马逊',
         iconSrc: '',
@@ -240,7 +220,7 @@ export const defaultMenu = {
         isFolder: false,
         children: []
       },],
-[      {
+      [{
         sid: 12,
         title: 'steam',
         iconSrc: '',
@@ -299,7 +279,18 @@ export const defaultMenu = {
         index: 15,
         isFolder: false,
         children: []
-      },]
+      },
+      {
+
+        title: 'weather',
+        iconSrc: '',
+        iconBase64: '',
+        url: 'tabplus://weather',
+        index: 16,
+        isFolder: false,
+        children: []
+      },
+    ]
   ]};
 
 // export const defaultMenu = localMenu;

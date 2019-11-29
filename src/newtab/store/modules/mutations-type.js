@@ -45,6 +45,7 @@ export const ADD_CUSTOM_ENGINE = 'ADD_CUSTOM_ENGINE'; // 添加自定义搜索�
 export const DELETE_CUSTOME_ENGINE = 'DELETE_CUSTOME_ENGINE'; // 删除自定义搜索引擎
 export const OPEN_CUSTOM_ENGINE = 'OPEN_CUSTOM_ENGINE'; // 打开自定义搜索引擎
 export const CLOSE_CUSTOM_ENGINE = 'CLOSE_CUSTOM_ENGINE'; // 关闭自定义搜索引擎
+export const SET_SEARCH_POPOVER = 'SET_SEARCH_POPOVER'; // 弹出框
 
 // 在主页添加站点相关的mutation
 export const ADD_ONE_SITE = 'ADD_ONE_SITE'; // 在主页添加一个站点

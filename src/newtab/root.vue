@@ -1,13 +1,13 @@
 <template>
-  <v-app>
+  <div>
     <div @click="unedit">
       <background />
       <div class="bookmarks-wrap" v-if="showBookMarkBar">
         <bookmarks />
       </div>
-      <!-- <div class="weather-wrap">
+      <div class="weather-wrap">
         <weather />
-      </div> -->
+      </div>
       <systemBar />
       <div class="loading-tips">
         <cloud-tips />
@@ -24,7 +24,7 @@
       </div>
     </div>
       
-  </v-app>
+  </div>
 </template>
 <script>
 import { mapState,mapMutations, mapActions } from 'vuex';

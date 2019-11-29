@@ -3,14 +3,22 @@
         <div v-if="!hideAllIcons" id="suggestions" :style="[suggestionsWidth,suggestionsHeight]">
             <swiper :options="swiperOption" ref="mySwiper" :class="{'swiper-no-swiping':isDrag}" style='height:100%'>
                 <swiper-slide v-for="(page,index) in homeWebList" :key="index" class='suggestion-swiper'>
-                    <draggable v-model="homeWebList[index]" v-bind="dragOptions" :move="onMove" @start="onStart"
-                        @end="onEnd" @choose="onChoose" @change="onChange" @sort='onSort' @update='onUpdate' handle='.handle-img'
-                        @remove='onRemove' @add='onAdd' @drag="onDrag" group="home">
+                    <draggable v-model="homeWebList[index]" v-bind="dragOptions" @start="onStart"
+                        @end="onEnd" handle='.handle-img' group="home">
                         <transition-group type="transition" name="list-complete" tag="div" style='height: 100%'>
                             <!-- <draggable group="home"> -->
-                            <suggestion-item :dragging="dragging" v-for="(item, idx) in page" draggable="true"
-                                :item-info="item" :page-index="index" :item-index="idx" :key="item.index" v-on:change="changeDrag" @mousedown="mouse_down"
-                                v-on:leave="leaveDrag" class="list-complete-item">
+                            <suggestion-item 
+                                :dragging="dragging" 
+                                v-for="(item, idx) in page" 
+                                draggable="true"
+                                :item-info="item" 
+                                :page-index="index" 
+                                :item-index="idx" 
+                                :key="item.index" 
+                                v-on:change="changeDrag" 
+                                v-on:leave="leaveDrag" 
+                                class="list-complete-item"
+                            >
                                 <!-- <suggestions /> -->
                             </suggestion-item>
                             <!-- </draggable> -->
@@ -361,28 +369,28 @@
             },
         },
 
-        mouse_down(e) {
-            //            this.movePage = true
-            let odiv = e.target; //获取目标元素
-            //            //算出鼠标相对元素的位置
-            //            let self = this;
-            //            let beforeX = e.clientX;
-            let disX = e.clientX - odiv.offsetLeft;
-            let disY = e.clientY - odiv.offsetTop;
-            //            let left = 0;
-            //            let top = 0;
-            document.onmousemove = (e) => { //鼠标按下并移动的事件
-                //                //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-                let left = e.clientX - disX;
-                let top = e.clientY - disY;
-                odiv.style.left = left + 'px';
-                odiv.style.top = top + 'px';
-            };
-            document.onmouseup = (e) => {
-                document.onmousemove = null;
-                document.onmouseup = null;
-            };
-        }
+        // mouse_down(e) {
+        //     //            this.movePage = true
+        //     let odiv = e.target; //获取目标元素
+        //     //            //算出鼠标相对元素的位置
+        //     //            let self = this;
+        //     //            let beforeX = e.clientX;
+        //     let disX = e.clientX - odiv.offsetLeft;
+        //     let disY = e.clientY - odiv.offsetTop;
+        //     //            let left = 0;
+        //     //            let top = 0;
+        //     document.onmousemove = (e) => { //鼠标按下并移动的事件
+        //         //                //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+        //         let left = e.clientX - disX;
+        //         let top = e.clientY - disY;
+        //         odiv.style.left = left + 'px';
+        //         odiv.style.top = top + 'px';
+        //     };
+        //     document.onmouseup = (e) => {
+        //         document.onmousemove = null;
+        //         document.onmouseup = null;
+        //     };
+        // }
 
     }
 </script>

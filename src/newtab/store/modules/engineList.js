@@ -1,5 +1,15 @@
-import { ADD_CHOOSE_ENGINE, DELETE_CHOOSE_ENGINE, OPEN_ENGINE_POPOVER, CLOSE_ENGINE_POPOVER, CHANGE_CURRENT_ENGINE, 
-    ADD_CUSTOM_ENGINE,DELETE_CUSTOME_ENGINE,OPEN_CUSTOM_ENGINE,CLOSE_CUSTOM_ENGINE} from './mutations-type.js'
+import { 
+    ADD_CHOOSE_ENGINE,
+    DELETE_CHOOSE_ENGINE, 
+    OPEN_ENGINE_POPOVER, 
+    CLOSE_ENGINE_POPOVER, 
+    CHANGE_CURRENT_ENGINE, 
+    ADD_CUSTOM_ENGINE,
+    DELETE_CUSTOME_ENGINE,
+    OPEN_CUSTOM_ENGINE,
+    CLOSE_CUSTOM_ENGINE,
+    SET_SEARCH_POPOVER
+} from './mutations-type.js'
 import engineList from '../../services/apis/engineList.js';
 import { localSave } from '../../utils/localSave.js'
 // initial state
@@ -167,6 +177,9 @@ const actions = {
 
 // mutations
 const mutations = {
+    [SET_SEARCH_POPOVER] (state, vis){
+        state.searchPopoverVisible = vis
+    },
     [DELETE_CHOOSE_ENGINE] (state,index){
         let result = state.searchEngineList.filter(engine => {
             return engine.id !== state.allEngineList[index].id

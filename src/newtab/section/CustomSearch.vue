@@ -49,9 +49,17 @@
         },
         props: ['isShow'],
         computed: {
-            ...mapState('engineList', ['searchPopoverVisible', 'currentSearchEngine']),
+            ...mapState('engineList', ['currentSearchEngine']),
             ...mapState('settings', ['searchBarSizeValue', 'searchBarRadiusValue', 'searchBarOpacityValue']),
             ...mapState('locale', ['location']),
+            searchPopoverVisible: {
+                get () {
+                    return this.$store.state.engineList.searchPopoverVisible
+                },
+                set (value) {
+                    this.$store.commit('engineList/SET_SEARCH_POPOVER', value)
+                }
+            },
             inputIconStyle: function () {
                 return {
                     'border-radius': 4.0 * (this.searchBarRadiusValue * 2.0) / 100 + 'vh' + ' 0 0 ' + 4.0 * (this
@@ -220,7 +228,8 @@
             }
         },
         mounted() {
-            this.setTabs()
+            this.setTabs();
+            console.log('th', this.$store)
         }
     }
 </script>
