@@ -23,7 +23,8 @@ const state = {
   const actions = {
     async getNewWallPaper ({commit}) {
       const { data } = await req(wallPaper.random)
-      if(data.code === 'Success') {
+      if(data && data.code === 'Success') {
+        console.log('切换图片')
         commit(SET_WALLPAPERLOADING, true)
         setWallPaper('Unsplash', data.data, (src) => {commit(SET_WALLPAPER, src);commit(SET_WALLPAPERLOADING, false)})
       } else {

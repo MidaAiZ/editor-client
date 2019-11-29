@@ -3,8 +3,8 @@
         <el-menu
             :default-active="defaultActive"
             class="web-list-menu">
-            <el-menu-item v-for="item in categories" v-bind:key="item.cid" :index="item.index.toString()" @click="changeCategory(item.cid)" >
-                <span class="menu-title" slot="title">{{ item.title }}</span>
+            <el-menu-item style="height: auto; line-height: 20px" v-for="item in categories" v-bind:key="item.cid" :index="item.index.toString()" @click="changeCategory(item.cid)" >
+                <div class="menu-title" slot="title">{{ item.title }}</div>
             </el-menu-item>
         </el-menu>
         <div class="web-list-cnt">
@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import { mapState,mapMutations } from 'vuex'
+import { mapState,mapMutations, mapActions } from 'vuex'
 import localeText from '../../../static/locale/index.js'
 import webListCnt from './WebListCnt.vue'
 
@@ -52,9 +52,11 @@ export default {
         this.cid = this.categories[0].cid;
     },
     created: function() {
+        this.getCategories()
         // this.menuListName = localeText[this.location].appTypeList
     },
     methods: {
+        ...mapActions('categories', ['getCategories']),
         changeCategory(cid) {
             // console.log('cid', cid)
             this.cid = cid
@@ -76,11 +78,18 @@ export default {
         float: left;
     }
     .menu-title {
-        padding-left: 15px;
+        padding-top: 15px;
+        padding-left: 13px;
+        padding-bottom: 15px;
+        height: auto;
+        width: 100%;
+        line-height: 20px;
+        text-align: left;
+        white-space: normal;
     }
     .web-list-cnt {
         width: 358px;
-        height: calc(100vh - 150px);
+        height: calc(100vh - 200px);
         background: #fff;
         overflow: auto;
         float: right;

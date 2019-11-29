@@ -43,6 +43,7 @@ import { localSave } from './utils/localSave.js';
 import defaultSettings from './utils/defaultOpt.js';
 import req from './services/index.js';
 import track from './services/apis/track.js';
+import localeText from '../../static/locale/index.js';
 
 export default {
     name: 'root',
@@ -72,6 +73,7 @@ export default {
     methods:{
         ...mapMutations('engineList',['CLOSE_ENGINE_POPOVER']),
         ...mapMutations('settings',['SET_ALL']),
+        ...mapMutations('locale',['CHANGE_LOCALE']),
         ...mapMutations('homeWebList',['CHANGE_IS_EDIT','AFTER_CHANGE']),
         closeEnginePopover(){
             this.CLOSE_ENGINE_POPOVER();
@@ -80,6 +82,7 @@ export default {
         ...mapActions('settings', ['getDefaultSettings', 'getUserSettings', 'uploadSettings']),
         ...mapActions('categories', ['getCategories']),
         ...mapActions('homeWebList', ['afterChanged', 'getDefaultMenus', 'getUserMenus']),
+        ...mapActions('locale',['changeLocale']),
         unedit() {
           this.CHANGE_IS_EDIT(false);
         },
@@ -96,6 +99,17 @@ export default {
         
     },
     created: async function () {
+      let localLang = navigator.language ? navigator.language : navigator.userLanguage;
+      localLang = localLang.replace(/-/, "_");
+      let localSettings = JSON.parse(localStorage.getItem('settings') || "{}")
+      if(localSettings.defaultLocale && localSettings.defaultLocale.version === 'default') {
+        if(localeText[localLang]) {
+          this.changeLocale(localLang)
+        } else {
+          this.changeLocale('en')
+        }
+      }
+      // console.log('languageeee', localLang)
       // 判断是否登录
       const loginInfo = await this.judgeLogin()
       if(loginInfo === 'hasLogined') {
@@ -115,11 +129,9 @@ export default {
               }
             }
       // 初始化
-      this.getCategories()
       this.setTrack()
       let that = this;
       window.addEventListener('storage', function(e) {  
-        console.log(JSON.parse(e.newValue), 'fuckLocal')
         that.afterChanged(JSON.parse(e.newValue).menus);
       });
       // chrome.storage.local.get('homeMenus', (content) => {this.AFTER_CHANGE(content.menus)})

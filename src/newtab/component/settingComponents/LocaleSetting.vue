@@ -46,7 +46,7 @@ export default {
                 return this.$store.state.locale.location
             },
             set (value) {
-                this.$store.commit('locale/CHANGE_LOCALE', value)
+                this.$store.dispatch('locale/changeLocale', value)
             }
         }
     },
@@ -63,6 +63,9 @@ export default {
         ]),
         ...mapActions('settings', [
             'uploadSettings',
+        ]),
+        ...mapActions('locale', [
+            'changeLocale',
         ]),
     },
 }

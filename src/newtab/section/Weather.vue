@@ -59,7 +59,6 @@ export default {
         let lang = this.location
                 let payload = {
                     location: 'auto_ip',
-                    lang: this.location
                 }
         this.getCurrentWeather(payload);
         this.getWeatherForecast(payload);
@@ -75,7 +74,6 @@ export default {
             this.CHANGE_UNIT(unit);
             let payload = {
                     location: 'auto_ip',
-                    lang: this.location
                 }
             this.getWeatherForecast(payload);
         }

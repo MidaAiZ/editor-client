@@ -73,7 +73,7 @@ export default {
         border-radius: 40px;
         border: 0;
         background-color: #efefef;
-        padding-left: 20px;
+        padding-left: 10px;
         outline: 0;
         float: left;
     }

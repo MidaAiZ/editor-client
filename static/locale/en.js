@@ -25,7 +25,7 @@ const en = {
         default: 'default',
         customize: 'customize'
     },
-    addAppPlaceholder: 'Search what you want to add, or click the plus sign to add directly',
+    addAppPlaceholder: 'Search what you want to add, or click + directly',
     loginSuggest: 'Log in to experience more custom settings and cloud storage your settings',
     appTypeList: {
         hottest: 'Hottest',
@@ -95,7 +95,7 @@ const en = {
     searchResultNewTab: 'Open search results in a new tab',
     openMarkNewTab: 'Open bookmark in new tab',
     historyNewTab: 'Open history in new tab',
-    view: 'view',
+    view: 'View',
     showRandomBg: 'Show random wallpaper button',
     showOftenUsedWeb: 'Show frequently used websites at the top',
     showEmail: 'Show e-mail entry at the bottom',
@@ -111,7 +111,7 @@ const en = {
     searchBarSize: 'Search bar size',
     searchBarRadius: 'Search bar radians',
     searchBarOpacity: 'Search bar opacity',
-    font: 'font',
+    font: 'Font',
     fontSize: 'font size',
     fontColor: 'font color',
     resetAll: 'Restore default settings',

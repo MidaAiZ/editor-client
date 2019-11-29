@@ -286,7 +286,8 @@
         border-width: 0;
         padding-left: 75px;
         padding-right: 40px;
-        width: 35vw;
+        width: 40vw;
+        min-width: 451px;
         height: 7vh;
         font-size: 16px;
         background: white;

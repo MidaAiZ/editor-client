@@ -18,42 +18,15 @@ import {
     SET_FONTCOLOR,
     RESET_ALL,
     SET_ALL
-} from './mutations-type.js'
-import settings from '../../services/apis/settings.js'
-import req from '../../services/index.js'
-import { localSave } from '../../utils/localSave.js'
-  const defaultSetting = {
-    bgSrc: 'default',
-    maskOpacityValue: 30,
-    bgBlurValue: 20,
-    newSiteNewTabValue: false,
-    cloudSave: false,
-    searchResultNewTabValue: false,
-    openMarkNewTabValue: false,
-    historyNewTabValue: false,
-    randomBgBtn: false,
-    showOftenUsedBar: false,
-    showEmailBtn: false,
-    showBookMarkBar: false,
-    iconLayout: {
-        name: '2x5',
-        row: 2,
-        col: 5,
-    },
-    hideAllIcons: false,
-    iconRadiusValue: 50,
-    iconSizeValue: 50,
-    hideSearchBarValue: false,
-    hideSearchTypeValue: false,
-    searchBarRadiusValue: 50,
-    searchBarSizeValue: 50,
-    searchBarOpacityValue: 100,
-    fontSizeValue: 15,
-    fontColorValue: '#fff',
-  }
+} from './mutations-type.js';
+import settings from '../../services/apis/settings.js';
+import req from '../../services/index.js';
+import { localSave } from '../../utils/localSave.js';
+import { defaultSettings } from '../../utils/defaultOpt.js';
+
 // initial state
 const localSettings = localStorage.getItem('settings');
-const state = Object.assign(defaultSetting, JSON.parse(localSettings || "{}"));
+const state = Object.assign(defaultSettings, JSON.parse(localSettings || "{}"));
 
 
   // getters
@@ -87,7 +60,6 @@ const state = Object.assign(defaultSetting, JSON.parse(localSettings || "{}"));
         if (state.cloudSave) {
             const { data } = await req(settings.update, {}, newSettings)
             if (data.code === 'Success') {
-                console.log('同步设置成功')
                 commit('SET_ALL', data.data)
             } else {
                 commit('SET_ALL', newSettings)
@@ -166,6 +138,10 @@ const state = Object.assign(defaultSetting, JSON.parse(localSettings || "{}"));
         state.fontColorValue = value
         localSave('settings', {...state})
     },
+    // [SET_LOCALE] (state, locale) {
+    //     state.defaultLocale = value
+    //     localSave('settings', {...state})
+    // },
     [RESET_ALL] (state) {
         state.bgSrc = 'default'
         state.maskOpacityValue = 30

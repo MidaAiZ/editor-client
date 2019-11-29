@@ -38,7 +38,8 @@
 }
 .setting-bg-item {
     width: 100%;
-    height: 74px;
+    min-height: 74px;
+    height: auto;
     margin-top: 10px;
     margin-bottom: 30px;
 }
@@ -51,7 +52,11 @@
 }
 .bg-desc {
     font-size: 14px;
-    text-indent: 23px;
+    line-height: 18px;
+    width: 100%;
+    white-space: normal;
+    height: auto;
+    padding-left: 23px;
     font-weight: lighter;
     color: #666;
 }
@@ -66,7 +71,7 @@
 }
 .setting-open-item {
     margin-top: 5px;
-    height: 30px;
+    height: auto;
     line-height: 30px;
 }
 .setting-switch {
@@ -75,6 +80,8 @@
 }
 .setting-open-title {
     font-size: 15px;
+    white-space: normal;
+    height: auto;
     color: #888;
 }
 .setting-layout-wrap {

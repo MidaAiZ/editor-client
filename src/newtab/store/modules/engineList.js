@@ -11,6 +11,7 @@ import {
     SET_SEARCH_POPOVER
 } from './mutations-type.js'
 import engineList from '../../services/apis/engineList.js';
+import req from '../../services/index.js'
 import { localSave } from '../../utils/localSave.js'
 // initial state
 const baidu = require('../../../../static/logos/baidu.svg');
@@ -172,7 +173,10 @@ const getters = {
 
 // actions
 const actions = {
-
+    async getEngineList({commit}) {
+        const { data } = req(engineList.default)
+        console.log(data)
+    }
 }
 
 // mutations

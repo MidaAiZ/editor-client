@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         newWallPaper() {
-            this.SET_WALLPAPERLOADING(true)
+            // this.SET_WALLPAPERLOADING(true)
             this.SET_BGSRC('Unsplash')
             this.getNewWallPaper()
         },

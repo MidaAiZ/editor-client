@@ -81,7 +81,7 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     maskOpacityValue: 30,
     bgBlurValue: 20,
     newSiteNewTabValue: false,
-    cloudSave: true,
+    cloudSave: false,
     searchResultNewTabValue: false,
     openMarkNewTabValue: false,
     historyNewTabValue: false,
@@ -104,6 +104,11 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     searchBarOpacityValue: 100,
     fontSizeValue: 15,
     fontColorValue: '#fff',
+    defaultSearchEngine: 'google',
+    defaultLocale: {
+      version: 'default',
+      lang: 'en'
+    },
   }
 
 // Object.defineProperties(menu, {

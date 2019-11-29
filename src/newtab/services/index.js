@@ -1,5 +1,6 @@
 // const baseURL = '//'
 import $axios from './axios.js';
+import store from '../store/modules/locale.js';
 import wallPaper from './apis/wallPaper.js';
 
 import { Message } from 'element-ui';
@@ -33,6 +34,10 @@ function checkCode(code = 'Success') {
  * @return {object}           An object containing either "data" or "err"
  */
 export default async function req(service, params, data, headers, withCredentials) {
+  params = {
+    ...params,
+    lang: store.state.location
+  }
   let option =
     withCredentials === false
       ? {

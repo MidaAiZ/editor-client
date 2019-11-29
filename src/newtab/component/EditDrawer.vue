@@ -1,9 +1,10 @@
 <template>
     <div id="edit-drawer">
-        <div class="edit-drawer-input"><el-input v-model="currentItem.itemInfo.url"></el-input></div>
-        <div class="edit-drawer-input"><el-input v-model="currentItem.itemInfo.title"></el-input></div>
+        <div class="edit-drawer-input"><el-input placeholder="url" v-model="currentItem.itemInfo.url"></el-input></div>
+        <div class="edit-drawer-input"><el-input :placeholder="title" v-model="currentItem.itemInfo.title"></el-input></div>
         <div class='edit-drawer-img'>
-            <img :src='currentItem.itemInfo.iconSrc'/>
+            <div v-if="!currentItem.itemInfo.iconSrc" class="fake-img">Img</div>
+            <img :src='currentItem.itemInfo.iconSrc' v-else/>
             <span>
                 <div class="edit-drawer-img-edit img-edit" @click="showEditDialog">{{editPicture}}</div>
                 <div style="position: relative; cursor: pointer">
@@ -49,6 +50,9 @@
             },
             complete: function() {
                 return localeText[this.location].complete
+            },
+            title: function() {
+                return localeText[this.location].title
             }
         },
         data() {
@@ -170,6 +174,16 @@
         bottom: 0;
         opacity: 0;
         cursor: pointer;
+    }
+    .fake-img {
+        width: 100px;
+        height: 100px;
+        background-color: #fa8072;
+        font-size: 20px;
+        font-weight: bolder;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
     }
     /* .color-item{
 

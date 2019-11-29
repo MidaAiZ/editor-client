@@ -102,7 +102,8 @@
     import {
         mapState,
         mapGetters,
-        mapMutations
+        mapMutations,
+        mapActions
     } from 'vuex';
     import {
         VueCropper
@@ -202,6 +203,7 @@
             }
         },
         created: function() {
+            this.getEngineList()
             if (!localStorage.getItem('engineList')) {
                 localSave('engineList', {engineList: this.searchEngineList})
             }
@@ -209,6 +211,7 @@
         methods: {
             ...mapMutations('engineList', ['DELETE_CHOOSE_ENGINE', 'ADD_CHOOSE_ENGINE', 'CHANGE_CURRENT_ENGINE',
             'ADD_CUSTOM_ENGINE','DELETE_CUSTOME_ENGINE','OPEN_CUSTOM_ENGINE','CLOSE_CUSTOM_ENGINE']),
+            ...mapActions('engineList', ['getEngineList']),
             changeEngine: function (index) {
                 if (index === this.engineList.length - 1) {
                     this.drawer = true;
@@ -293,8 +296,9 @@
 </script>
 <style scoped>
     #search-popover {
-        width: 35vw;
+        width: 40vw;
         padding: 0;
+        min-width: 450px;
         overflow: hidden;
         background-color: white;
     }
