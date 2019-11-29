@@ -9,14 +9,14 @@
                 @click='toNewSite' @mouseup="itemEdit" 
                 @contextmenu.stop.prevent="contextMenu"
             >
-                <img :src="isWeather ? currentIcon : src" class='handle-img'/>
+                <img :src="itemInfo.isWeather ? currentIcon : src" class='handle-img'/>
                 <div class="item-img-mask" v-show="isHover&&isEdit" @click='editDrawerShow'>
                     <img :src='editImg'/>
                 </div>
             </div>
         </div>
         <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
-            <span v-if="isWeather">{{currentTmp}}</span>
+            <span v-if="itemInfo.isWeather">{{currentTmp}}</span>
             <span v-else>{{itemInfo.title}}</span>
         </div>
     </div>
@@ -188,7 +188,8 @@
                     cbFunc = function() {
                         that.SET_WEATHER_DRAWER(true)
                     }
-                } else if(this.itemInfo.url.indexOf('tabplus://settings') === 0) {
+                }
+                if(this.itemInfo.url.indexOf('tabplus://settings') === 0) {
                     cbFunc = function() {
                         that.SET_SETTINGVIS(true)
                     }
@@ -247,19 +248,21 @@
                 }, 10);
             }
         },
-        mounted(){
-            let self = this
-            document.onclick=function(){
-                self.CHANGE_IS_EDIT(false);
-            }
-            if(this.itemInfo.url.indexOf('tabplus://weather') === 0) {
-                this.isWeather = true;
+        created() {
+            if(this.itemInfo.isWeather) {
+                // this.isWeather = true;
                 let lang = this.location
                 let payload = {
                     location: 'auto_ip',
                     lang: this.location
                 }
                 this.getCurrentWeather(payload)
+            }
+        },
+        mounted(){
+            let self = this
+            document.onclick=function(){
+                self.CHANGE_IS_EDIT(false);
             }
         }
     }

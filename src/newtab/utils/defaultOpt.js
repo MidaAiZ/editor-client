@@ -3,60 +3,12 @@ const settings = require('../../../static/logos/settings.png')
 
 export const defaultCategories = [ // 默认分类，如果服务器获取失败且本地没有存储，
     {
-      "cid": 0,
-      "title": "默认",
-      "index": null,
-      "sitesCount": null,
-      "createdAt": "2019-09-29 02:41:22",
-      "updatedAt": "2019-09-29 02:41:26"
-    },
-    {
-      "cid": 2,
-      "title": "科技",
-      "index": null,
-      "sitesCount": null,
-      "createdAt": "2019-09-29 02:30:36",
-      "updatedAt": "2019-09-29 02:28:43"
-    },
-    {
-      "cid": 3,
-      "title": "军事",
-      "index": null,
-      "sitesCount": null,
-      "createdAt": "2019-09-29 02:30:36",
-      "updatedAt": "2019-09-29 02:28:43"
-    },
-    {
-      "cid": 4,
-      "title": "教育",
-      "index": null,
-      "sitesCount": null,
-      "createdAt": "2019-09-29 02:30:36",
-      "updatedAt": "2019-09-29 02:28:43"
-    },
-    {
-      "cid": 5,
-      "title": "文化",
-      "index": null,
-      "sitesCount": null,
-      "createdAt": "2019-09-29 02:30:36",
-      "updatedAt": "2019-09-29 02:28:43"
-    },
-    {
-      "cid": 6,
-      "title": "游戏",
-      "index": null,
-      "sitesCount": null,
-      "createdAt": "2019-09-29 02:30:36",
-      "updatedAt": "2019-09-29 02:28:43"
-    },
-    {
-      "cid": 8,
-      "title": "购物",
-      "index": null,
-      "sitesCount": null,
-      "createdAt": "2019-09-29 02:45:59",
-      "updatedAt": "2019-09-29 02:46:01"
+      cid: 124,
+      createdAt: "2019-11-29 13:50:22",
+      index: 0,
+      sitesCount: 0,
+      title: "",
+      updatedAt: "2019-11-29 18:19:27",
     }
   ]
 

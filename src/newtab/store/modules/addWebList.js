@@ -15,7 +15,7 @@ const state = {
     currentSiteList: [],
     pageNum: 1,
     pageSize: 20,
-    disableLoad: false,
+    disableLoad: true,
     searchSiteIptValue: '', // 搜索站点时输入框输入的内容
     loading: false
     // currentCid: null
@@ -45,7 +45,6 @@ const actions = {
             const { data } = await req(sitesCategories.hottest, payload)
             commit('SET_LOADING', false)
             if (data.code === 'Success') {
-                commit('DIS_AUTO_LOAD', false) 
                 let arr = state.currentSiteList.concat(data.data)
                 // localSave('categories', data.data)
                 commit('SET_SITES_CATEGORY', arr)
@@ -53,6 +52,8 @@ const actions = {
                 commit('SET_SITES_PAGE', pN)
                 if(data.data.length < payload.pageSize) {
                     commit('DIS_AUTO_LOAD', true)
+                } else {
+                    commit('DIS_AUTO_LOAD', false) 
                 }
             }
         } else {

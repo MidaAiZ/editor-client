@@ -183,7 +183,6 @@
         watch: {
             iconLayout: function(newLayout, oldLayout) {
                 if (newLayout.name !== oldLayout.name) {
-                    console.log('fuck', this.iconLayout);
                     this.paging()
                 }
             }
@@ -252,7 +251,6 @@
             paging: function () {
                 let rowNumber = this.iconLayout.row; //一页多少行
                 let colNumber = this.iconLayout.col; //一行多少个
-                console.log('总数', this.totalSize)
                 let pages = Math.ceil(this.totalSize / (rowNumber * colNumber));
                 let everyPageNumber = rowNumber * colNumber;
                 let wholeArr = [];
@@ -260,7 +258,6 @@
                 for(let j = 0; j < this.homeWebList.length; j++) {
                     wholeArr = wholeArr.concat(this.homeWebList[j])
                 }
-                console.log('所有数组', wholeArr)
                 for (let i = 0; i < pages; i++) {
                     let tempArray = (i === (pages - 1) 
                                             ? 

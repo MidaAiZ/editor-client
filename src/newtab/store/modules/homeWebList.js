@@ -63,7 +63,7 @@ const getters = {
 // actions
 const actions = {
     async getDefaultMenus ({ commit }) { // 从服务器获取默认主页添加网站
-        const { data } = await req(homeMenus.default, {code: 'CN'})
+        const { data } = await req(homeMenus.default)
         let menu;
         if (data.code === 'Success') {
             menu = {
@@ -79,8 +79,32 @@ const actions = {
         menu.menus.forEach((item, index) => {
             item.forEach((i, idx) => {
                 i.index = idx
+                if(i.url.indexOf('tabplus://weather') === 0) {
+                    i.isWeather = true
+                }
             })
         })
+        let listArr = menu.menus;
+        const promises = [];
+                listArr.forEach(function(page, index){
+                    page.forEach(function(item, idx){
+                        promises.push(new Promise(async (resolve) => {
+                            // let itm = item
+                            if(!item.iconBase64) {
+                                const base64 = await imgToBase64(item.iconSrc)
+                            // listArr[index][idx] = item;
+                                item.iconBase64 = base64;
+                                listArr[index][idx] = item;
+                            }
+                            resolve();
+                    }));
+                });
+            })
+            Promise.all(promises).then((args) => {
+                menu.menus = listArr;
+                localSave('homeMenus', menu)
+                commit('SET_HOMEMENUS', menu.menus)
+            })
         // let menuArr = menu.menus
         localSave('homeMenus', menu)
         commit('SET_HOMEMENUS', menu.menus)
@@ -104,6 +128,9 @@ const actions = {
         menu.menus.forEach((item, index) => {
             item.forEach((i, idx) => {
                 i.index = idx
+                if(i.url.indexOf('tabplus://weather') === 0) {
+                    i.isWeather = true
+                }
             })
         })
 

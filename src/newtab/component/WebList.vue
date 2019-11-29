@@ -59,6 +59,7 @@ export default {
     },
     created: function() {
         this.getHottest()
+        this.getCategories()
         // this.menuListName = localeText[this.location].appTypeList
     },
     methods: {
