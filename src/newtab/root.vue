@@ -141,15 +141,6 @@ export default {
       window.addEventListener('storage', function(e) {  
         that.afterChanged(JSON.parse(e.newValue).menus);
       });
-      // chrome.storage.local.get('homeMenus', (content) => {this.AFTER_CHANGE(content.menus)})
-      // chrome.storage.onChanged.addListener(
-      //   (content) => {
-      //     if(content.homeMenus.newValue.menus) {
-      //       console.log('fucksync', content)
-      //       this.AFTER_CHANGE(content.homeMenus.newValue.menus)
-      //     }
-      //   }
-      // )
     },
 }
 </script>

@@ -13,16 +13,5 @@ const localeText = {
     en_US,
     en
 }
-// if(localeText[xx])
-// function getLocaleText(key) {
-//     const locale = 'ZH';
-//     if (isChrome) {
-//         return chrome.,,,
-//     } else {
-//         ....
-//     } else {
-
-//     }
-// }
 
 export default localeText
