@@ -35,7 +35,7 @@ const actions = {
         commit('SET_LOADING', false)
         // localSave('categories', data.data)
         commit('SET_SITES_CATEGORY', data.data)
-        if(data.data.length < payload.pageSize) {
+        if(data.data.length < 20) {
             commit('DIS_AUTO_LOAD', true)
         }
     },
@@ -50,10 +50,10 @@ const actions = {
                 commit('SET_SITES_CATEGORY', arr)
                 let pN = state.pageNum+1;
                 commit('SET_SITES_PAGE', pN)
-                if(data.data.length < payload.pageSize) {
+                commit('DIS_AUTO_LOAD', false) 
+                if(data.data.length < 20 || data.data.length === 0) {
+                    console.log('f')
                     commit('DIS_AUTO_LOAD', true)
-                } else {
-                    commit('DIS_AUTO_LOAD', false) 
                 }
             }
         } else {
@@ -65,7 +65,8 @@ const actions = {
                 commit('SET_SITES_CATEGORY', arr)
                 let pN = state.pageNum+1;
                 commit('SET_SITES_PAGE', pN)
-                if(data.data.length < payload.pageSize) {
+                if(data.data.length < 20 || data.data.length === 0) {
+                    console.log('u')
                     commit('DIS_AUTO_LOAD', true)
                 }
             }

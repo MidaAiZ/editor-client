@@ -1,6 +1,6 @@
 <template>
-    <div id="custom-search" :style="searchStyle">
-        <div id="search-tab-container">
+    <div id="custom-search" :style="searchStyle" v-if="!hideSearchBarValue">
+        <div id="search-tab-container" v-if="!hideSearchTypeValue">
             <span v-for="(item,index) in tabList" class="search-tab" :class="{searchClick:index === tabIndex}"
                 @click="changeTab(item, index)" :key="index">{{item.title}}</span>
         </div>
@@ -50,7 +50,7 @@
         props: ['isShow'],
         computed: {
             ...mapState('engineList', ['currentSearchEngine']),
-            ...mapState('settings', ['searchBarSizeValue', 'searchBarRadiusValue', 'searchBarOpacityValue']),
+            ...mapState('settings', ['searchBarSizeValue', 'searchBarRadiusValue', 'searchBarOpacityValue','hideSearchBarValue', 'hideSearchTypeValue']),
             ...mapState('locale', ['location']),
             searchPopoverVisible: {
                 get () {

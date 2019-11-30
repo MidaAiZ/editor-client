@@ -1,6 +1,6 @@
 <template>
     <div style="margin: 0; padding: 0">
-        <ul style="margin: 0; padding: 0" v-if="hasContent === true" :infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore">
+        <ul style="margin: 0; padding: 0" :infinite-scroll-immediate="false" v-if="hasContent === true" infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore">
             <li style="overflow:auto" v-for="item in currentSiteList" :key="item.sid">
                 <web-list-item :item="item"></web-list-item>
             </li>
@@ -11,9 +11,10 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
-import localeText from '../../../static/locale/index.js'
+import { mapState, mapActions, mapMutations } from 'vuex';
+import localeText from '../../../static/locale/index.js';
 import webListItem from './webListItem.vue';
+import debounce from '../utils/debounce.js'
 
 export default {
     name: 'webListCnt',
@@ -97,7 +98,10 @@ export default {
                 pageNum: this.pageNum + 1,
                 pageSize: this.pageSize,
             }
-            this.loadMore(payload)
+            let debounceReq = debounce(this.loadMore, 500)
+                // this.searchSite({keyword: value, pageNum: 1, pageSize: 100})
+             debounceReq(payload)
+            // this.loadMore(payload)
             // this.getCategorySite(this.cid)
         }
     }

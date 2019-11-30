@@ -8,7 +8,7 @@
             <el-switch
                 @change="toggleHideSearchBar($event)"
                 class="setting-switch"
-                v-model="hideSearchBarValue"
+                :value="hideSearchBarValue"
             >
             </el-switch>
         </div>
@@ -17,7 +17,7 @@
             <el-switch
                 @change="toggleHideSearchType($event)"
                 class="setting-switch"
-                v-model="hideSearchTypeValue"
+                :value="hideSearchTypeValue"
             >
             </el-switch>
         </div>

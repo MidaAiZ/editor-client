@@ -8,7 +8,8 @@
             <el-switch
                 @change="toggleCloudSave($event)"
                 class="setting-switch"
-                v-model="cloudSave"
+                :value="cloudSave"
+                :disabled="!hasLogin"
             >
             </el-switch>
         </div>
@@ -29,6 +30,9 @@ export default {
     computed: {
         ...mapState('locale', [
             'location',
+        ]),
+        ...mapState('user', [
+            'hasLogin',
         ]),
         cloudSaveBtn: function() {
             return localeText[this.location].cloudSaveBtn
