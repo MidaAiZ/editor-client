@@ -41,10 +41,8 @@ export const defaultCategories = [ // 默认分类，如果服务器获取失败
     fontSizeValue: 15,
     fontColorValue: '#fff',
     defaultSearchEngine: 'google',
-    defaultLocale: {
-      version: 'default',
-      lang: 'en'
-    },
+    defaultLocale: 'en',
+    localeVersion: 'default',
   }
 
 // Object.defineProperties(menu, {

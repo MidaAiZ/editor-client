@@ -64,6 +64,9 @@ export default {
             'searchBarOpacityValue',
             'fontSizeValue',
             'fontColorValue',
+            'defaultSearchEngine',
+            'defaultLocale',
+            'localeVersion'
         ])
     },
     methods: {
@@ -97,6 +100,9 @@ export default {
                     searchBarOpacityValue: this.searchBarOpacityValue,
                     fontSizeValue: this.fontSizeValue,
                     fontColorValue: this.fontColorValue,
+                    defaultSearchEngine: this.defaultSearchEngine,
+                    defaultLocale: this.defaultLocale,
+                    localeVersion: this.localeVersion,
                 };
                 this.uploadSettings(newSettings)
             }
