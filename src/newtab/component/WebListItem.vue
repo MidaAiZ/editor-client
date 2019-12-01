@@ -45,7 +45,8 @@ export default {
             'currentSiteList'
         ]),
         ...mapState('settings', [
-            'iconLayout'
+            'iconLayout',
+            'newSiteNewTabValue'
         ]),
         ...mapState('locale', [
             'location',
@@ -79,16 +80,33 @@ export default {
         ...mapMutations('homeWebList', [
             'ADD_ONE_SITE'
         ]),
+        ...mapMutations('drawersVis',[
+            'SET_WEATHER_DRAWER',
+            'SET_SETTINGVIS'
+        ]),
         getCategorySite(id) {
             this.getSitesInCategory(id)
         },
         openNewSite() {
+            let itemInfo = this.item;
             let siteObj = {
-                siteId: this.item.sid,
-                siteUrl: this.item.url,
-                siteTitle: this.item.title
+                siteId: itemInfo.sid,
+                siteUrl: itemInfo.url,
+                siteTitle: itemInfo.title
             };
-            openSite(siteObj, 'newtab')
+            let cbFunc;
+            let that = this;
+            if(itemInfo.url.indexOf('tabplus://weather') === 0) {
+                cbFunc = function() {
+                    that.SET_WEATHER_DRAWER(true)
+                }
+            }
+            if(itemInfo.url.indexOf('tabplus://settings') === 0) {
+                cbFunc = function() {
+                    that.SET_SETTINGVIS(true)
+                }
+            }
+            openSite(siteObj, this.newSiteNewTabValue ? 'newtab' : '', cbFunc)
         },
         addNewSite() {
             let payload = {

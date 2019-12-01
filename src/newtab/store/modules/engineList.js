@@ -193,8 +193,13 @@ const mutations = {
         localSave('currentEngine', {cE: state.currentSearchEngine})
     },
     [ADD_CUSTOM_ENGINE] (state, customEngine){
-        state.customEngineList.push(customEngine);
-        state.searchEngineList.push(customEngine);
+        let newCustomArr =  state.customEngineList
+        newCustomArr.push(customEngine);
+        state.customEngineList = newCustomArr;
+        let newSearchArr = state.searchEngineList;
+        newSearchArr.push(customEngine);
+        state.searchEngineList = newSearchArr;
+        console.log(customEngine,'engine')
         localSave('engineList', {engineList: state.searchEngineList})
         localSave('customEngineList', {engineList: state.customEngineList})
     },

@@ -63,7 +63,7 @@
                             </div>
                             <div class="form-item-container">
                                 <div class="form-label">{{engineUrl}}</div>
-                                <el-input type="textarea" v-model="customEngine.urls"></el-input>
+                                <el-input type="textarea" v-model="customEngine.urls.web"></el-input>
                             </div>
                             <div class="form-item-container">
                                 <div class="form-label">{{engineIcon}}</div>
@@ -179,7 +179,7 @@
                 dialogVisible: false,
                 customEngine: {
                     id: '',
-                    urls: '',
+                    urls: {web: ''},
                     iconSrc: '',
                     title: '',
                     isChoose: true
@@ -221,6 +221,14 @@
                 }
             },
             drawerClose() {
+                this.customEngine = {
+                    id: '',
+                    urls: {web: ''},
+                    iconSrc: '',
+                    title: '',
+                    isChoose: true
+                }
+                this.isAdd = false
                 this.drawer = false;
             },
             changeChoose(index) {
@@ -272,12 +280,13 @@
             addCustomEngine(){
                 this.customEngine.id = this.maxID + 1;
                 this.customEngine.isChoose = true;
-                this.customEngine.urls = {web: this.customEngine.urls}
-                this.ADD_CUSTOM_ENGINE({...this.customEngine});
-                this.customEngine.urls.web = '';
-                this.customEngine.iconSrc = '';
-                this.customEngine.title = '';
-                this.isAdd = false;
+                // this.customEngine.urls = {web: this.customEngine.urls}
+                // console.log('ce', this.customEngine)
+                this.ADD_CUSTOM_ENGINE(this.customEngine);
+                // this.customEngine.urls.web = '';
+                // this.customEngine.iconSrc = '';
+                // this.customEngine.title = '';
+                // this.isAdd = false;
             },
             deleteCustomEngine(item){
                 this.DELETE_CUSTOME_ENGINE(item);
@@ -369,7 +378,6 @@
         /*padding: 0;*/
         width: 2vw;
         height: 2vw;
-        margin-bottom: 10px;
         /*border: 1px #ccc dashed;*/
         position: relative;
         /*font-size: 1.5vw;*/
