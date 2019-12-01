@@ -4,8 +4,8 @@
                 <!-- <img :src="item.icon"/> -->
             </div>
             <div class="web-content">
-                <h3>{{item.title}}</h3>
-                <p class="web-desc">{{item.desc ? item.desc : '网站无简介'}}</p>
+                <h3 style="height: 30px;line-height: 30px; color: #444;margin:0px;margin-top:10px">{{item.title}}</h3>
+                <span class="web-desc" style="height: 30px;line-height: 30px;magin:0px;margin-bottom:10px;">{{item.desc ? item.desc : '网站无简介'}}</span>
             </div>
             <div class="web-action">
                 <el-button 
@@ -119,6 +119,7 @@ export default {
 }
 .web-content {
     width: calc(100% - 160px);
+    height: 100%;
     float: left;
     margin-left: 15px;
 }
