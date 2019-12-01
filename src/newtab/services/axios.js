@@ -21,6 +21,9 @@ $axios.interceptors.request.use(
     // if (store.getters.token) {
     //   config.headers['token'] = getToken();
     // }
+    if(chrome && chrome.runtime && chrome.extension)  {
+      config.headers['Plugin-Platform'] ='chrome-extension';
+    }
     config.headers['Accept'] = 'application/json';
     return config;
   },

@@ -38,7 +38,8 @@ export default {
             'SET_CAVIS',
         ]),
         ...mapActions('addWebList', [
-            'searchSite'
+            'searchSite',
+            'getHottest'
         ]),
         setValue(value) {
             this.SET_SEARCH_SITES_VALUE(value)
@@ -46,11 +47,13 @@ export default {
         handleSearchSite(value) {
             if(value) {
                 this.ADD_SEARCH_CATE()
-                let debounceReq = debounce(this.searchSite, 200)
+                let debounceReq = debounce(this.searchSite, 400)
                 // this.searchSite({keyword: value, pageNum: 1, pageSize: 100})
                 debounceReq({keyword: value, pageNum: 1, pageSize: 100})
             } else {
                 this.DELETE_SEARCH_CATE()
+                let debounceReq = debounce(this.getHottest, 500)
+                debounceReq();
             }
         },
         openCustomAdd() {

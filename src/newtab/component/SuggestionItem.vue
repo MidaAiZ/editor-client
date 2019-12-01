@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="item-name" @mouseover="clickItem1" @mouseleave="leaveItem1" :style="itemNameStyle">
-            <span v-if="itemInfo.isWeather">{{currentTmp}}</span>
+            <span v-if="itemInfo.isWeather">{{currentTmp || 'weather'}}</span>
             <span v-else>{{itemInfo.title}}</span>
         </div>
     </div>
@@ -126,12 +126,6 @@
                     default:
                 }
                 return imgStyle
-            },
-            hakeClass:function(){
-                return{
-                    'shake-rotate': this.isEdit,
-                    'shake-constant':this.isEdit
-                }
             },
             edit: function() {
                 return localeText[this.location].edit

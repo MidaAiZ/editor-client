@@ -161,7 +161,7 @@ const getters = {
 const actions = {
     async getEngineList({commit}) {
         const { data } = req(engineList.default)
-        console.log(data)
+        // console.log(data)
     }
 }
 

@@ -104,6 +104,7 @@ export default {
                 menus: arr
             };
             localSave('homeMenus', menus);
+            window.close();
         }
     }
 

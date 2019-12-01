@@ -1,6 +1,6 @@
 <template>
     <div style="margin: 0; padding: 0">
-        <ul style="margin: 0; padding: 0" :infinite-scroll-immediate="false" v-if="hasContent === true" infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore">
+        <ul style="margin: 0; padding: 0" v-if="hasContent === true" infinite-scroll-disabled="disableLoad" v-infinite-scroll="handleLoadMore">
             <li style="overflow:auto" v-for="item in currentSiteList" :key="item.sid">
                 <web-list-item :item="item"></web-list-item>
             </li>

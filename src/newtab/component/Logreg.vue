@@ -13,6 +13,7 @@
                 type="password"
                 :value="loginPassword" 
                 @input="inputLogin($event.target.value, 'loginPassword')"
+                v-on:keyup.enter="handleLogin"
             />
             <div class="log-or-reg">
                 <el-button class="login-btn" :loading="loginLoading" @click="handleLogin" type="primary">{{loginBtn}}</el-button>
@@ -39,6 +40,7 @@
                 :placeholder="pswPlaceholder" 
                 type="password" 
                 @input="inputRegisterInfo($event.target.value, 'registerPassword')" 
+                v-on:keyup.enter="handleRegister"
             />
             <p v-if="registerPswTipVis" class="register-tip">{{registerPswTip}}</p>
             <div class="log-or-reg">

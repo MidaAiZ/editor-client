@@ -8,6 +8,7 @@ import {
     DELETE_SEARCH_CATE
 } from './mutations-type.js'
 import {defaultCategories} from '../../utils/defaultOpt.js'
+import store from '../modules/locale.js'
 // import { Message } from 'element-ui';
 // initial state
 const state = {
@@ -37,11 +38,12 @@ const mutations = {
         state.categories = categories
     },
     [ADD_SEARCH_CATE] (state) {
-        
+        console.log('rootState', store.state.location)
+        let location = store.state.location
         state.categories = [{
             cid: 'search',
             index: 'search',
-            title: "搜索"
+            title: localeText[location].search
         }];
     },
     [DELETE_SEARCH_CATE] (state) {

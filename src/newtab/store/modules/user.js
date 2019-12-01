@@ -64,7 +64,7 @@ const actions = {
             commit('setUserName', userData.name)
             commit('setLogRegModalVis', false)
             commit('loginSuccess', true)
-            await dispatch('homeWebList/getUserMenus', {}, {root:true})
+            await dispatch('settings/getUserSettings', {}, {root:true})
         } else {
             Message.error({message: localeText[rootState.locale.location].loginMessage.fail})
         }
@@ -85,6 +85,7 @@ const actions = {
         } else {
             commit('setUserName', '')
             commit('loginSuccess', false)
+            commit('settings/SET_CLOUDSAVE', false, {root:true})
             return 'notLogined'
         }
     },
@@ -94,6 +95,7 @@ const actions = {
             localStorage.removeItem('userData')
             commit('loginSuccess', false)
             commit('setUserName', '')
+            commit('settings/SET_CLOUDSAVE', false, {root:true})
             Message.success({message: localeText[rootState.locale.location].logoutMessage.success})
             let menu = {
                 version: 'logout',
