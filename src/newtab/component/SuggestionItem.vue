@@ -172,7 +172,7 @@
                 // this.CHANGE_IS_EDIT(false)
                 let itemInfo = this.itemInfo;
                 let siteObj = {
-                    siteId: itemInfo.sid,
+                    siteId: itemInfo.siteId,
                     siteUrl: itemInfo.url,
                     siteTitle: itemInfo.title
                 };
