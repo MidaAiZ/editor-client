@@ -228,6 +228,7 @@ const actions = {
         let arr = state.homeWebList;
         let newItem = {
             sid: item.sid,
+            siteId: item.sid,
             url: item.url,
             title: item.title,
             iconSrc: iconSrc,

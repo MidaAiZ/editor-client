@@ -109,8 +109,10 @@ export default {
             openSite(siteObj, this.newSiteNewTabValue ? 'newtab' : '', cbFunc)
         },
         addNewSite() {
+            let itemInfo = this.item;
+            // itemInfo.siteId = this.item.sid;
             let payload = {
-                item: this.item,
+                item: itemInfo,
                 size: this.iconLayout.row * this.iconLayout.col
             }
             this.addOne(payload)
