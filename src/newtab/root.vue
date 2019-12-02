@@ -142,6 +142,9 @@ export default {
         that.afterChanged(JSON.parse(e.newValue).menus);
       });
     },
+    mounted() {
+       document.getElementById('content').focus();
+    }
 }
 </script>
 <style scoped>

@@ -49,7 +49,7 @@ export default {
                 this.defaultActive = 'search'
             } else {
                 this.changeCategory('hottest')
-                this.$refs.addContent.getHot()
+                // this.$refs.addContent.getHot()
                 this.defaultActive = 'hottest'
             }
         }

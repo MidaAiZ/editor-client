@@ -13,7 +13,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
 import localeText from '../../../static/locale/index.js';
-import webListItem from './webListItem.vue';
+import webListItem from './WebListItem.vue';
 import debounce from '../utils/debounce.js'
 
 export default {

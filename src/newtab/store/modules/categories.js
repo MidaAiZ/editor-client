@@ -38,7 +38,6 @@ const mutations = {
         state.categories = categories
     },
     [ADD_SEARCH_CATE] (state) {
-        console.log('rootState', store.state.location)
         let location = store.state.location
         state.categories = [{
             cid: 'search',

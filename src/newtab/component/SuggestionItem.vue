@@ -6,7 +6,7 @@
             </span>
             <span class="item-img-del displayNone" :style="itemImageStyle"></span>
             <div :style="itemImageStyle" @mouseover="clickItem" @mouseleave="leaveItem" class="item-img" id="item-img"
-                @click='toNewSite' @mouseup="itemEdit" 
+                @click.prevent.stop='toNewSite' @mouseup="itemEdit" 
                 @contextmenu.stop.prevent="contextMenu"
             >
                 <img :src="itemInfo.isWeather ? currentIcon : src" class='handle-img'/>
