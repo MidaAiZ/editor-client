@@ -12,6 +12,7 @@ const localSave = (settingKey, settingValue) => {
 
 const imgToBase64 = (srcUrl, callBack) => {
     let imgDom = new Image();
+    imgDom.setAttribute("crossOrigin",'Anonymous')
     return new Promise(resolve => {
         imgDom.onload = function () {
             var imgCanvas = document.createElement("canvas"),
