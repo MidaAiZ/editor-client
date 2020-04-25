@@ -9,5 +9,5 @@ sftp root@139.196.120.93 <<EOF
 put -r $file tabplus-client/${file}
 EOF
 
-echo "程序执行完毕"
+echo "程序执行完毕!"
 
