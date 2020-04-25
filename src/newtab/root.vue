@@ -23,8 +23,7 @@
           <div class="engine-popover-mask" :class="{displayNone: !searchPopoverVisible}" @click="closeEnginePopover"></div>
         </div>
       </div>
-    </div>
-      
+    </div>      
   </div>
 </template>
 <script>
